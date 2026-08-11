@@ -181,13 +181,8 @@ h1, h2, h3 {
 }
 
 /* ---------- Decorative background shapes ---------- */
-/* Wraps hero + trust + services so the shapes flow continuously past
-   the fold instead of stopping abruptly at the bottom of the hero. */
-.decor-wrap {
-  position: relative;
-  overflow: hidden;
-}
-
+/* Confined to the hero, which is the only section that keeps the
+   cream/textured treatment; everything after it is solid white. */
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -214,7 +209,7 @@ h1, h2, h3 {
 .blob-terracotta-2 {
   width: 260px;
   height: 260px;
-  top: 20%;
+  top: 55%;
   left: -90px;
   background: var(--terracotta-dark);
   opacity: 0.28;
@@ -232,7 +227,7 @@ h1, h2, h3 {
 .blob-sage-2 {
   width: 320px;
   height: 320px;
-  top: 62%;
+  top: 68%;
   right: -120px;
   background: var(--sage-dark);
   opacity: 0.3;
@@ -249,6 +244,8 @@ h1, h2, h3 {
 
 /* ---------- Hero ---------- */
 .hero {
+  position: relative;
+  overflow: hidden;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -304,6 +301,7 @@ h1, h2, h3 {
 /* ---------- Trust ---------- */
 .trust {
   padding: 48px 0;
+  background: var(--white);
 }
 
 .trust-grid {
@@ -338,6 +336,7 @@ h1, h2, h3 {
 /* ---------- Services ---------- */
 .services {
   padding: 64px 0;
+  background: var(--white);
 }
 
 .service-card {
@@ -367,7 +366,7 @@ h1, h2, h3 {
 /* ---------- Rates & Policies ---------- */
 .rates {
   padding: 64px 0 96px;
-  background: var(--cream-alt);
+  background: var(--white);
 }
 
 .rate-block {
@@ -510,6 +509,7 @@ tbody td:last-child {
 /* ---------- Contact ---------- */
 .contact {
   padding: 64px 0 96px;
+  background: var(--white);
 }
 
 .contact-grid {
