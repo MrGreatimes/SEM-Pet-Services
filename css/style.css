@@ -106,10 +106,15 @@ h1, h2, h3 {
 /* ---------- Header ---------- */
 .site-header {
   position: fixed;
-  top: 16px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 100;
+  transition: top 0.3s ease;
+}
+
+.site-header.scrolled {
+  top: 16px;
 }
 
 .header-inner {
@@ -118,10 +123,16 @@ h1, h2, h3 {
   justify-content: space-between;
   padding-top: 14px;
   padding-bottom: 14px;
-  background: rgba(251, 243, 233, 0.92);
+  background: transparent;
+  border-radius: 999px;
+  box-shadow: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.site-header.scrolled .header-inner {
+  background: rgba(251, 243, 233, 0.74);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-radius: 999px;
   box-shadow: 0 12px 32px rgba(58, 46, 40, 0.16);
 }
 
@@ -169,14 +180,12 @@ h1, h2, h3 {
   border-radius: 2px;
 }
 
-/* ---------- Hero ---------- */
-.hero {
+/* ---------- Decorative background shapes ---------- */
+/* Wraps hero + trust + services so the shapes flow continuously past
+   the fold instead of stopping abruptly at the bottom of the hero. */
+.decor-wrap {
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 130px 0 48px;
 }
 
 .hero-bg {
@@ -202,6 +211,15 @@ h1, h2, h3 {
   opacity: 0.45;
 }
 
+.blob-terracotta-2 {
+  width: 260px;
+  height: 260px;
+  top: 20%;
+  left: -90px;
+  background: var(--terracotta-dark);
+  opacity: 0.28;
+}
+
 .blob-sage {
   width: 360px;
   height: 360px;
@@ -211,6 +229,15 @@ h1, h2, h3 {
   opacity: 0.5;
 }
 
+.blob-sage-2 {
+  width: 320px;
+  height: 320px;
+  top: 62%;
+  right: -120px;
+  background: var(--sage-dark);
+  opacity: 0.3;
+}
+
 .blob-cream {
   width: 280px;
   height: 280px;
@@ -218,6 +245,14 @@ h1, h2, h3 {
   left: 58%;
   background: var(--terracotta-dark);
   opacity: 0.2;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 130px 0 48px;
 }
 
 .hero-inner {

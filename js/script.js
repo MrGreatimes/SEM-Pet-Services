@@ -16,3 +16,11 @@ nav.querySelectorAll('a').forEach((link) => {
 
 // Footer year
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Float the header only once the page has scrolled
+const siteHeader = document.querySelector('.site-header');
+const setHeaderScrolled = () => {
+  siteHeader.classList.toggle('scrolled', window.scrollY > 0);
+};
+setHeaderScrolled();
+window.addEventListener('scroll', setHeaderScrolled, { passive: true });
