@@ -105,20 +105,24 @@ h1, h2, h3 {
 
 /* ---------- Header ---------- */
 .site-header {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: 16px;
+  left: 0;
+  right: 0;
   z-index: 100;
-  background: rgba(251, 243, 233, 0.92);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(58, 46, 40, 0.08);
 }
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  background: rgba(251, 243, 233, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 999px;
+  box-shadow: 0 12px 32px rgba(58, 46, 40, 0.16);
 }
 
 .logo {
@@ -167,10 +171,59 @@ h1, h2, h3 {
 
 /* ---------- Hero ---------- */
 .hero {
-  padding: 72px 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 130px 0 48px;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  filter: blur(60px);
+}
+
+.blob-terracotta {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  right: -100px;
+  background: var(--terracotta);
+  opacity: 0.45;
+}
+
+.blob-sage {
+  width: 360px;
+  height: 360px;
+  bottom: -160px;
+  left: -100px;
+  background: var(--sage);
+  opacity: 0.5;
+}
+
+.blob-cream {
+  width: 280px;
+  height: 280px;
+  top: 45%;
+  left: 58%;
+  background: var(--terracotta-dark);
+  opacity: 0.2;
 }
 
 .hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 48px;
@@ -522,6 +575,16 @@ tbody td:last-child {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
+  .site-header {
+    left: 12px;
+    right: 12px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 110px;
+  }
+
   .hero-inner {
     grid-template-columns: 1fr;
   }
