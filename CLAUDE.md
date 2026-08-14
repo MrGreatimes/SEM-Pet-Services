@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Static marketing landing page for SEM Pet Services (in-home overnight pet sitting). Plain HTML/CSS/JS, no framework, no build step, no package manager, no tests.
+Static marketing landing page for SEM Pet Services (in-home overnight pet sitting and dog walking). Plain HTML/CSS/JS, no framework, no build step, no package manager, no tests.
 
 ## Structure
 
-- `index.html` — the entire page (single page, all sections). Sections in order: header/nav, hero, trust badges, services, rates & policies (rate tables, add-ons, deposit/payment, meet & greet, booking checklist, cancellation policy), contact form, footer.
+- `index.html` — the entire page (single page, all sections). Sections in order: header/nav (Home, Services, Our Mission, Contact Us), hero, trust badges, services (two cards: overnight sitting, dog walking), Our Mission, rates & policies (overnight subsection: rate tables, add-ons, deposit/payment, meet & greet, booking checklist, cancellation policy — dog walking subsection: walk rates by length/solo-group, add-ons, booking & cancellation policy), contact form, footer.
 - `css/style.css` — all styling. Color palette and other design tokens are CSS custom properties at the top of the file (`:root`); change the palette there rather than hardcoding colors elsewhere.
 - `js/script.js` — mobile nav toggle and footer year, nothing else.
 - `assets/images/` — placeholder for photos (currently empty; hero image is a CSS gradient placeholder in `index.html`/`style.css` until real photos are added).
