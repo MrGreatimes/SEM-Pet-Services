@@ -286,16 +286,15 @@ h1, h2, h3 {
   background: linear-gradient(135deg, var(--sage-light), var(--cream-alt));
   box-shadow: var(--shadow);
   position: relative;
+  overflow: hidden;
 }
 
-.hero-image::after {
-  content: "🐕";
-  font-size: 4rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.5;
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+  display: block;
 }
 
 /* ---------- Trust ---------- */
