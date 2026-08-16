@@ -130,7 +130,7 @@ h1, h2, h3 {
 }
 
 .site-header.scrolled .header-inner {
-  background: rgba(251, 243, 233, 0.74);
+  background: rgba(251, 243, 233, 0.59);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 12px 32px rgba(58, 46, 40, 0.16);
@@ -284,7 +284,7 @@ h1, h2, h3 {
   aspect-ratio: 4 / 3;
   border-radius: var(--radius);
   background: linear-gradient(135deg, var(--sage-light), var(--cream-alt));
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 10px rgba(58, 46, 40, 0.1), 0 20px 40px rgba(58, 46, 40, 0.16);
   position: relative;
   overflow: hidden;
 }
