@@ -375,10 +375,30 @@ h1, h2, h3 {
   font-size: 0.9rem;
 }
 
+.services-note {
+  color: var(--charcoal-soft);
+  font-size: 0.88rem;
+  margin-top: 28px;
+}
+
 /* ---------- Our Mission ---------- */
 .mission {
   padding: 64px 0;
   background: var(--sage-light);
+}
+
+.mission-bio {
+  max-width: 640px;
+  margin: 32px auto 0;
+}
+
+.mission-bio p {
+  color: var(--charcoal-soft);
+  margin-bottom: 16px;
+}
+
+.mission-bio p:last-child {
+  margin-bottom: 0;
 }
 
 .mission-grid {
@@ -404,6 +424,20 @@ h1, h2, h3 {
 .mission-item p {
   color: var(--charcoal-soft);
   font-size: 0.92rem;
+}
+
+/* ---------- Service Area ---------- */
+.area {
+  padding: 56px 0;
+  background: var(--white);
+}
+
+.area-list {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 28px 0 20px;
 }
 
 /* ---------- Rates & Policies ---------- */
@@ -621,10 +655,50 @@ tbody td:last-child {
   font-weight: 600;
 }
 
+/* ---------- Testimonials ---------- */
+.testimonials {
+  padding: 56px 0;
+  background: var(--cream-alt);
+}
+
 /* ---------- Contact ---------- */
 .contact {
   padding: 64px 0 96px;
   background: var(--white);
+}
+
+.next-steps {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 32px 0 8px;
+  padding: 0;
+}
+
+.next-steps li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--charcoal-soft);
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--terracotta);
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .contact-grid {
