@@ -8,10 +8,10 @@ Static marketing landing page for SEM Pet Services (in-home overnight pet sittin
 
 ## Structure
 
-- `index.html` — the entire page (single page, all sections). Sections in order: header/nav (Home, Services, Our Mission, Contact Us), hero, trust badges, services (two cards: overnight sitting, dog walking), Our Mission, rates & policies (overnight subsection: rate tables, add-ons, deposit/payment, meet & greet, booking checklist, cancellation policy — dog walking subsection: walk rates by length/solo-group, add-ons, booking & cancellation policy), contact form, footer.
+- `index.html` — the entire page (single page, all sections). Sections in order: header/nav (Home, Services, Our Mission, Contact Us), hero, trust badges, services (two cards: overnight sitting, dog walking), Our Mission (bio + pillars grid), Service Area, rates & policies (overnight subsection: rate tables, add-ons, deposit/payment, meet & greet, booking checklist, cancellation policy — dog walking subsection: walk rates by length/solo-group, add-ons, booking & cancellation policy — shared emergency policy and sitter-side cancellation policy), Testimonials (placeholder, pending real reviews), contact form, footer.
 - `css/style.css` — all styling. Color palette and other design tokens are CSS custom properties at the top of the file (`:root`); change the palette there rather than hardcoding colors elsewhere.
-- `js/script.js` — mobile nav toggle and footer year, nothing else.
-- `assets/images/` — placeholder for photos (currently empty; hero image is a CSS gradient placeholder in `index.html`/`style.css` until real photos are added).
+- `js/script.js` — mobile nav toggle (floats/shrinks header on scroll) and footer year, nothing else.
+- `assets/images/` — `hero.jpg` is the current hero photo (marked as a placeholder by the site owner, easy to swap via a single `src` change).
 
 ## Running locally
 
@@ -28,7 +28,7 @@ Do not open `index.html` directly via `file://` — the Browser preview tool's n
 ## Deployment
 
 - Hosted on Netlify, connected to the `main` branch of `github.com/MrGreatimes/SEM-Pet-Services`. Pushing to `main` triggers an auto-deploy — no build command, publish directory is the repo root.
-- The contact form posts to Formspree. The form `action` in `index.html` currently has a placeholder (`YOUR_FORM_ID`) that needs to be swapped for a real Formspree form ID before the form is functional in production.
+- The contact form posts to Formspree (form ID `mljrpyjz`, live). Includes a `_subject` hidden field and a `_gotcha` honeypot field for basic spam filtering.
 
 ## Content notes
 

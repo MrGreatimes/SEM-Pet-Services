@@ -365,12 +365,15 @@
       </ol>
 
       <div class="contact-grid">
-        <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <form class="contact-form" action="https://formspree.io/f/mljrpyjz" method="POST">
+          <input type="hidden" name="_subject" value="New inquiry from SEM Pet Services website">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
           <label for="name">Your Name</label>
-          <input type="text" id="name" name="name" required>
+          <input type="text" id="name" name="name" autocomplete="name" required>
 
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" id="email" name="email" autocomplete="email" required>
 
           <label for="dates">Dates Needed</label>
           <input type="text" id="dates" name="dates" placeholder="e.g. Aug 12–16">
