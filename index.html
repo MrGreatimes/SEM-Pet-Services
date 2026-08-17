@@ -354,8 +354,8 @@
 
         <div class="review-form-row">
           <div>
-            <label for="review-name">Your Name</label>
-            <input type="text" id="review-name" name="name" autocomplete="name" required>
+            <label for="review-name">First Name</label>
+            <input type="text" id="review-name" name="name" autocomplete="given-name" required>
           </div>
           <div>
             <label for="review-pet">Pet's Name</label>
@@ -364,7 +364,8 @@
         </div>
 
         <label for="review-service">Service</label>
-        <select id="review-service" name="service">
+        <select id="review-service" name="service" required>
+          <option value="" disabled selected>Select an option</option>
           <option value="Overnight Sitting">Overnight Sitting</option>
           <option value="Dog Walking">Dog Walking</option>
         </select>
@@ -374,7 +375,7 @@
 
         <label class="review-consent">
           <input type="checkbox" name="consent_to_publish" value="Yes" required>
-          Okay to feature this review, with my name, on the site
+          <span>Okay to feature this review, with my name, on the site</span>
         </label>
 
         <button type="submit" class="btn btn-primary">Submit Review</button>

@@ -685,21 +685,27 @@ tbody td:last-child {
   gap: 6px;
 }
 
-label.review-consent {
+.review-form label.review-consent {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
   font-size: 0.88rem;
   color: var(--charcoal-soft);
   font-family: var(--font-body);
   font-weight: 400;
-  margin-bottom: -6px;
+  background: var(--cream);
+  border: 1.5px solid var(--cream-alt);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
 }
 
 .review-consent input {
-  width: auto;
-  margin-top: 3px;
+  width: 18px;
+  height: 18px;
   flex: none;
+  accent-color: var(--terracotta);
+  cursor: pointer;
 }
 
 /* ---------- Contact ---------- */
