@@ -346,7 +346,39 @@
     <div class="container">
       <p class="eyebrow center">What Clients Say</p>
       <h2 class="center">Testimonials</h2>
-      <p class="section-sub center">Client reviews are on their way. In the meantime, references are available on request, just ask during your meet &amp; greet.</p>
+      <p class="section-sub center">Reviews are on their way. If you've worked with me before, I'd love to hear how it went.</p>
+
+      <form class="review-form" action="https://formspree.io/f/mljrpyjz" method="POST">
+        <input type="hidden" name="_subject" value="New testimonial submission from SEM Pet Services website">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="review-form-row">
+          <div>
+            <label for="review-name">Your Name</label>
+            <input type="text" id="review-name" name="name" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="review-pet">Pet's Name</label>
+            <input type="text" id="review-pet" name="pet_name">
+          </div>
+        </div>
+
+        <label for="review-service">Service</label>
+        <select id="review-service" name="service">
+          <option value="Overnight Sitting">Overnight Sitting</option>
+          <option value="Dog Walking">Dog Walking</option>
+        </select>
+
+        <label for="review-text">Your Review</label>
+        <textarea id="review-text" name="review" rows="4" placeholder="e.g. How did your pet seem after their stay? Did you get the updates you expected? Would you book again?" required></textarea>
+
+        <label class="review-consent">
+          <input type="checkbox" name="consent_to_publish" value="Yes" required>
+          Okay to feature this review, with my name, on the site
+        </label>
+
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+      </form>
     </div>
   </section>
 
