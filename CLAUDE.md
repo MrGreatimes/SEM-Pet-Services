@@ -4,14 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Static marketing landing page for SEM Pet Services (in-home overnight pet sitting and dog walking). Plain HTML/CSS/JS, no framework, no build step, no package manager, no tests.
+Static marketing site for SEM Pet Services (in-home overnight pet sitting and dog walking). Two pages, plain HTML/CSS/JS, no framework, no build step, no package manager, no tests.
 
 ## Structure
 
-- `index.html` — the entire page (single page, all sections). Sections in order: header/nav (Home, Services, Our Mission, Contact Us), hero, trust badges, services (two cards: overnight sitting, dog walking), Our Mission (bio + pillars grid), Service Area, rates & policies (overnight subsection: rate tables, add-ons, deposit/payment, meet & greet, booking checklist, cancellation policy — dog walking subsection: walk rates by length/solo-group, add-ons, booking & cancellation policy — shared emergency policy and sitter-side cancellation policy), Testimonials (placeholder, pending real reviews), contact form, footer.
-- `css/style.css` — all styling. Color palette and other design tokens are CSS custom properties at the top of the file (`:root`); change the palette there rather than hardcoding colors elsewhere.
-- `js/script.js` — mobile nav toggle (floats/shrinks header on scroll) and footer year, nothing else.
-- `assets/images/` — `hero.jpg` is the current hero photo (marked as a placeholder by the site owner, easy to swap via a single `src` change).
+- `index.html` — the homepage. Sections in order: header/nav (Home, Services, Our Mission, Rates & Policies, Contact Us), hero (full-bleed background photo with a dark scrim, condensed intro copy), Why Choose Us (trust badges), Services (condensed teaser cards linking to `rates.html` anchors), Our Mission (bio + photo, two-column), Service Area, Testimonials (placeholder + review submission form), contact form, footer.
+- `rates.html` — dedicated rates & policies page (moved off the homepage to keep it lean). Same header/nav as `index.html`, but nav links to homepage sections use `index.html#section` since it's a separate page. Overnight subsection: rate tables, add-ons, deposit/payment, meet & greet, booking checklist, cancellation policy. Dog walking subsection: walk rates by length/solo-group, add-ons, booking & cancellation policy. Shared: emergency policy and sitter-side cancellation policy.
+- `css/style.css` — all styling. Color palette and other design tokens are CSS custom properties at the top of the file (`:root`); change the palette there rather than hardcoding colors elsewhere. Watch for CSS specificity when adding rules that need to override a generic selector (e.g. `.review-form input`) — equal-specificity rules are resolved by source order, which has caused real bugs here twice; prefer bumping specificity deliberately (e.g. `.review-form .review-consent input`) over relying on rule placement.
+- `js/script.js` — mobile nav toggle (floats/shrinks header on scroll) and footer year, nothing else. Shared by both pages.
+- `assets/images/` — `hero.jpg` is the owner's photo, used in the Our Mission section (placeholder, easy to swap via a single `src` change). `background.jpeg` is the hero section's full-bleed background image.
 
 ## Running locally
 
