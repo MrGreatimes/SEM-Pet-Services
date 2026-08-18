@@ -92,17 +92,6 @@ h1, h2, h3 {
   box-shadow: var(--shadow);
 }
 
-.btn-ghost {
-  background: transparent;
-  border-color: var(--terracotta);
-  color: var(--terracotta-dark);
-}
-
-.btn-ghost:hover {
-  background: var(--terracotta);
-  color: var(--white);
-}
-
 /* ---------- Header ---------- */
 .site-header {
   position: fixed;
@@ -246,16 +235,6 @@ h1, h2, h3 {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-}
-
-.hero .btn-ghost {
-  border-color: var(--white);
-  color: var(--white);
-}
-
-.hero .btn-ghost:hover {
-  background: var(--white);
-  color: var(--charcoal);
 }
 
 /* ---------- Trust ---------- */
