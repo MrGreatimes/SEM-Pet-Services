@@ -222,6 +222,7 @@ h1, h2, h3 {
 
 .hero-text {
   max-width: 620px;
+  margin-top: 50px;
 }
 
 .hero-text .eyebrow {
