@@ -187,7 +187,7 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   padding: 130px 0 48px;
-  background: url('../assets/images/background.jpeg') calc(50% - 100px) 25% / cover no-repeat;
+  background: url('../assets/images/background.jpeg') 25% 25% / 160% auto no-repeat;
   color: var(--white);
 }
 
