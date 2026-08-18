@@ -150,17 +150,19 @@ h1, h2, h3 {
 
 .nav a {
   font-weight: 600;
-  color: var(--charcoal);
+  font-size: 1.1rem;
+  color: var(--white);
   transition: color 0.15s ease;
 }
 
-.nav a:hover { color: var(--terracotta-dark); }
+.nav a:hover { color: var(--terracotta); }
 
-.header-phone {
-  font-family: var(--font-heading);
-  font-weight: 700;
+.site-header.scrolled .nav a {
+  color: var(--charcoal);
+}
+
+.site-header.scrolled .nav a:hover {
   color: var(--terracotta-dark);
-  white-space: nowrap;
 }
 
 .nav-toggle {
@@ -176,8 +178,22 @@ h1, h2, h3 {
 .nav-toggle span {
   width: 24px;
   height: 2px;
-  background: var(--charcoal);
+  background: var(--white);
   border-radius: 2px;
+  transition: background 0.15s ease;
+}
+
+.site-header.scrolled .nav-toggle span {
+  background: var(--charcoal);
+}
+
+/* Pages with no dark hero backdrop keep the nav readable on white */
+.site-header.light-page .nav a {
+  color: var(--charcoal);
+}
+
+.site-header.light-page .nav-toggle span {
+  background: var(--charcoal);
 }
 
 /* ---------- Hero ---------- */
@@ -858,16 +874,16 @@ tbody td:last-child {
     display: none;
   }
 
+  .nav a {
+    color: var(--charcoal);
+  }
+
   .nav.open {
     display: flex;
   }
 
   .nav-toggle {
     display: flex;
-  }
-
-  .header-phone {
-    display: none;
   }
 }
 
