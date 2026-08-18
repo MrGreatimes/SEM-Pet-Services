@@ -700,7 +700,7 @@ tbody td:last-child {
   cursor: pointer;
 }
 
-.review-consent input {
+.review-form .review-consent input {
   width: 18px;
   height: 18px;
   flex: none;
