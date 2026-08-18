@@ -280,10 +280,16 @@ h1, h2, h3 {
 
 .offer-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 40px auto 0;
+}
+
+.offer-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 900px;
+  margin-top: 24px;
 }
 
 .offer-card {
