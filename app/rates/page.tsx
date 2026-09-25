@@ -159,6 +159,7 @@ export default function RatesPage() {
                 {[
                   "Emergency contact info",
                   "Vet name, clinic, and phone number",
+                  "Current vaccination records (rabies required; Bordetella for group walks and dog park trips)",
                   "Feeding schedule, medication instructions (dosage/timing), and any behavioral notes",
                   "House access details (keys, alarm codes, wifi)",
                   "Cancellation terms acknowledged by the client",
@@ -264,8 +265,9 @@ export default function RatesPage() {
               <h3 className="text-[1.1rem] mb-2 text-gold-dark">In an Emergency</h3>
               <p className="text-charcoal-soft">
                 My approach is prevention-first: staying alert to hazards and avoiding unnecessary risk during every
-                walk or stay. If a medical emergency does happen, I&apos;ll take your pet to your designated vet, or
-                the nearest emergency vet if I can&apos;t reach you, and contact you immediately.
+                walk or stay. If a medical emergency does happen, I&apos;ll contact you immediately and arrange transport
+                for your pet by pet taxi or with your help, to your designated vet, or to the nearest emergency vet if I
+                can&apos;t reach you.
               </p>
             </div>
 

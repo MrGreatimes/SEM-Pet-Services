@@ -16,7 +16,7 @@ Marketing site for Strol (in-home overnight pet sitting and dog walking, Seattle
 - `components/Footer.tsx` — server component, computes the copyright year at render time.
 - `components/OfferCard.tsx` — reusable card for the offer grid; takes per-card `imgClassName` for the couple of photos that need custom `object-position`/`scale` cropping.
 - `tailwind.config.ts` — design tokens (colors, fonts, radius, shadow, max-width) live here now instead of CSS custom properties. Current palette: `primary`/`primary-dark` (blue), `gold`/`gold-light`/`gold-dark` (yellow), `cream`/`cream-alt`, `charcoal`/`charcoal-soft`.
-- `public/images/` — `hero.jpg` is the owner's photo, used in the Our Mission section. `background.jpeg` is the hero section's full-bleed background image. Numbered files (`1.jpeg`–`16.jpeg`) are the offer-card photos, plus the `Strōl`/`Strol` brand asset files (wordmark and icon explorations).
+- `public/images/` — `Owner and dog 1.jpeg` is the owner's photo, used in the Our Mission section (other `Owner and ...` files are alternates). Note these filenames contain spaces: pass them to `next/image` raw (`src="/images/Owner and dog 1.jpeg"`), since pre-encoding them as `%20` gets double-encoded and 404s. `background.jpeg` is the hero section's full-bleed background image. Numbered files (`1.jpeg`–`16.jpeg`) are the offer-card photos, plus the `Strōl`/`Strol` brand asset files (wordmark and icon explorations).
 
 ## Running locally
 
@@ -30,7 +30,7 @@ Runs on port 5959 (set in `package.json`'s `dev` script) to match the existing `
 ## Deployment
 
 - Hosted on Netlify, connected to the `main` branch of `github.com/MrGreatimes/SEM-Pet-Services`. Netlify auto-detects Next.js and runs `next build`; no manual `netlify.toml` build config was needed at time of migration, but confirm the Netlify site's build command/publish directory match a Next.js app if deploys ever fail after this change.
-- The contact and testimonial forms still post directly to Formspree (form ID `mljrpyjz`) as plain HTML forms — no client-side JS or API route involved yet. Includes a `_subject` hidden field and a `_gotcha` honeypot field for basic spam filtering. This is a likely candidate to move to a Next.js Route Handler later if custom server-side logic (e.g. booking availability checks) gets added.
+- The contact and testimonial forms still post directly to Formspree (form ID `xjykrlgr`) as plain HTML forms — no client-side JS or API route involved yet. Includes a `_subject` hidden field and a `_gotcha` honeypot field for basic spam filtering. This is a likely candidate to move to a Next.js Route Handler later if custom server-side logic (e.g. booking availability checks) gets added.
 
 ## Content notes
 

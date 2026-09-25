@@ -22,6 +22,10 @@ export default function Header({ lightPage = false }: { lightPage?: boolean }) {
   const navLinkColor =
     scrolled || lightPage ? "text-charcoal hover:text-primary-dark" : "text-white hover:text-primary";
   const barColor = scrolled || lightPage ? "bg-charcoal" : "bg-white";
+  // The logo is rendered as a CSS mask over a solid fill so it can take an exact
+  // brand color: primary blue (matching the buttons) on the light/scrolled header,
+  // white when floating over the dark hero.
+  const logoColor = scrolled || lightPage ? "bg-primary" : "bg-white";
 
   return (
     <header
@@ -37,8 +41,22 @@ export default function Header({ lightPage = false }: { lightPage?: boolean }) {
             : "bg-transparent"
         }`}
       >
-        <Link href={lightPage ? "/" : "#top"} className="font-heading font-bold text-[1.625rem] text-primary-dark">
-          Strol Pet Services
+        <Link href={lightPage ? "/" : "#top"} className="flex items-center" aria-label="Strol Pet Services, home">
+          <span
+            role="img"
+            aria-label="Strol Pet Services"
+            className={`block h-12 max-[560px]:h-10 aspect-[2168/888] transition-colors duration-300 ${logoColor}`}
+            style={{
+              WebkitMaskImage: 'url("/images/Strol%20Pet%20Services%20Mono%20-%20Black.png")',
+              maskImage: 'url("/images/Strol%20Pet%20Services%20Mono%20-%20Black.png")',
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "left center",
+              maskPosition: "left center",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+            }}
+          />
         </Link>
 
         <nav

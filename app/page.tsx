@@ -11,9 +11,51 @@ const inputClass =
 
 const labelClass = "font-heading font-semibold text-[0.9rem] -mb-1.5";
 
+const siteUrl = "https://strolpetservices.com";
+
+const serviceAreas = ["Crown Hill", "Ballard", "Shilshole", "Fremont", "Green Lake"];
+
+const offeredServices = [
+  "Overnight in-home pet sitting",
+  "Dog walking",
+  "Cat sitting",
+  "Off-leash dog park trips",
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Strol Pet Services",
+  description:
+    "Independent, in-home overnight pet sitting and dog walking in Seattle. Ten years of experience, with daily photo and text updates.",
+  url: siteUrl,
+  image: `${siteUrl}/images/Owner and dog 1 edit.jpeg`,
+  logo: `${siteUrl}/images/Strol Pet Services Orange 2.png`,
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Seattle",
+    addressRegion: "WA",
+    addressCountry: "US",
+  },
+  areaServed: serviceAreas.map((name) => ({
+    "@type": "City",
+    name: `${name}, Seattle, WA`,
+  })),
+  knowsAbout: offeredServices,
+  makesOffer: offeredServices.map((service) => ({
+    "@type": "Offer",
+    itemOffered: { "@type": "Service", name: service },
+  })),
+};
+
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       <main>
@@ -30,11 +72,12 @@ export default function HomePage() {
           <div className="relative z-10 w-full mx-auto max-w-site px-6">
             <div className="max-w-[620px] mt-[100px]">
               <h1 className="text-white text-[2.6rem] max-[560px]:text-[2rem] mb-5">
-                Trusted Overnight Care and Secure Walking
+                Trusted Overnight
+                <br />
+                Care and Secure Walking
               </h1>
               <p className="text-white/85 text-[1.05rem] max-w-[460px] mb-8">
-                Independent overnight pet sitting and dog walking professional in Seattle. Pet first aid certified,
-                background-checked, and years experience with pets of every kind.
+                Independent overnight pet sitting and dog walking professional in Seattle.
               </p>
               <div className="flex gap-4 flex-wrap">
                 <a href="#contact" className={btnPrimary}>
@@ -49,36 +92,38 @@ export default function HomePage() {
         <section className="py-12 bg-white">
           <div className="mx-auto max-w-site px-6">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
-              Why Choose Us
+              Why Strol
             </p>
-            <h2 className="text-center">Why Choose Us?</h2>
+            <h2 className="text-center">The Little Things That Matter</h2>
             <div className="grid grid-cols-4 max-[860px]:grid-cols-2 max-[560px]:grid-cols-1 gap-6 mt-8">
               <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">🛡️</div>
-                <h3 className="text-[1.05rem] mb-2">Certified &amp; Background-Checked</h3>
+                <div className="text-3xl mb-3">🔁</div>
+                <h3 className="text-[1.05rem] mb-2">Established Pet Care Reputation</h3>
                 <p className="text-charcoal-soft text-[0.92rem]">
-                  Pet first aid certified, with a clean background check available on request.
+                  Years of proven pet care, with past clients who keep coming back and asking for me by name.
                 </p>
               </div>
               <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">📸</div>
-                <h3 className="text-[1.05rem] mb-2">Daily Updates</h3>
+                <div className="text-3xl mb-3">🙋</div>
+                <h3 className="text-[1.05rem] mb-2">The Same Face Every Time</h3>
                 <p className="text-charcoal-soft text-[0.92rem]">
-                  Photo and text updates every day so you always know how your dog is doing.
+                  One dedicated person, never a rotating roster, so your pet always knows who is walking through the
+                  door.
                 </p>
               </div>
               <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">🤝</div>
-                <h3 className="text-[1.05rem] mb-2">Free Meet &amp; Greet</h3>
+                <div className="text-3xl mb-3">🐕</div>
+                <h3 className="text-[1.05rem] mb-2">Dog Behavior Trained</h3>
                 <p className="text-charcoal-soft text-[0.92rem]">
-                  Always offered before a first booking, so there are no surprises for you or your dog.
+                  A psychology degree plus hands-on experience in dog psychology, so stress and trouble get spotted
+                  before they start.
                 </p>
               </div>
               <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">💊</div>
-                <h3 className="text-[1.05rem] mb-2">Medication Included</h3>
+                <div className="text-3xl mb-3">💸</div>
+                <h3 className="text-[1.05rem] mb-2">No Platform Fees</h3>
                 <p className="text-charcoal-soft text-[0.92rem]">
-                  Basic medication and routine special needs care, at no extra charge.
+                  Book directly with me. No agency or app taking a cut, just clear rates confirmed in writing.
                 </p>
               </div>
             </div>
@@ -184,9 +229,8 @@ export default function HomePage() {
               <div className="flex flex-col gap-4">
                 <p className="text-charcoal-soft">
                   Born and raised in Seattle, I&apos;ve spent the last ten years caring for the pets of friends,
-                  family, and neighbors, long before this was a business. I&apos;m pet first aid certified and
-                  background-checked, with hands-on experience across dogs, cats, birds, rabbits, and more, from
-                  high-energy puppies to senior dogs who need a slower pace.
+                  family, and neighbors, long before this was a business. I have hands-on experience across dogs, cats, birds, rabbits, and
+                  more, from high-energy puppies to senior dogs who need a slower pace.
                 </p>
                 <p className="text-charcoal-soft">
                   I don&apos;t have pets of my own right now, so I get my fix by taking care of yours. (The cat in
@@ -195,12 +239,12 @@ export default function HomePage() {
                   stay stays organized and predictable for your pet.
                 </p>
               </div>
-              <div className="relative w-full aspect-[4/3] rounded-site shadow-[0_4px_10px_rgba(58,46,40,0.1),0_20px_40px_rgba(58,46,40,0.16)] overflow-hidden">
+              <div className="relative w-full aspect-[900/837] rounded-site shadow-[0_4px_10px_rgba(58,46,40,0.1),0_20px_40px_rgba(58,46,40,0.16)] overflow-hidden">
                 <Image
-                  src="/images/hero.jpg"
-                  alt="The owner of Strol with a cat"
+                  src="/images/Owner and dog 1 edit.jpeg"
+                  alt="The owner of Strol with a dog"
                   fill
-                  className="object-cover object-[center_58%]"
+                  className="object-cover"
                 />
               </div>
             </div>
@@ -247,7 +291,7 @@ export default function HomePage() {
 
             <form
               className="bg-white rounded-site shadow-site p-8 max-w-[560px] mx-auto mt-10 flex flex-col gap-3.5"
-              action="https://formspree.io/f/mljrpyjz"
+              action="https://formspree.io/f/xjykrlgr"
               method="POST"
             >
               <input type="hidden" name="_subject" value="New testimonial submission from Strol website" />
@@ -271,8 +315,8 @@ export default function HomePage() {
               <label htmlFor="review-service" className={labelClass}>
                 Service
               </label>
-              <select id="review-service" name="service" required className={inputClass}>
-                <option value="" disabled defaultValue="">
+              <select id="review-service" name="service" required defaultValue="" className={inputClass}>
+                <option value="" disabled>
                   Select an option
                 </option>
                 <option value="Overnight Sitting">Overnight Sitting</option>
@@ -337,10 +381,10 @@ export default function HomePage() {
               ))}
             </ol>
 
-            <div className="grid grid-cols-[1.3fr_0.7fr] max-[860px]:grid-cols-1 gap-8 mt-10 items-start">
+            <div className="mt-10 max-w-[640px] mx-auto">
               <form
                 className="bg-white rounded-site shadow-site p-8 flex flex-col gap-3.5"
-                action="https://formspree.io/f/mljrpyjz"
+                action="https://formspree.io/f/xjykrlgr"
                 method="POST"
               >
                 <input type="hidden" name="_subject" value="New inquiry from Strol website" />
@@ -381,16 +425,6 @@ export default function HomePage() {
                   Send Request
                 </button>
               </form>
-
-              <div className="bg-gold-light rounded-site p-8 text-center">
-                <h3 className="text-[1.1rem] mb-3 text-gold-dark">Prefer to call or text?</h3>
-                <a href="tel:12063075456" className="inline-block font-heading font-bold text-[1.4rem] text-primary-dark mb-3">
-                  (206) 307-5456
-                </a>
-                <p className="text-charcoal-soft text-[0.9rem]">
-                  10 years of experience caring for dogs overnight, in their own home.
-                </p>
-              </div>
             </div>
           </div>
         </section>
