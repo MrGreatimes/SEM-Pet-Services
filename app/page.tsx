@@ -32,6 +32,7 @@ const jsonLd = {
   image: `${siteUrl}/images/Owner and dog 1 edit.jpeg`,
   logo: `${siteUrl}/images/Strol Pet Services Orange 2.png`,
   priceRange: "$$",
+  knowsLanguage: ["en", "es"],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Seattle",
@@ -97,30 +98,30 @@ export default function HomePage() {
             <h2 className="text-center">The Little Things That Matter</h2>
             <div className="grid grid-cols-4 max-[860px]:grid-cols-2 max-[560px]:grid-cols-1 gap-6 mt-8">
               <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">🔁</div>
-                <h3 className="text-[1.05rem] mb-2">Established Pet Care Reputation</h3>
+                <div className="text-3xl mb-3">⭐</div>
+                <h3 className="text-[1.05rem] mb-2">Trusted &amp; Reputable</h3>
                 <p className="text-charcoal-soft text-[0.92rem]">
-                  Years of proven pet care, with past clients who keep coming back and asking for me by name.
+                  Years of dependable pet care, with past clients who keep coming back and asking for me by name.
                 </p>
               </div>
               <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">🙋</div>
-                <h3 className="text-[1.05rem] mb-2">The Same Face Every Time</h3>
+                <div className="text-3xl mb-3">🌿</div>
+                <h3 className="text-[1.05rem] mb-2">Down-to-Earth Personality</h3>
                 <p className="text-charcoal-soft text-[0.92rem]">
-                  One dedicated person, never a rotating roster, so your pet always knows who is walking through the
-                  door.
+                  A calm, welcoming presence that puts pets at ease, balanced with firm, structured guidance for dogs
+                  and their people alike.
                 </p>
               </div>
               <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">🐕</div>
-                <h3 className="text-[1.05rem] mb-2">Dog Behavior Trained</h3>
+                <div className="text-3xl mb-3">🧠</div>
+                <h3 className="text-[1.05rem] mb-2">Behavior Management Trained</h3>
                 <p className="text-charcoal-soft text-[0.92rem]">
-                  A psychology degree plus hands-on experience in dog psychology, so stress and trouble get spotted
-                  before they start.
+                  Experience with behavior in both pets and people shapes my structured, strategic approach to
+                  behavior management.
                 </p>
               </div>
               <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">💸</div>
+                <div className="text-3xl mb-3">🤝</div>
                 <h3 className="text-[1.05rem] mb-2">No Platform Fees</h3>
                 <p className="text-charcoal-soft text-[0.92rem]">
                   Book directly with me. No agency or app taking a cut, just clear rates confirmed in writing.
@@ -229,8 +230,9 @@ export default function HomePage() {
               <div className="flex flex-col gap-4">
                 <p className="text-charcoal-soft">
                   Born and raised in Seattle, I&apos;ve spent the last ten years caring for the pets of friends,
-                  family, and neighbors, long before this was a business. I have hands-on experience across dogs, cats, birds, rabbits, and
-                  more, from high-energy puppies to senior dogs who need a slower pace.
+                  family, and neighbors, long before this was a business. I have hands-on experience across dogs,
+                  cats, birds, rabbits, and more, from high-energy puppies to senior dogs who need a slower pace. I
+                  speak both English and Spanish, so you can book and get updates in whichever you prefer.
                 </p>
                 <p className="text-charcoal-soft">
                   I don&apos;t have pets of my own right now, so I get my fix by taking care of yours. (The cat in
