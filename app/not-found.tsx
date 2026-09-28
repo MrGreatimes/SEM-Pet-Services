@@ -28,7 +28,7 @@ export default function NotFound() {
             </p>
             <h1 className="text-[1.8rem] max-[560px]:text-[1.5rem] mb-4">This Page Wandered Off</h1>
             <p className="text-charcoal-soft mb-8">
-              The page you were looking for is not here. It may have moved, or the link might be out of date. Let us
+              The page you were looking for is not here. It may have moved, or the link might be out of date. Let me
               get you back on track.
             </p>
             <div className="flex gap-4 flex-wrap justify-center">

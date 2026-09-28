@@ -2,24 +2,43 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OfferCard from "@/components/OfferCard";
+import ReviewForm from "@/components/ReviewForm";
+import ContactForm from "@/components/ContactForm";
+import { btnPrimary } from "@/lib/styles";
+import { neighborhoods } from "@/lib/neighborhoods";
 
-const btnPrimary =
-  "inline-block px-7 py-3.5 rounded-full font-heading font-semibold text-base border-2 border-transparent bg-primary text-white transition-all hover:bg-primary-dark hover:-translate-y-0.5 hover:shadow-site cursor-pointer";
-
-const inputClass =
-  "font-body text-base px-3.5 py-3 border-[1.5px] border-cream-alt rounded-[10px] bg-cream text-charcoal w-full resize-y focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(62,110,142,0.3)]";
-
-const labelClass = "font-heading font-semibold text-[0.9rem] -mb-1.5";
 
 const siteUrl = "https://strolpetservices.com";
 
-const serviceAreas = ["Crown Hill", "Ballard", "Shilshole", "Fremont", "Green Lake"];
 
 const offeredServices = [
   "Overnight in-home pet sitting",
   "Dog walking",
   "Cat sitting",
   "Off-leash dog park trips",
+];
+
+const whyCards = [
+  {
+    emoji: "⭐",
+    title: "Trusted & Reputable",
+    text: "Years of dependable pet care, with past clients who keep coming back and asking for me by name.",
+  },
+  {
+    emoji: "🌿",
+    title: "Down-to-Earth Personality",
+    text: "A calm, welcoming presence that puts pets at ease, balanced with firm, structured guidance for dogs and their people alike.",
+  },
+  {
+    emoji: "🧠",
+    title: "Behavior Management Trained",
+    text: "Experience with behavior in both pets and people shapes my structured, strategic approach to behavior management.",
+  },
+  {
+    emoji: "🤝",
+    title: "No Platform Fees",
+    text: "Book directly with me. No agency or app taking a cut, just clear rates confirmed in writing.",
+  },
 ];
 
 const jsonLd = {
@@ -39,7 +58,7 @@ const jsonLd = {
     addressRegion: "WA",
     addressCountry: "US",
   },
-  areaServed: serviceAreas.map((name) => ({
+  areaServed: neighborhoods.map((name) => ({
     "@type": "City",
     name: `${name}, Seattle, WA`,
   })),
@@ -61,7 +80,7 @@ export default function HomePage() {
 
       <main>
         {/* HERO */}
-        <section className="hero-bg relative min-h-screen flex items-center pt-[130px] pb-12 text-white max-[860px]:min-h-0 max-[860px]:pt-[110px]">
+        <section className="hero-bg relative min-h-screen flex items-center pt-[130px] pb-12 text-white max-[860px]:min-h-[100svh] max-[860px]:pt-[110px] max-[860px]:items-end max-[860px]:pb-16">
           <div
             className="absolute inset-0 z-0"
             style={{
@@ -89,44 +108,31 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* WHY CHOOSE US */}
-        <section className="py-12 bg-white">
-          <div className="mx-auto max-w-site px-6">
+        {/* WHY STROL */}
+        {/* On phones (<=560px) the cards become compact rows (emoji left, text right).
+            At <=440px the section fills the screen height and the four cards stretch
+            equally to fill the space below the heading. */}
+        <section className="py-12 max-[560px]:py-10 bg-white max-[440px]:h-[100svh] max-[440px]:pt-[92px] max-[440px]:pb-[28px] max-[440px]:flex">
+          <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Why Strol
             </p>
             <h2 className="text-center">The Little Things That Matter</h2>
-            <div className="grid grid-cols-4 max-[860px]:grid-cols-2 max-[560px]:grid-cols-1 gap-6 mt-8">
-              <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">⭐</div>
-                <h3 className="text-[1.05rem] mb-2">Trusted &amp; Reputable</h3>
-                <p className="text-charcoal-soft text-[0.92rem]">
-                  Years of dependable pet care, with past clients who keep coming back and asking for me by name.
-                </p>
-              </div>
-              <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">🌿</div>
-                <h3 className="text-[1.05rem] mb-2">Down-to-Earth Personality</h3>
-                <p className="text-charcoal-soft text-[0.92rem]">
-                  A calm, welcoming presence that puts pets at ease, balanced with firm, structured guidance for dogs
-                  and their people alike.
-                </p>
-              </div>
-              <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">🧠</div>
-                <h3 className="text-[1.05rem] mb-2">Behavior Management Trained</h3>
-                <p className="text-charcoal-soft text-[0.92rem]">
-                  Experience with behavior in both pets and people shapes my structured, strategic approach to
-                  behavior management.
-                </p>
-              </div>
-              <div className="bg-white rounded-site p-7 px-5 text-center shadow-site">
-                <div className="text-3xl mb-3">🤝</div>
-                <h3 className="text-[1.05rem] mb-2">No Platform Fees</h3>
-                <p className="text-charcoal-soft text-[0.92rem]">
-                  Book directly with me. No agency or app taking a cut, just clear rates confirmed in writing.
-                </p>
-              </div>
+            <div className="grid grid-cols-4 max-[860px]:grid-cols-2 max-[560px]:grid-cols-1 gap-6 max-[560px]:gap-3 mt-8 max-[560px]:mt-6 max-[440px]:flex-1 max-[440px]:min-h-0 max-[440px]:auto-rows-[minmax(0,1fr)] max-[440px]:gap-1.5 max-[440px]:mt-3">
+              {whyCards.map(({ emoji, title, text }) => (
+                <div
+                  key={title}
+                  className="bg-white rounded-site p-7 px-5 text-center shadow-site max-[560px]:flex max-[560px]:items-start max-[440px]:items-center max-[560px]:gap-4 max-[560px]:p-4 max-[440px]:py-2.5 max-[440px]:gap-3 max-[560px]:text-left"
+                >
+                  <div className="text-3xl mb-3 max-[560px]:text-2xl max-[440px]:text-xl max-[560px]:mb-0 max-[560px]:shrink-0">{emoji}</div>
+                  <div>
+                    <h3 className="text-[1.05rem] mb-2 max-[560px]:text-base max-[440px]:text-[0.9rem] max-[560px]:mb-1">{title}</h3>
+                    <p className="text-charcoal-soft text-[0.92rem] max-[560px]:text-[0.85rem] max-[440px]:text-[0.78rem] max-[560px]:leading-snug">
+                      {text}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -139,7 +145,7 @@ export default function HomePage() {
             </p>
             <h2 className="text-center">Overnight Pet Sitting &amp; Dog Walking</h2>
 
-            <div className="grid grid-cols-4 max-[860px]:grid-cols-2 max-[560px]:grid-cols-1 gap-6 max-w-site mx-auto mt-10">
+            <div className="grid grid-cols-4 max-[860px]:grid-cols-2 gap-6 max-[560px]:gap-3 max-w-site mx-auto mt-8 max-[560px]:mt-6 max-[440px]:mt-4">
               <OfferCard
                 image="/images/1.jpeg"
                 alt="Dog on a walk"
@@ -168,12 +174,11 @@ export default function HomePage() {
                 title="60-Minute Walk"
                 price="$48 per walk"
                 items={["+$5 for weekends", "+$7 extra dog"]}
-                note="Longer walks available upon request."
                 imgClassName="object-[center_calc(50%-75px)]"
               />
             </div>
 
-            <div className="grid grid-cols-3 max-[860px]:grid-cols-2 max-[560px]:grid-cols-1 gap-6 max-w-[900px] mx-auto mt-6">
+            <div className="grid grid-cols-3 max-[860px]:grid-cols-2 gap-6 max-[560px]:gap-3 max-w-[900px] mx-auto mt-6 max-[860px]:[&>*:last-child:nth-child(odd)]:col-span-2 max-[860px]:[&>*:last-child:nth-child(odd)]:justify-self-center max-[860px]:[&>*:last-child:nth-child(odd)]:w-[calc(50%-12px)] max-[560px]:[&>*:last-child:nth-child(odd)]:w-[calc(50%-6px)]">
               <OfferCard
                 image="/images/16.jpeg"
                 alt="Dog at the off-leash park"
@@ -194,7 +199,6 @@ export default function HomePage() {
                   "$60 for overnight house sitting",
                   "+$5 for weekends and evenings after 4pm",
                 ]}
-                note="No extra fees for additional cats."
                 imgClassName="scale-125"
               />
               <OfferCard
@@ -214,20 +218,32 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* OUR MISSION */}
-        <section id="mission" className="py-16 bg-gold-light">
-          <div className="mx-auto max-w-site px-6">
+        {/* MY MISSION */}
+        {/* At <=440px the photo floats right with the bio text wrapping around it, and
+            the type/spacing tighten, and the yellow section fills the screen with its
+            content fitted between the header pill (ends at 84px) and the screen bottom,
+            anchored at the top (92px, same as Why Strol) so it stays put across widths. */}
+        <section id="mission" className="py-16 bg-gold-light max-[440px]:h-[100svh] max-[440px]:pt-[92px] max-[440px]:pb-4 max-[440px]:flex">
+          <div className="mx-auto max-w-site px-6 max-[440px]:w-full">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
-              Our Mission
+              My Mission
             </p>
-            <h2 className="text-center">Every Dog Deserves to Feel at Home</h2>
-            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 text-center">
+            <h2 className="text-center">Every Dog Deserves to Feel Loved</h2>
+            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center max-[440px]:text-left">
               Ten years of caring for dogs of every age and temperament has taught me that trust is earned one visit
               at a time, not promised in a listing.
             </p>
 
-            <div className="grid grid-cols-[1.2fr_0.8fr] max-[860px]:grid-cols-1 gap-10 items-center max-w-[900px] mx-auto mt-10">
-              <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-[1.2fr_0.8fr] max-[860px]:grid-cols-1 gap-10 items-center max-w-[900px] mx-auto mt-10 max-[440px]:flow-root max-[440px]:mt-4">
+              <div className="relative w-full aspect-[900/837] col-start-2 row-start-1 max-[860px]:col-start-1 max-[860px]:row-start-2 max-[440px]:float-right max-[440px]:w-[48%] max-[440px]:ml-3 max-[440px]:mb-1.5 max-[440px]:mt-1 rounded-site shadow-[0_4px_10px_rgba(58,46,40,0.1),0_20px_40px_rgba(58,46,40,0.16)] overflow-hidden">
+                <Image
+                  src="/images/Owner and dog 1 edit.jpeg"
+                  alt="The owner of Strol with a dog"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col gap-4 col-start-1 row-start-1 max-[440px]:block max-[440px]:text-[0.95rem] max-[440px]:leading-snug max-[440px]:[&>p+p]:mt-3">
                 <p className="text-charcoal-soft">
                   Born and raised in Seattle, I&apos;ve spent the last ten years caring for the pets of friends,
                   family, and neighbors, long before this was a business. I have hands-on experience across dogs,
@@ -241,192 +257,93 @@ export default function HomePage() {
                   stay stays organized and predictable for your pet.
                 </p>
               </div>
-              <div className="relative w-full aspect-[900/837] rounded-site shadow-[0_4px_10px_rgba(58,46,40,0.1),0_20px_40px_rgba(58,46,40,0.16)] overflow-hidden">
-                <Image
-                  src="/images/Owner and dog 1 edit.jpeg"
-                  alt="The owner of Strol with a dog"
-                  fill
-                  className="object-cover"
-                />
-              </div>
             </div>
           </div>
         </section>
 
         {/* SERVICE AREA */}
-        <section id="area" className="py-14 bg-white">
-          <div className="mx-auto max-w-site px-6">
+        {/* At <=440px the section is exactly one screen tall (the map stretches to fill
+            whatever height is left, so the button always ends at the bottom) and its top padding clears
+            the floating header pill (ends at 84px), matching the Why Strol and Mission
+            sections; content stays anchored at the top. The map is a keyless Google Maps
+            embed (no mapping library), lazy-loaded. */}
+        <section id="area" className="py-14 max-[440px]:pt-[92px] max-[440px]:pb-6 max-[440px]:h-[100svh] max-[440px]:flex bg-white">
+          <div className="mx-auto max-w-[720px] px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Where I Work
             </p>
             <h2 className="text-center">Service Area</h2>
-            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 text-center">
-              Seattle neighborhoods from Crown Hill south to Fremont, and Shilshole east to Green Lake, anywhere I
-              can reach by bike.
+            <p className="text-charcoal-soft mt-3 max-[440px]:mt-2 text-center max-[440px]:text-left max-[440px]:text-[0.95rem] max-[440px]:leading-snug">
+              I&apos;m based in Ballard and sit throughout North Seattle: hill to hill, shore to shore. Crown Hill down to
+              Queen Anne, Puget Sound across to Lake Washington.
             </p>
-            <div className="flex justify-center gap-2.5 flex-wrap my-7">
-              {["Crown Hill", "Ballard", "Shilshole", "Fremont", "Green Lake"].map((n) => (
-                <span
-                  key={n}
-                  className="bg-gold-light text-gold-dark font-heading font-semibold text-[0.85rem] px-4 py-1.5 rounded-full"
-                >
-                  {n}
-                </span>
-              ))}
+
+            <div className="rounded-site p-6 px-7 max-[440px]:p-4 mt-6 max-[440px]:mt-4 bg-gold-light border-l-4 border-gold-dark">
+              <h3 className="text-[1.1rem] max-[440px]:text-base mb-2 max-[440px]:mb-1 text-gold-dark">Outside that range?</h3>
+              <p className="text-charcoal-soft text-[0.95rem] max-[440px]:text-[0.875rem] max-[440px]:leading-snug">
+                Reach out anyway. I take bookings across greater Seattle and figure it out case by case.
+              </p>
             </div>
-            <p className="text-charcoal-soft text-[0.85rem] text-center">
-              Not sure if your neighborhood is covered? Just ask, I&apos;m happy to check.
-            </p>
+
+            <div className="relative mt-6 max-[440px]:mt-4 aspect-video max-[560px]:aspect-[4/3] max-[440px]:aspect-auto max-[440px]:flex-1 max-[440px]:min-h-[160px] rounded-site overflow-hidden shadow-site bg-cream-alt">
+              {/* Google My Maps embed with the custom service-area boundary (Crown Hill to
+                  Queen Anne, Puget Sound to Lake Washington). Its framing comes from the
+                  map's saved default view in My Maps. My Maps always shows a 46px title bar;
+                  the iframe is shifted up and made 46px taller so the frame (overflow-hidden)
+                  crops it off, leaving Google's attribution at the bottom visible. */}
+              <iframe
+                title="Map of the Strol Pet Services area in North Seattle"
+                src="https://www.google.com/maps/d/embed?mid=1SVwcGDoesTB7NbzgF1NtwevxwBSE4s4&ehbc=2E312F&noprof=1"
+                className="absolute left-0 -top-[46px] w-full h-[calc(100%_+_46px)] border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+
+            <div className="mt-8 max-[440px]:mt-4 text-center">
+              <a href="#contact" className={`${btnPrimary} max-[440px]:py-3 max-[440px]:text-[0.95rem]`}>
+                Get in touch.
+              </a>
+            </div>
           </div>
         </section>
 
         {/* TESTIMONIALS */}
-        <section id="testimonials" className="py-14 bg-cream-alt">
-          <div className="mx-auto max-w-site px-6">
+        {/* At <=440px, like the sections above: exactly one screen tall, top padding
+            clears the header pill, and the review textarea stretches to fill the
+            leftover height so the submit button ends at the bottom. */}
+        <section id="testimonials" className="py-14 max-[440px]:pt-[92px] max-[440px]:pb-4 max-[440px]:min-h-[100svh] max-[440px]:flex bg-cream-alt">
+          <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               What Clients Say
             </p>
             <h2 className="text-center">Testimonials</h2>
-            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 text-center">
+            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center">
               Reviews are on their way. If you&apos;ve worked with me before, I&apos;d love to hear how it went.
             </p>
 
-            <form
-              className="bg-white rounded-site shadow-site p-8 max-w-[560px] mx-auto mt-10 flex flex-col gap-3.5"
-              action="https://formspree.io/f/xjykrlgr"
-              method="POST"
-            >
-              <input type="hidden" name="_subject" value="New testimonial submission from Strol website" />
-              <input type="text" name="_gotcha" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
-
-              <div className="grid grid-cols-2 max-[560px]:grid-cols-1 gap-3.5">
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="review-name" className={labelClass}>
-                    First Name
-                  </label>
-                  <input type="text" id="review-name" name="name" autoComplete="given-name" required className={inputClass} />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="review-pet" className={labelClass}>
-                    Pet&apos;s Name
-                  </label>
-                  <input type="text" id="review-pet" name="pet_name" className={inputClass} />
-                </div>
-              </div>
-
-              <label htmlFor="review-service" className={labelClass}>
-                Service
-              </label>
-              <select id="review-service" name="service" required defaultValue="" className={inputClass}>
-                <option value="" disabled>
-                  Select an option
-                </option>
-                <option value="Overnight Sitting">Overnight Sitting</option>
-                <option value="Dog Walking">Dog Walking</option>
-              </select>
-
-              <label htmlFor="review-text" className={labelClass}>
-                Your Review
-              </label>
-              <textarea
-                id="review-text"
-                name="review"
-                rows={4}
-                placeholder="e.g. How did your pet seem after their stay? Did you get the updates you expected? Would you book again?"
-                required
-                className={inputClass}
-              />
-
-              <label className="flex items-center gap-3 text-[0.88rem] text-charcoal-soft font-body font-normal bg-cream border-[1.5px] border-cream-alt rounded-[10px] px-3.5 py-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="consent_to_publish"
-                  value="Yes"
-                  required
-                  className="w-[18px] h-[18px] flex-none accent-primary cursor-pointer"
-                />
-                <span>Okay to feature this review, with my name, on the site</span>
-              </label>
-
-              <button type="submit" className={`${btnPrimary} self-start mt-2`}>
-                Submit Review
-              </button>
-            </form>
+            <ReviewForm />
           </div>
         </section>
 
         {/* CONTACT */}
-        <section id="contact" className="py-16 pb-24 bg-white">
-          <div className="mx-auto max-w-site px-6">
+        {/* At <=440px, like the sections above: exactly one screen tall, top padding
+            clears the header pill, Name/Email sit side by side, and the two textareas
+            share the leftover height so the send button ends at the bottom. */}
+        <section id="contact" className="py-16 pb-24 max-[440px]:pt-[92px] max-[440px]:pb-6 max-[440px]:min-h-[100svh] max-[440px]:flex bg-white">
+          <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Get In Touch
             </p>
             <h2 className="text-center">Check Availability</h2>
-            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 text-center">
-              Tell me about your dog and the dates you need, and I&apos;ll follow up to set up a free meet &amp;
+            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center">
+              Tell me about your dog and the dates you need, and I&apos;ll follow up to set up a meet &amp;
               greet.
             </p>
 
-            <ol className="flex justify-center flex-wrap gap-6 my-8">
-              {[
-                "I respond within 24 hours",
-                "We confirm the details",
-                "Free meet & greet, in public",
-                "Booking confirmed",
-              ].map((step, i) => (
-                <li key={step} className="flex items-center gap-2.5 text-[0.88rem] font-semibold text-charcoal-soft">
-                  <span className="inline-flex items-center justify-center flex-none w-6 h-6 rounded-full bg-primary text-white font-heading text-[0.78rem] font-bold">
-                    {i + 1}
-                  </span>
-                  {step}
-                </li>
-              ))}
-            </ol>
-
-            <div className="mt-10 max-w-[640px] mx-auto">
-              <form
-                className="bg-white rounded-site shadow-site p-8 flex flex-col gap-3.5"
-                action="https://formspree.io/f/xjykrlgr"
-                method="POST"
-              >
-                <input type="hidden" name="_subject" value="New inquiry from Strol website" />
-                <input type="text" name="_gotcha" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
-
-                <label htmlFor="name" className={labelClass}>
-                  Your Name
-                </label>
-                <input type="text" id="name" name="name" autoComplete="name" required className={inputClass} />
-
-                <label htmlFor="email" className={labelClass}>
-                  Email
-                </label>
-                <input type="email" id="email" name="email" autoComplete="email" required className={inputClass} />
-
-                <label htmlFor="dates" className={labelClass}>
-                  Dates Needed
-                </label>
-                <input type="text" id="dates" name="dates" placeholder="e.g. Aug 12–16" className={inputClass} />
-
-                <label htmlFor="dog-info" className={labelClass}>
-                  About Your Dog
-                </label>
-                <textarea
-                  id="dog-info"
-                  name="dog_info"
-                  rows={3}
-                  placeholder="Breed, age, temperament, any special needs"
-                  className={inputClass}
-                />
-
-                <label htmlFor="message" className={labelClass}>
-                  Message
-                </label>
-                <textarea id="message" name="message" rows={4} className={inputClass} />
-
-                <button type="submit" className={`${btnPrimary} self-start mt-2`}>
-                  Send Request
-                </button>
-              </form>
+            <div className="mt-10 max-[440px]:mt-4 max-w-[640px] mx-auto max-[440px]:w-full max-[440px]:flex-1 max-[440px]:min-h-0 max-[440px]:flex">
+              <ContactForm />
             </div>
           </div>
         </section>

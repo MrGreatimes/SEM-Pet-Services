@@ -25,12 +25,29 @@ h3 {
   line-height: 1.25;
 }
 
+/* Where menu-link jumps land: each section's top label ends up 8px below the
+   fixed header pill (pill bottom 92px on larger screens, 84px on phones). Those
+   sections have 64px of top padding, so 100 - 64 = 36px. */
 #services,
 #mission,
-#rates,
-#contact,
-.rates-divider {
+#contact {
+  scroll-margin-top: 36px;
+}
+
+#rates {
   scroll-margin-top: 100px;
+}
+
+/* On phones My Mission and Contact fill the screen and already reserve 92px for the
+   pill, so they land flush with the top; Services (64px padding) needs 92 - 64. */
+@media (max-width: 440px) {
+  #mission,
+  #contact {
+    scroll-margin-top: 0;
+  }
+  #services {
+    scroll-margin-top: 28px;
+  }
 }
 
 .hero-bg {

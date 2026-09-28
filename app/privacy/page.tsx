@@ -47,6 +47,12 @@ export default function PrivacyPage() {
               along by email. Their handling of the data is governed by their own privacy policy.
             </p>
 
+            <h2 className={h2}>Embedded map</h2>
+            <p className={p}>
+              The homepage shows an embedded Google Map of the service area. When it loads, Google may receive
+              information such as your IP address and set cookies, under Google&apos;s own privacy policy.
+            </p>
+
             <h2 className={h2}>Your choices</h2>
             <p className={p}>
               You can ask to see, correct, or delete any information you have sent, or ask that a featured review be
