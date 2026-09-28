@@ -29,7 +29,7 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
         }
         if (visible.size) setActiveIds(subnav.map((i) => i.id).filter((id) => visible.has(id)));
       },
-      { rootMargin: "-160px 0px -55% 0px" }
+      { rootMargin: "-190px 0px -55% 0px" }
     );
     targets.forEach((t) => observer.observe(t));
     return () => observer.disconnect();
@@ -75,12 +75,70 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
     };
   }, [open]);
 
+  // Auto-hide on scroll (<=860px only): the header slides up out of view while
+  // scrolling down and comes back on any scroll up. It always shows near the top of
+  // the page and while the menu is open.
+  //
+  // Hide on jump (all widths): clicking an in-page anchor link tucks the header away
+  // and keeps it tucked until the smooth scroll has actually finished (no scroll event
+  // for 150ms), however long or in whichever direction that scroll runs; after that a
+  // normal scroll up brings it back. Pages with an on-page tab bar (Rates) do the
+  // opposite and keep the header visible through the jump so the tabs stay available.
+  const [hidden, setHidden] = useState(false);
+  const [jumpHidden, setJumpHidden] = useState(false);
+  const openRef = useRef(open);
+  openRef.current = open;
+
+  const hideOnJump = !subnav?.length;
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0);
+    let lastY = window.scrollY;
+    let jumping = false;
+    let settleTimer: ReturnType<typeof setTimeout> | undefined;
+    const endJumpSoon = () => {
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(() => {
+        jumping = false;
+      }, 150);
+    };
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 0);
+      const delta = y - lastY;
+      lastY = y;
+      if (jumping) {
+        // Hold the jump state: tucked away normally, kept visible on tab-bar pages.
+        if (!hideOnJump) setHidden(false);
+        endJumpSoon();
+        return;
+      }
+      if (y < 80 || openRef.current) {
+        setHidden(false);
+        setJumpHidden(false);
+      } else if (delta > 4) setHidden(true);
+      else if (delta < -4) {
+        setHidden(false);
+        setJumpHidden(false);
+      }
+    };
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement).closest("a[href*='#']");
+      if (!link) return;
+      const target = (link.getAttribute("href") ?? "").split("#")[1];
+      if (!target || target === "top") return;
+      jumping = true;
+      setHidden(hideOnJump);
+      setJumpHidden(hideOnJump);
+      endJumpSoon();
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    document.addEventListener("click", onClick);
+    return () => {
+      clearTimeout(settleTimer);
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("click", onClick);
+    };
+  }, [hideOnJump]);
 
   // No "Home" link: the logo is the home link.
   const servicesHref = lightPage ? "/#services" : "#services";
@@ -109,8 +167,15 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
   return (
     <header
       id="top"
+      // Keyboard focus inside the header always brings it back into view.
+      onFocus={() => {
+        setHidden(false);
+        setJumpHidden(false);
+      }}
       // Always 16px from the top so the header doesn't jump when the pill appears.
-      className="fixed left-0 right-0 top-4 z-[100] max-[860px]:left-3 max-[860px]:right-3"
+      className={`fixed left-0 right-0 top-4 z-[100] max-[860px]:left-3 max-[860px]:right-3 transition-transform duration-300 ease-out ${
+        jumpHidden && !open ? "-translate-y-[calc(100%+16px)]" : hidden && !open ? "max-[860px]:-translate-y-[calc(100%+16px)]" : ""
+      }`}
     >
       {/* Mobile spacing: --pad is the header's side padding, set so the gaps
           pill-edge|logo|word|word|word|word|X|pill-edge are all equal: 7 equal gaps
@@ -140,8 +205,7 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
           aria-label="Strol Pet Services, home"
         >
           <span
-            role="img"
-            aria-label="Strol Pet Services"
+            aria-hidden="true"
             className={`block h-12 max-[560px]:h-10 aspect-[2168/888] transition-colors duration-300 ${logoColor}`}
             style={{
               WebkitMaskImage: 'url("/images/Strol%20Pet%20Services%20Mono%20-%20Black.png")',
@@ -220,7 +284,7 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
           // narrows to leave an 8px gap before the dropdown: 116 + 8 = 124px. Closed it
           // is a fixed 280px, centered via margin, so the width and margin can animate
           // (300ms ease-out, same as the dropdown) instead of jumping.
-          className={`mx-auto mt-2 w-fit flex gap-1 p-1 rounded-full bg-[rgba(251,243,233,0.59)] backdrop-blur-md shadow-[0_12px_32px_rgba(58,46,40,0.16)] max-[440px]:transition-[margin,width] max-[440px]:duration-300 max-[440px]:ease-out ${
+          className={`mx-auto mt-2 w-fit flex gap-1 p-1 rounded-full max-[440px]:rounded-[22px] max-[440px]:grid max-[440px]:grid-cols-6 max-[440px]:gap-0.5 max-[440px]:[&>a]:col-span-2 max-[440px]:[&>a:nth-child(4)]:col-start-2 bg-[rgba(251,243,233,0.59)] backdrop-blur-md shadow-[0_12px_32px_rgba(58,46,40,0.16)] max-[440px]:transition-[margin,width] max-[440px]:duration-300 max-[440px]:ease-out ${
             open
               ? "max-[440px]:ml-0 max-[440px]:w-[calc(100%-124px)]"
               : "max-[440px]:ml-[calc((100%-280px)/2)] max-[440px]:w-[280px]"

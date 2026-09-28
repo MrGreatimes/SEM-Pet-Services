@@ -6,6 +6,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Visitors who ask their device for reduced motion get instant scrolling and no
+   sliding/fading animations (header, menu, tab bar, form transitions). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
 body {
   color: #2b2e33;
   background: #faf6ec;
@@ -38,15 +53,14 @@ h3 {
   scroll-margin-top: 100px;
 }
 
-/* On phones My Mission and Contact fill the screen and already reserve 92px for the
-   pill, so they land flush with the top; Services (64px padding) needs 92 - 64. */
+/* On phones a menu jump tucks the auto-hiding header away (see Header.tsx), so
+   sections land flush with the top of the screen; the full-screen ones then fit the
+   screen exactly. */
 @media (max-width: 440px) {
+  #services,
   #mission,
   #contact {
     scroll-margin-top: 0;
-  }
-  #services {
-    scroll-margin-top: 28px;
   }
 }
 

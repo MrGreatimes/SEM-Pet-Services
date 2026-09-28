@@ -14,6 +14,10 @@ const config: Config = {
         gold: "#D4A537",
         "gold-light": "#F3E4B8",
         "gold-dark": "#9A7418",
+        // Text on gold-light backgrounds (gold-dark is only 3.4:1 there; this is 4.98:1).
+        "gold-ink": "#7A5B10",
+        // Form field borders: 3.37:1 against white (WCAG non-text contrast needs 3:1).
+        "field-border": "#948B7A",
       },
       fontFamily: {
         heading: ["var(--font-fraunces)", "serif"],

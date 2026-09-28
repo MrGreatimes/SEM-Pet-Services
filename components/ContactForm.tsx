@@ -5,7 +5,7 @@ import { btnPrimary, inputClass, labelClass } from "@/lib/styles";
 import { looksLikeEmail, useFormValidation } from "@/lib/useFormValidation";
 
 // "Check Availability" form. Required: Your Name, Email. Optional: Dates Needed,
-// About Your Dog, Message. Posts straight to Formspree as a plain HTML form.
+// Tell Me More (one combined box for dog details and anything else). Posts straight to Formspree as a plain HTML form.
 export default function ContactForm() {
   const { errors, onSubmit, fieldProps } = useFormValidation({
     name: (v) => (v.trim() ? undefined : "Add a name."),
@@ -67,7 +67,7 @@ export default function ContactForm() {
 
       <div className={field}>
         <label htmlFor="dates" className={labelClass}>
-          Dates Needed
+          Dates Needed <span className="font-normal text-charcoal-soft">(optional)</span>
         </label>
         <p id="dates-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
           e.g. Aug 12–16
@@ -82,20 +82,13 @@ export default function ContactForm() {
       </div>
 
       <div className={`${field} ${grow}`}>
-        <label htmlFor="dog-info" className={labelClass}>
-          About Your Dog
-        </label>
-        <p id="dog-info-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
-          Breed, age, temperament, any special needs
-        </p>
-        <textarea id="dog-info" name="dog_info" rows={3} aria-describedby="dog-info-hint" className={textarea} />
-      </div>
-
-      <div className={`${field} ${grow}`}>
         <label htmlFor="message" className={labelClass}>
-          Message
+          Tell Me More <span className="font-normal text-charcoal-soft">(optional)</span>
         </label>
-        <textarea id="message" name="message" rows={4} className={textarea} />
+        <p id="message-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
+          Your dog&apos;s breed, age, temperament, any special needs, and anything else I should know
+        </p>
+        <textarea id="message" name="message" rows={5} aria-describedby="message-hint" className={textarea} />
       </div>
 
       <button

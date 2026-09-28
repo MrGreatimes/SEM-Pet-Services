@@ -48,8 +48,8 @@ const jsonLd = {
   description:
     "Independent, in-home overnight pet sitting and dog walking in Seattle. Ten years of experience, with daily photo and text updates.",
   url: siteUrl,
-  image: `${siteUrl}/images/Owner and dog 1 edit.jpeg`,
-  logo: `${siteUrl}/images/Strol Pet Services Orange 2.png`,
+  image: encodeURI(`${siteUrl}/images/Owner and dog 1 edit.jpeg`),
+  logo: encodeURI(`${siteUrl}/images/Strol Pet Services Orange 2.png`),
   priceRange: "$$",
   knowsLanguage: ["en", "es"],
   address: {
@@ -112,7 +112,7 @@ export default function HomePage() {
         {/* On phones (<=560px) the cards become compact rows (emoji left, text right).
             At <=440px the section fills the screen height and the four cards stretch
             equally to fill the space below the heading. */}
-        <section className="py-12 max-[560px]:py-10 bg-white max-[440px]:h-[100svh] max-[440px]:pt-[92px] max-[440px]:pb-[28px] max-[440px]:flex">
+        <section className="py-12 max-[560px]:py-10 bg-white max-[440px]:h-[100svh] max-[359px]:h-auto max-[359px]:min-h-[100svh] max-[440px]:pt-12 max-[440px]:pb-2 max-[440px]:flex">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Why Strol
@@ -124,7 +124,7 @@ export default function HomePage() {
                   key={title}
                   className="bg-white rounded-site p-7 px-5 text-center shadow-site max-[560px]:flex max-[560px]:items-start max-[440px]:items-center max-[560px]:gap-4 max-[560px]:p-4 max-[440px]:py-2.5 max-[440px]:gap-3 max-[560px]:text-left"
                 >
-                  <div className="text-3xl mb-3 max-[560px]:text-2xl max-[440px]:text-xl max-[560px]:mb-0 max-[560px]:shrink-0">{emoji}</div>
+                  <div aria-hidden="true" className="text-3xl mb-3 max-[560px]:text-2xl max-[440px]:text-xl max-[560px]:mb-0 max-[560px]:shrink-0">{emoji}</div>
                   <div>
                     <h3 className="text-[1.05rem] mb-2 max-[560px]:text-base max-[440px]:text-[0.9rem] max-[560px]:mb-1">{title}</h3>
                     <p className="text-charcoal-soft text-[0.92rem] max-[560px]:text-[0.85rem] max-[440px]:text-[0.78rem] max-[560px]:leading-snug">
@@ -138,34 +138,31 @@ export default function HomePage() {
         </section>
 
         {/* SERVICES */}
-        <section id="services" className="py-16 bg-white">
+        <section id="services" className="py-16 max-[440px]:pt-10 max-[440px]:pb-12 bg-white">
           <div className="mx-auto max-w-site px-6">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               What I Offer
             </p>
-            <h2 className="text-center">Overnight Pet Sitting &amp; Dog Walking</h2>
+            <h2 className="text-center">Dog Walking, Pet Sitting &amp; Park Trips</h2>
 
-            <div className="grid grid-cols-4 max-[860px]:grid-cols-2 gap-6 max-[560px]:gap-3 max-w-site mx-auto mt-8 max-[560px]:mt-6 max-[440px]:mt-4">
+            <div className="grid grid-cols-4 max-[860px]:grid-cols-1 gap-6 max-[860px]:gap-2.5 max-w-site max-[860px]:max-w-[560px] mx-auto mt-8 max-[560px]:mt-6 max-[440px]:mt-4">
               <OfferCard
                 image="/images/1.jpeg"
                 alt="Dog on a walk"
                 title="20-Minute Walk"
                 price="$25 per walk"
-                items={["+$5 for weekends", "+$7 extra dog"]}
               />
               <OfferCard
                 image="/images/11.jpeg"
                 alt="Dog on a walk"
                 title="30-Minute Walk"
                 price="$32 per walk"
-                items={["+$5 for weekends", "+$7 extra dog"]}
               />
               <OfferCard
                 image="/images/14.jpeg"
                 alt="Dog on a walk"
                 title="45-Minute Walk"
                 price="$38 per walk"
-                items={["+$5 for weekends", "+$7 extra dog"]}
                 imgClassName="object-[center_calc(50%-20px)]"
               />
               <OfferCard
@@ -173,18 +170,17 @@ export default function HomePage() {
                 alt="Dog on a walk"
                 title="60-Minute Walk"
                 price="$48 per walk"
-                items={["+$5 for weekends", "+$7 extra dog"]}
-                imgClassName="object-[center_calc(50%-75px)]"
+                imgClassName="object-[center_calc(50%-75px)] max-[860px]:object-center"
               />
             </div>
 
-            <div className="grid grid-cols-3 max-[860px]:grid-cols-2 gap-6 max-[560px]:gap-3 max-w-[900px] mx-auto mt-6 max-[860px]:[&>*:last-child:nth-child(odd)]:col-span-2 max-[860px]:[&>*:last-child:nth-child(odd)]:justify-self-center max-[860px]:[&>*:last-child:nth-child(odd)]:w-[calc(50%-12px)] max-[560px]:[&>*:last-child:nth-child(odd)]:w-[calc(50%-6px)]">
+            <div className="grid grid-cols-3 max-[860px]:grid-cols-1 gap-6 max-[860px]:gap-2.5 max-w-[900px] max-[860px]:max-w-[560px] mx-auto mt-6 max-[860px]:mt-2.5">
               <OfferCard
                 image="/images/16.jpeg"
                 alt="Dog at the off-leash park"
                 title="Off-Leash Dog Park Trip"
                 price="$45 per trip"
-                items={["+$40 per extra dog"]}
+                items={["+$20 per extra dog"]}
                 note="Two hours at a nearby off-leash park."
               />
               <OfferCard
@@ -192,13 +188,7 @@ export default function HomePage() {
                 alt="A cat in care"
                 title="Cat Sitting"
                 price="$27–$42 per visit"
-                items={[
-                  "$27 per 30-minute visit",
-                  "$35 per 45-minute visit",
-                  "$42 per 60-minute visit",
-                  "$60 for overnight house sitting",
-                  "+$5 for weekends and evenings after 4pm",
-                ]}
+                items={["30 to 60-minute visits, plus overnight house sitting."]}
                 imgClassName="scale-125"
               />
               <OfferCard
@@ -212,9 +202,14 @@ export default function HomePage() {
                   "Three 45-minute walks: $132/night",
                   "Three 60-minute walks: $156/night",
                 ]}
-                note="Three walks a day, minimum, included in every overnight stay."
               />
             </div>
+
+            <p className="text-center mt-8 max-[860px]:mt-6">
+              <a href="/rates" className="font-heading font-semibold text-primary-dark underline underline-offset-4 hover:text-primary">
+                See all rates &amp; policies &rarr;
+              </a>
+            </p>
           </div>
         </section>
 
@@ -223,7 +218,7 @@ export default function HomePage() {
             the type/spacing tighten, and the yellow section fills the screen with its
             content fitted between the header pill (ends at 84px) and the screen bottom,
             anchored at the top (92px, same as Why Strol) so it stays put across widths. */}
-        <section id="mission" className="py-16 bg-gold-light max-[440px]:h-[100svh] max-[440px]:pt-[92px] max-[440px]:pb-4 max-[440px]:flex">
+        <section id="mission" className="py-16 bg-gold-light max-[440px]:h-[100svh] max-[440px]:pt-12 max-[440px]:pb-4 max-[440px]:flex">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               My Mission
@@ -245,16 +240,15 @@ export default function HomePage() {
               </div>
               <div className="flex flex-col gap-4 col-start-1 row-start-1 max-[440px]:block max-[440px]:text-[0.95rem] max-[440px]:leading-snug max-[440px]:[&>p+p]:mt-3">
                 <p className="text-charcoal-soft">
-                  Born and raised in Seattle, I&apos;ve spent the last ten years caring for the pets of friends,
+                  Hi, I&apos;m Sean. Born and raised in Seattle, I&apos;ve spent the last ten years caring for the pets of friends,
                   family, and neighbors, long before this was a business. I have hands-on experience across dogs,
                   cats, birds, rabbits, and more, from high-energy puppies to senior dogs who need a slower pace. I
                   speak both English and Spanish, so you can book and get updates in whichever you prefer.
                 </p>
                 <p className="text-charcoal-soft">
-                  I don&apos;t have pets of my own right now, so I get my fix by taking care of yours. (The cat in
-                  this photo is one of five I earned the trust of, slowly, over several months, in a single
-                  client&apos;s home.) My approach is structured and calm, friendly but focused, so every walk or
-                  stay stays organized and predictable for your pet.
+                  I don&apos;t have pets of my own right now, so I get my fix by taking care of yours. (I once earned
+                  the trust of five cats, slowly, over several months, in a single client&apos;s home.) My approach is structured and calm, friendly but focused, so every walk
+                  and stay is organized and predictable for your pet.
                 </p>
               </div>
             </div>
@@ -267,7 +261,7 @@ export default function HomePage() {
             the floating header pill (ends at 84px), matching the Why Strol and Mission
             sections; content stays anchored at the top. The map is a keyless Google Maps
             embed (no mapping library), lazy-loaded. */}
-        <section id="area" className="py-14 max-[440px]:pt-[92px] max-[440px]:pb-6 max-[440px]:h-[100svh] max-[440px]:flex bg-white">
+        <section id="area" className="py-14 max-[440px]:pt-12 max-[440px]:pb-6 max-[440px]:h-[100svh] max-[440px]:flex bg-white">
           <div className="mx-auto max-w-[720px] px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Where I Work
@@ -279,7 +273,7 @@ export default function HomePage() {
             </p>
 
             <div className="rounded-site p-6 px-7 max-[440px]:p-4 mt-6 max-[440px]:mt-4 bg-gold-light border-l-4 border-gold-dark">
-              <h3 className="text-[1.1rem] max-[440px]:text-base mb-2 max-[440px]:mb-1 text-gold-dark">Outside that range?</h3>
+              <h3 className="text-[1.1rem] max-[440px]:text-base mb-2 max-[440px]:mb-1 text-gold-ink">Outside that range?</h3>
               <p className="text-charcoal-soft text-[0.95rem] max-[440px]:text-[0.875rem] max-[440px]:leading-snug">
                 Reach out anyway. I take bookings across greater Seattle and figure it out case by case.
               </p>
@@ -313,13 +307,13 @@ export default function HomePage() {
         {/* At <=440px, like the sections above: exactly one screen tall, top padding
             clears the header pill, and the review textarea stretches to fill the
             leftover height so the submit button ends at the bottom. */}
-        <section id="testimonials" className="py-14 max-[440px]:pt-[92px] max-[440px]:pb-4 max-[440px]:min-h-[100svh] max-[440px]:flex bg-cream-alt">
+        <section id="testimonials" className="py-14 max-[440px]:pt-12 max-[440px]:pb-4 max-[440px]:min-h-[100svh] max-[440px]:flex bg-cream-alt">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               What Clients Say
             </p>
             <h2 className="text-center">Testimonials</h2>
-            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center">
+            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center max-[440px]:text-left">
               Reviews are on their way. If you&apos;ve worked with me before, I&apos;d love to hear how it went.
             </p>
 
@@ -331,7 +325,7 @@ export default function HomePage() {
         {/* At <=440px, like the sections above: exactly one screen tall, top padding
             clears the header pill, Name/Email sit side by side, and the two textareas
             share the leftover height so the send button ends at the bottom. */}
-        <section id="contact" className="py-16 pb-24 max-[440px]:pt-[92px] max-[440px]:pb-6 max-[440px]:min-h-[100svh] max-[440px]:flex bg-white">
+        <section id="contact" className="py-16 pb-24 max-[440px]:pt-12 max-[440px]:pb-6 max-[440px]:min-h-[100svh] max-[440px]:flex bg-white">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Get In Touch

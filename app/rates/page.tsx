@@ -9,18 +9,21 @@ export const metadata: Metadata = {
     "Rates for overnight pet sitting and dog walking in North Seattle, plus deposit, cancellation, and booking policies from Strol Pet Services.",
 };
 
-// Page order: hero, what's always included, rates (overnight and walking side by side
-// on desktop, stacked at <=860px), booking checklist, all policies in one block, CTA.
+// Page order: hero, what's always included, rates (walking and overnight side by side
+// on desktop, stacked at <=860px), cat sitting and dog park (same two-column layout),
+// booking checklist, all policies in one block, CTA.
 // The header's on-page tab bar (Overnight | Walking | Policies) links to the ids below;
 // `anchor` offsets jumps so headings land below the fixed header + tab bar.
 
 const subnav = [
-  { id: "overnight", label: "Overnight" },
   { id: "walking", label: "Walking" },
+  { id: "overnight", label: "Overnight" },
+  { id: "cat-sitting", label: "Cat Sitting" },
+  { id: "dog-park", label: "Dog Park" },
   { id: "policies", label: "Policies" },
 ];
 
-const anchor = "scroll-mt-[150px]";
+const anchor = "scroll-mt-[150px] max-[440px]:scroll-mt-[184px]";
 const card = "bg-white rounded-site shadow-site p-8 max-[560px]:p-6";
 const narrow = "mx-auto max-w-[700px]";
 const rateNote = "text-charcoal-soft text-[0.92rem] mb-4";
@@ -28,7 +31,7 @@ const th = "text-left font-heading text-[0.85rem] uppercase tracking-wide text-c
 const td = "px-3 py-3 border-b border-cream-alt";
 const tdLast = "px-3 py-3 border-b border-cream-alt font-bold text-primary-dark whitespace-nowrap";
 const bullet = "relative pl-5 before:content-['•'] before:absolute before:left-0 before:text-primary before:font-bold";
-const check = "relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-gold-dark before:font-bold";
+const check = "relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-gold-ink before:font-bold";
 const blockTitle = "text-[1.2rem] mb-3 text-primary-dark";
 const subTitle = "font-heading font-bold text-[1rem] text-charcoal mb-2";
 
@@ -48,7 +51,7 @@ export default function RatesPage() {
       <Header lightPage subnav={subnav} />
 
       <main>
-        <section id="rates" className="pt-[180px] max-[860px]:pt-[160px] pb-24 bg-white">
+        <section id="rates" className="pt-[180px] max-[860px]:pt-[160px] max-[440px]:pt-[196px] pb-24 bg-white">
           <div className="mx-auto max-w-site px-6">
             {/* Hero */}
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
@@ -62,7 +65,7 @@ export default function RatesPage() {
 
             {/* What's Always Included (applies to both services) */}
             <div className={`${narrow} mt-10 rounded-site p-7 px-8 max-[560px]:p-6 bg-gold-light border-l-4 border-gold-dark`}>
-              <h2 className="text-[1.1rem] mb-3 text-gold-dark">What&apos;s Always Included</h2>
+              <h2 className="text-[1.1rem] mb-3 text-gold-ink">What&apos;s Always Included</h2>
               <ul className="text-charcoal-soft space-y-2.5">
                 <li className={check}>
                   Meet &amp; greet: Offered before a first booking.
@@ -74,8 +77,60 @@ export default function RatesPage() {
               </ul>
             </div>
 
-            {/* Rates: two columns on desktop, stacked at <=860px */}
+            {/* Rates: dog walking first, then overnight; two columns on desktop, stacked at <=860px */}
             <div className="grid grid-cols-2 max-[860px]:grid-cols-1 gap-8 max-[860px]:gap-14 mt-14 items-start">
+              <div id="walking" className={anchor}>
+                <Divider label="Dog Walking" />
+
+                <div className={card}>
+                  <h3 className={blockTitle}>Walk Rates</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr>
+                          <th className={th}>Length</th>
+                          <th className={th}>Rate</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td className={td}>20 minutes</td><td className={tdLast}>$25</td></tr>
+                        <tr><td className={td}>30 minutes</td><td className={tdLast}>$32</td></tr>
+                        <tr><td className={td}>45 minutes</td><td className={tdLast}>$38</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>60 minutes</td><td className={`${tdLast} !border-b-0`}>$48</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className={`${card} mt-8`}>
+                  <h3 className={blockTitle}>Add-Ons</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr>
+                          <th className={th}>Item</th>
+                          <th className={th}>Fee</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td className={td}>Additional dog, same household</td><td className={tdLast}>+$7/walk</td></tr>
+                        <tr><td className={td}>Weekend walks</td><td className={tdLast}>+$5/walk</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>Holiday walks (Thanksgiving, Dec 24&ndash;Jan 1, July 4th)</td><td className={`${tdLast} !border-b-0`}>+$10/walk</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className={`${card} mt-8`}>
+                  <h3 className={blockTitle}>Booking</h3>
+                  <ul className="text-charcoal-soft space-y-2.5">
+                    <li className={bullet}>Weekday walks can be requested the same morning, by 8am</li>
+                    <li className={bullet}>Weekend walks require 48 hours notice</li>
+                    <li className={bullet}>Walks are scheduled within a 2-hour arrival window, not an exact time</li>
+                  </ul>
+                </div>
+              </div>
+
               <div id="overnight" className={anchor}>
                 <Divider label="Overnight Pet Sitting" />
 
@@ -124,32 +179,31 @@ export default function RatesPage() {
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div id="walking" className={anchor}>
-                <Divider label="Dog Walking" />
-
+            {/* Cat Sitting and Off-Leash Dog Park: side by side on desktop */}
+            <div className="grid grid-cols-2 max-[860px]:grid-cols-1 gap-8 max-[860px]:gap-14 mt-14 items-start">
+              <div id="cat-sitting" className={anchor}>
+                <Divider label="Cat Sitting" />
                 <div className={card}>
-                  <h3 className={blockTitle}>Walk Rates</h3>
-                  <p className={rateNote}>Solo walks are one-on-one. Group walks include other clients&apos; dogs on the same route.</p>
+                  <h3 className={blockTitle}>Visit Rates</h3>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
                       <thead>
                         <tr>
-                          <th className={th}>Length</th>
-                          <th className={th}>Solo</th>
-                          <th className={th}>Group</th>
+                          <th className={th}>Visit</th>
+                          <th className={th}>Rate</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr><td className={td}>20 minutes</td><td className={tdLast}>$25</td><td className={tdLast}>$20</td></tr>
-                        <tr><td className={td}>30 minutes</td><td className={tdLast}>$32</td><td className={tdLast}>$26</td></tr>
-                        <tr><td className={td}>45 minutes</td><td className={tdLast}>$38</td><td className={tdLast}>$30</td></tr>
-                        <tr><td className={`${td} !border-b-0`}>60 minutes</td><td className={`${tdLast} !border-b-0`}>$48</td><td className={`${tdLast} !border-b-0`}>$38</td></tr>
+                        <tr><td className={td}>30-minute visit</td><td className={tdLast}>$27</td></tr>
+                        <tr><td className={td}>45-minute visit</td><td className={tdLast}>$35</td></tr>
+                        <tr><td className={td}>60-minute visit</td><td className={tdLast}>$42</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>Overnight house sitting</td><td className={`${tdLast} !border-b-0`}>$60</td></tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
-
                 <div className={`${card} mt-8`}>
                   <h3 className={blockTitle}>Add-Ons</h3>
                   <div className="overflow-x-auto">
@@ -161,21 +215,47 @@ export default function RatesPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr><td className={td}>Additional dog, same household</td><td className={tdLast}>+$7/walk</td></tr>
-                        <tr><td className={td}>Weekend walks</td><td className={tdLast}>+$5/walk</td></tr>
-                        <tr><td className={`${td} !border-b-0`}>Holiday walks</td><td className={`${tdLast} !border-b-0`}>+$10/walk</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>Weekends and evenings after 4pm</td><td className={`${tdLast} !border-b-0`}>+$5</td></tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
+              </div>
 
+              <div id="dog-park" className={anchor}>
+                <Divider label="Off-Leash Dog Park" />
+                <div className={card}>
+                  <h3 className={blockTitle}>Park Trips</h3>
+                  <p className={rateNote}>Two hours at a nearby off-leash park.</p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr>
+                          <th className={th}>Trip</th>
+                          <th className={th}>Rate</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td className={`${td} !border-b-0`}>Off-leash dog park trip</td><td className={`${tdLast} !border-b-0`}>$45 per trip</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
                 <div className={`${card} mt-8`}>
-                  <h3 className={blockTitle}>Booking</h3>
-                  <ul className="text-charcoal-soft space-y-2.5">
-                    <li className={bullet}>Weekday walks can be requested the same morning, by 8am</li>
-                    <li className={bullet}>Weekend walks require 48 hours notice</li>
-                    <li className={bullet}>Walks are scheduled within a 2-hour arrival window, not an exact time</li>
-                  </ul>
+                  <h3 className={blockTitle}>Add-Ons</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr>
+                          <th className={th}>Item</th>
+                          <th className={th}>Fee</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td className={`${td} !border-b-0`}>Each extra dog</td><td className={`${tdLast} !border-b-0`}>+$20</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -188,7 +268,7 @@ export default function RatesPage() {
                 {[
                   "Emergency contact info",
                   "Vet name, clinic, and phone number",
-                  "Current vaccination records (rabies required; Bordetella for group walks and dog park trips)",
+                  "Current vaccination records (rabies required; Bordetella for dog park trips)",
                   "Feeding schedule, medication instructions (dosage/timing), and any behavioral notes",
                   "House access details (keys, alarm codes, wifi)",
                   "Cancellation terms acknowledged by the client",
@@ -218,7 +298,7 @@ export default function RatesPage() {
                     </thead>
                     <tbody>
                       <tr><td className={td}>More than 7 days before start</td><td className={`${td} font-semibold`}>Deposit refunded</td></tr>
-                      <tr><td className={td}>Inside 3 days</td><td className={`${td} font-semibold`}>Deposit forfeited</td></tr>
+                      <tr><td className={td}>7 days or less before start</td><td className={`${td} font-semibold`}>Deposit non-refundable</td></tr>
                       <tr><td className={`${td} !border-b-0`}>Inside 24 hours</td><td className={`${td} !border-b-0 font-semibold`}>Full balance due regardless of cancellation</td></tr>
                     </tbody>
                   </table>
@@ -257,7 +337,7 @@ export default function RatesPage() {
                 </ul>
                 <div className="flex gap-2.5 mt-5 flex-wrap">
                   {["Venmo", "Zelle", "Cash"].map((m) => (
-                    <span key={m} className="bg-gold-light text-gold-dark font-heading font-semibold text-[0.85rem] px-4 py-1.5 rounded-full">
+                    <span key={m} className="bg-gold-light text-gold-ink font-heading font-semibold text-[0.85rem] px-4 py-1.5 rounded-full">
                       {m}
                     </span>
                   ))}
@@ -265,7 +345,7 @@ export default function RatesPage() {
               </div>
 
               <div className="rounded-site p-7 px-8 max-[560px]:p-6 mt-8 bg-gold-light border-l-4 border-gold-dark">
-                <h3 className="text-[1.1rem] mb-2 text-gold-dark">In an Emergency</h3>
+                <h3 className="text-[1.1rem] mb-2 text-gold-ink">In an Emergency</h3>
                 <p className="text-charcoal-soft">
                   My approach is prevention-first: staying alert to hazards and avoiding unnecessary risk during every
                   walk or stay. If a medical emergency does happen, I&apos;ll contact you immediately and arrange transport

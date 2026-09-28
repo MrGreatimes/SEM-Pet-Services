@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         <section className="pt-[150px] max-[860px]:pt-[130px] pb-24 bg-white">
           <div className="mx-auto max-w-[720px] px-6">
             <h1 className="text-[1.6rem] mb-2">Privacy Policy</h1>
-            <p className="text-charcoal-soft text-[0.9rem] mb-6">Last updated September 23, 2026</p>
+            <p className="text-charcoal-soft text-[0.9rem] mb-6">Last updated September 28, 2026</p>
 
             <p className={p}>
               Strol Pet Services is a small, independent business. This page explains what information this website
@@ -45,6 +45,11 @@ export default function PrivacyPage() {
             <p className={p}>
               Form submissions are delivered by Formspree, a third-party form service, which passes your message
               along by email. Their handling of the data is governed by their own privacy policy.
+            </p>
+            <p className={p}>
+              To block spam, Formspree may ask you to complete a Google reCAPTCHA check when you submit a form.
+              reCAPTCHA collects information such as your IP address and how you interact with the page, and its use
+              is subject to Google&apos;s Privacy Policy and Terms of Service.
             </p>
 
             <h2 className={h2}>Embedded map</h2>
