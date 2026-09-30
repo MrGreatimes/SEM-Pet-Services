@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ChangeEvent, type FocusEvent, type FormEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type FocusEvent, type FormEvent } from "react";
 
 type FieldElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
@@ -22,9 +22,36 @@ export const looksLikeEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.te
  *   as soon as it's fixed (a different error only shows on the next blur).
  * - On submit, every field is checked; if any fail, the submit is cancelled (the
  *   typed data stays put). Focus is not moved; the user clicks into a field to fix it.
+ * - After a successful submit (the browser leaves for Formspree's thank-you page),
+ *   the form clears itself, so pressing "Go back" doesn't show the sent message
+ *   still filled in. Attach the returned `formRef` to the <form>.
  */
 export function useFormValidation(validators: Record<string, Validator>) {
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+  const formRef = useRef<HTMLFormElement>(null);
+  const submittedKey = `strol-form-sent:${Object.keys(validators).join(",")}`;
+
+  // Coming back from the thank-you page: browsers may restore the page (and typed
+  // values) from their cache, so clear this form if it was just sent. A form that was
+  // typed in but never sent keeps its contents.
+  useEffect(() => {
+    const clearIfSent = () => {
+      try {
+        if (!sessionStorage.getItem(submittedKey)) return;
+        sessionStorage.removeItem(submittedKey);
+      } catch {
+        return;
+      }
+      formRef.current?.reset();
+      setErrors({});
+    };
+    clearIfSent();
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) clearIfSent();
+    };
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
+  }, [submittedKey]);
 
   const check = (name: string, value: string, form: HTMLFormElement | null) => validators[name]?.(value, form);
 
@@ -60,7 +87,21 @@ export function useFormValidation(validators: Record<string, Validator>) {
     setErrors(next);
     // Focus is deliberately left alone (owner's choice): the user picks which field
     // to fix. The errors' role="alert" still announces them to screen readers.
-    if (Object.values(next).some(Boolean)) e.preventDefault();
+    if (Object.values(next).some(Boolean)) {
+      e.preventDefault();
+      return;
+    }
+    // Valid: let the browser send it, then clear the fields once the send has begun
+    // (clearing inside this handler would send an empty form).
+    try {
+      sessionStorage.setItem(submittedKey, "1");
+    } catch {
+      // storage unavailable: the timed reset below still covers most cases
+    }
+    setTimeout(() => {
+      form.reset();
+      setErrors({});
+    }, 0);
   };
 
   // Spread onto a field: wires up the handlers plus aria-invalid/aria-describedby,
@@ -75,5 +116,5 @@ export function useFormValidation(validators: Record<string, Validator>) {
     "aria-describedby": [hintId, errors[name] && `${id}-error`].filter(Boolean).join(" ") || undefined,
   });
 
-  return { errors, onSubmit, fieldProps };
+  return { errors, onSubmit, fieldProps, formRef };
 }

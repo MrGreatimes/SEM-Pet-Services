@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: "/images/Owner and dog 1 edit.jpeg",
+        url: "/images/Owner and Chloe 1 edit.jpeg",
         width: 900,
         height: 837,
         alt: "Strol Pet Services, in-home overnight pet sitting and dog walking in Seattle",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/images/Owner and dog 1 edit.jpeg"],
+    images: ["/images/Owner and Chloe 1 edit.jpeg"],
   },
 };
 

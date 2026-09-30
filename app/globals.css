@@ -65,11 +65,11 @@ h3 {
 }
 
 .hero-bg {
-  background: url("/images/background.jpeg") center calc(25% + 90px) / 100% auto no-repeat;
+  background: url("/images/background.webp") center calc(25% + 90px) / 100% auto no-repeat;
 }
 
 @media (max-width: 860px) {
   .hero-bg {
-    background: url("/images/background.jpeg") center calc(25% + 40px) / 180% auto no-repeat;
+    background: url("/images/background.webp") center calc(25% + 40px) / 180% auto no-repeat;
   }
 }

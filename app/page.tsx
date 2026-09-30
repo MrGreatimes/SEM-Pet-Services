@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { preload } from "react-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OfferCard from "@/components/OfferCard";
@@ -32,7 +33,7 @@ const whyCards = [
   {
     emoji: "🧠",
     title: "Behavior Management Trained",
-    text: "Experience with behavior in both pets and people shapes my structured, strategic approach to behavior management.",
+    text: "Professional training in reading pets and people, so I catch stress early and keep every visit steady and structured.",
   },
   {
     emoji: "🤝",
@@ -48,7 +49,7 @@ const jsonLd = {
   description:
     "Independent, in-home overnight pet sitting and dog walking in Seattle. Ten years of experience, with daily photo and text updates.",
   url: siteUrl,
-  image: encodeURI(`${siteUrl}/images/Owner and dog 1 edit.jpeg`),
+  image: encodeURI(`${siteUrl}/images/Owner and Chloe 1 edit.jpeg`),
   logo: encodeURI(`${siteUrl}/images/Strol Pet Services Orange 2.png`),
   priceRange: "$$",
   knowsLanguage: ["en", "es"],
@@ -70,6 +71,11 @@ const jsonLd = {
 };
 
 export default function HomePage() {
+  // The hero photo is a CSS background (.hero-bg in globals.css), which the
+  // browser normally finds only after the stylesheet loads. Preloading it
+  // starts the download right away; it's the page's LCP image.
+  preload("/images/background.webp", { as: "image", fetchPriority: "high" });
+
   return (
     <>
       <script
@@ -112,13 +118,13 @@ export default function HomePage() {
         {/* On phones (<=560px) the cards become compact rows (emoji left, text right).
             At <=440px the section fills the screen height and the four cards stretch
             equally to fill the space below the heading. */}
-        <section className="py-12 max-[560px]:py-10 bg-white max-[440px]:h-[100svh] max-[359px]:h-auto max-[359px]:min-h-[100svh] max-[440px]:pt-12 max-[440px]:pb-2 max-[440px]:flex">
+        <section className="py-12 max-[560px]:py-10 bg-white max-[440px]:min-h-[100svh] max-[440px]:pt-12 max-[440px]:pb-2 max-[440px]:flex">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Why Strol
             </p>
             <h2 className="text-center">The Little Things That Matter</h2>
-            <div className="grid grid-cols-4 max-[860px]:grid-cols-2 max-[560px]:grid-cols-1 gap-6 max-[560px]:gap-3 mt-8 max-[560px]:mt-6 max-[440px]:flex-1 max-[440px]:min-h-0 max-[440px]:auto-rows-[minmax(0,1fr)] max-[440px]:gap-1.5 max-[440px]:mt-3">
+            <div className="grid grid-cols-4 max-[860px]:grid-cols-2 max-[560px]:grid-cols-1 gap-6 max-[560px]:gap-3 mt-8 max-[560px]:mt-6 max-[440px]:flex-1 max-[440px]:min-h-0 max-[440px]:auto-rows-fr max-[440px]:gap-1.5 max-[440px]:mt-3">
               {whyCards.map(({ emoji, title, text }) => (
                 <div
                   key={title}
@@ -147,52 +153,51 @@ export default function HomePage() {
 
             <div className="grid grid-cols-4 max-[860px]:grid-cols-1 gap-6 max-[860px]:gap-2.5 max-w-site max-[860px]:max-w-[560px] mx-auto mt-8 max-[560px]:mt-6 max-[440px]:mt-4">
               <OfferCard
-                image="/images/1.jpeg"
-                alt="Dog on a walk"
+                image="/images/Kaasie 1.jpeg"
+                alt="German shepherd resting its head on a lap"
                 title="20-Minute Walk"
                 price="$25 per walk"
               />
               <OfferCard
-                image="/images/11.jpeg"
+                image="/images/Fleia.jpeg"
                 alt="Dog on a walk"
                 title="30-Minute Walk"
                 price="$32 per walk"
               />
               <OfferCard
-                image="/images/14.jpeg"
-                alt="Dog on a walk"
+                image="/images/Honeybee 2.jpeg"
+                alt="Golden retriever on a leash beside blue hydrangeas"
                 title="45-Minute Walk"
                 price="$38 per walk"
-                imgClassName="object-[center_calc(50%-20px)]"
+                imgClassName="object-[center_40%]"
               />
               <OfferCard
-                image="/images/4.jpeg"
+                image="/images/Bunnie 1.jpeg"
                 alt="Dog on a walk"
                 title="60-Minute Walk"
                 price="$48 per walk"
-                imgClassName="object-[center_calc(50%-75px)] max-[860px]:object-center"
+                imgClassName="object-[center_80%]"
               />
             </div>
 
             <div className="grid grid-cols-3 max-[860px]:grid-cols-1 gap-6 max-[860px]:gap-2.5 max-w-[900px] max-[860px]:max-w-[560px] mx-auto mt-6 max-[860px]:mt-2.5">
               <OfferCard
-                image="/images/16.jpeg"
-                alt="Dog at the off-leash park"
+                image="/images/Ollie 2.jpeg"
+                alt="Dog lying in the dirt at an off-leash park"
                 title="Off-Leash Dog Park Trip"
                 price="$45 per trip"
                 items={["+$20 per extra dog"]}
                 note="Two hours at a nearby off-leash park."
               />
               <OfferCard
-                image="/images/13.jpeg"
-                alt="A cat in care"
+                image="/images/Manu 2.jpeg"
+                alt="Tabby cat stretched out on a pink blanket"
                 title="Cat Sitting"
                 price="$27–$42 per visit"
                 items={["30 to 60-minute visits, plus overnight house sitting."]}
-                imgClassName="scale-125"
               />
               <OfferCard
-                image="/images/7.jpeg"
+                image="/images/Biker 1.jpeg"
                 alt="Dog resting comfortably outdoors"
                 title="Overnight Stay + 3 Walks"
                 price="From $90 per night"
@@ -218,7 +223,7 @@ export default function HomePage() {
             the type/spacing tighten, and the yellow section fills the screen with its
             content fitted between the header pill (ends at 84px) and the screen bottom,
             anchored at the top (92px, same as Why Strol) so it stays put across widths. */}
-        <section id="mission" className="py-16 bg-gold-light max-[440px]:h-[100svh] max-[440px]:pt-12 max-[440px]:pb-4 max-[440px]:flex">
+        <section id="mission" className="py-16 bg-gold-light max-[440px]:min-h-[100svh] max-[440px]:pt-12 max-[440px]:pb-4 max-[440px]:flex">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               My Mission
@@ -232,7 +237,7 @@ export default function HomePage() {
             <div className="grid grid-cols-[1.2fr_0.8fr] max-[860px]:grid-cols-1 gap-10 items-center max-w-[900px] mx-auto mt-10 max-[440px]:flow-root max-[440px]:mt-4">
               <div className="relative w-full aspect-[900/837] col-start-2 row-start-1 max-[860px]:col-start-1 max-[860px]:row-start-2 max-[440px]:float-right max-[440px]:w-[48%] max-[440px]:ml-3 max-[440px]:mb-1.5 max-[440px]:mt-1 rounded-site shadow-[0_4px_10px_rgba(58,46,40,0.1),0_20px_40px_rgba(58,46,40,0.16)] overflow-hidden">
                 <Image
-                  src="/images/Owner and dog 1 edit.jpeg"
+                  src="/images/Owner and Chloe 1 edit.jpeg"
                   alt="The owner of Strol with a dog"
                   fill
                   className="object-cover"
@@ -261,7 +266,7 @@ export default function HomePage() {
             the floating header pill (ends at 84px), matching the Why Strol and Mission
             sections; content stays anchored at the top. The map is a keyless Google Maps
             embed (no mapping library), lazy-loaded. */}
-        <section id="area" className="py-14 max-[440px]:pt-12 max-[440px]:pb-6 max-[440px]:h-[100svh] max-[440px]:flex bg-white">
+        <section id="area" className="py-14 max-[440px]:pt-12 max-[440px]:pb-6 max-[440px]:min-h-[100svh] max-[440px]:flex bg-white">
           <div className="mx-auto max-w-[720px] px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Where I Work
@@ -310,9 +315,9 @@ export default function HomePage() {
         <section id="testimonials" className="py-14 max-[440px]:pt-12 max-[440px]:pb-4 max-[440px]:min-h-[100svh] max-[440px]:flex bg-cream-alt">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
-              What Clients Say
+              Reviews
             </p>
-            <h2 className="text-center">Testimonials</h2>
+            <h2 className="text-center">Share Your Experience</h2>
             <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center max-[440px]:text-left">
               Reviews are on their way. If you&apos;ve worked with me before, I&apos;d love to hear how it went.
             </p>
@@ -333,7 +338,7 @@ export default function HomePage() {
             <h2 className="text-center">Check Availability</h2>
             <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center">
               Tell me about your dog and the dates you need, and I&apos;ll follow up to set up a meet &amp;
-              greet.
+              greet. <strong className="font-semibold text-charcoal">Now booking for November and beyond.</strong>
             </p>
 
             <div className="mt-10 max-[440px]:mt-4 max-w-[640px] mx-auto max-[440px]:w-full max-[440px]:flex-1 max-[440px]:min-h-0 max-[440px]:flex">

@@ -6,13 +6,13 @@ import { btnPrimary } from "@/lib/styles";
 export const metadata: Metadata = {
   title: "Rates & Policies | Strol Pet Services",
   description:
-    "Rates for overnight pet sitting and dog walking in North Seattle, plus deposit, cancellation, and booking policies from Strol Pet Services.",
+    "Rates for dog walking, overnight pet sitting, cat sitting, and dog park trips in North Seattle, plus deposit and cancellation policies.",
 };
 
 // Page order: hero, what's always included, rates (walking and overnight side by side
 // on desktop, stacked at <=860px), cat sitting and dog park (same two-column layout),
 // booking checklist, all policies in one block, CTA.
-// The header's on-page tab bar (Overnight | Walking | Policies) links to the ids below;
+// The header's on-page tab bar (Walking | Overnight | Cat Sitting | Dog Park | Policies) links to the ids below;
 // `anchor` offsets jumps so headings land below the fixed header + tab bar.
 
 const subnav = [
@@ -119,6 +119,7 @@ export default function RatesPage() {
                       </tbody>
                     </table>
                   </div>
+                  <p className="text-charcoal-soft text-[0.85rem] mt-4">Holiday rates replace weekend rates.</p>
                 </div>
 
                 <div className={`${card} mt-8`}>
@@ -215,10 +216,13 @@ export default function RatesPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr><td className={`${td} !border-b-0`}>Weekends and evenings after 4pm</td><td className={`${tdLast} !border-b-0`}>+$5</td></tr>
+                        <tr><td className={td}>Weekend and evening visits (after 4pm)</td><td className={tdLast}>+$5/visit</td></tr>
+                        <tr><td className={td}>Holiday visits (Thanksgiving, Dec 24&ndash;Jan 1, July 4th)</td><td className={tdLast}>+$10/visit</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>Holiday overnight house sitting</td><td className={`${tdLast} !border-b-0`}>+30%</td></tr>
                       </tbody>
                     </table>
                   </div>
+                  <p className="text-charcoal-soft text-[0.85rem] mt-4">Holiday rates replace weekend rates.</p>
                 </div>
               </div>
 
@@ -252,7 +256,8 @@ export default function RatesPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr><td className={`${td} !border-b-0`}>Each extra dog</td><td className={`${tdLast} !border-b-0`}>+$20</td></tr>
+                        <tr><td className={td}>Each extra dog</td><td className={tdLast}>+$20</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>Holiday trips (Thanksgiving, Dec 24&ndash;Jan 1, July 4th)</td><td className={`${tdLast} !border-b-0`}>+$10/trip</td></tr>
                       </tbody>
                     </table>
                   </div>
@@ -263,7 +268,7 @@ export default function RatesPage() {
             {/* Before Your First Booking */}
             <div className={`${narrow} ${card} mt-14`}>
               <h2 className={blockTitle}>Before Your First Booking</h2>
-              <p className={rateNote}>Get these before confirming a stay:</p>
+              <p className={rateNote}>Get these before your first walk or stay:</p>
               <ul className="text-charcoal-soft space-y-2.5">
                 {[
                   "Emergency contact info",
@@ -287,7 +292,7 @@ export default function RatesPage() {
               <div className={card}>
                 <h3 className={blockTitle}>If You Cancel</h3>
 
-                <h4 className={subTitle}>Overnight stays</h4>
+                <h4 className={subTitle}>Overnight stays (including cat overnight house sitting)</h4>
                 <div className="overflow-x-auto">
                   <table className="w-full border-collapse">
                     <thead>
@@ -297,44 +302,48 @@ export default function RatesPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td className={td}>More than 7 days before start</td><td className={`${td} font-semibold`}>Deposit refunded</td></tr>
-                      <tr><td className={td}>7 days or less before start</td><td className={`${td} font-semibold`}>Deposit non-refundable</td></tr>
-                      <tr><td className={`${td} !border-b-0`}>Inside 24 hours</td><td className={`${td} !border-b-0 font-semibold`}>Full balance due regardless of cancellation</td></tr>
+                      <tr><td className={td}>More than 48 hours before start</td><td className={`${td} font-semibold`}>Deposit refunded</td></tr>
+                      <tr><td className={td}>24 to 48 hours before start</td><td className={`${td} font-semibold`}>Deposit non-refundable</td></tr>
+                      <tr><td className={`${td} !border-b-0`}>Inside 24 hours</td><td className={`${td} !border-b-0 font-semibold`}>50% of the total stay due (deposit included)</td></tr>
                     </tbody>
                   </table>
                 </div>
                 <p className="text-charcoal-soft text-[0.85rem] mt-4">
-                  Other bookings are turned away to hold your dates, which is why the 24-hour terms apply regardless of
+                  Other bookings are turned away to hold your dates, which is why these terms apply regardless of
                   cancellation reason.
                 </p>
 
-                <h4 className={`${subTitle} mt-6`}>Dog walks</h4>
+                <h4 className={`${subTitle} mt-6`}>Dog walks, cat visits and park trips</h4>
                 <p className="text-charcoal-soft">
                   24 hours notice to cancel or reschedule without charge; cancellations inside 24 hours are charged the
-                  full walk rate
+                  full rate
                 </p>
               </div>
 
               <div className="rounded-site p-7 px-8 max-[560px]:p-6 mt-8" style={{ background: "#F6E3D8", borderLeft: "4px solid #3E6E8E" }}>
                 <h3 className="text-[1.1rem] mb-2 text-primary-dark">If I Cancel</h3>
                 <p className="text-charcoal-soft">
-                  If I ever need to cancel or reschedule, I&apos;ll reach out as early as possible. Same-day
-                  cancellations on my end come at no charge to you, and you&apos;ll get priority for rebooking.
+                  If I ever need to cancel or reschedule, I&apos;ll reach out as early as possible. You&apos;re never
+                  charged for a cancellation on my end, any deposit is refunded in full, and you&apos;ll get priority for
+                  rebooking.
                 </p>
               </div>
 
               <div className={`${card} mt-8`}>
                 <h3 className={blockTitle}>Deposit &amp; Payment</h3>
+                <h4 className={subTitle}>Overnight stays</h4>
                 <ul className="text-charcoal-soft space-y-2.5">
                   <li className={bullet}>
                     <strong>Deposit:</strong> 25% of total, due to hold the dates
                   </li>
-                  <li className={bullet}>Deposit becomes non-refundable if canceled inside 7 days of the start date</li>
+                  <li className={bullet}>Deposit becomes non-refundable if canceled within 48 hours of the start</li>
                   <li className={bullet}>
                     <strong>Balance due:</strong> day of arrival
                   </li>
                   <li className={bullet}>Total dollar amount confirmed in writing (text/email) before the stay begins</li>
                 </ul>
+                <h4 className={`${subTitle} mt-6`}>Walks, visits and park trips</h4>
+                <p className="text-charcoal-soft">Paid after each service</p>
                 <div className="flex gap-2.5 mt-5 flex-wrap">
                   {["Venmo", "Zelle", "Cash"].map((m) => (
                     <span key={m} className="bg-gold-light text-gold-ink font-heading font-semibold text-[0.85rem] px-4 py-1.5 rounded-full">

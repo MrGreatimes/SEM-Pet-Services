@@ -7,7 +7,7 @@ import { looksLikeEmail, useFormValidation } from "@/lib/useFormValidation";
 // "Check Availability" form. Required: Your Name, Email. Optional: Dates Needed,
 // Tell Me More (one combined box for dog details and anything else). Posts straight to Formspree as a plain HTML form.
 export default function ContactForm() {
-  const { errors, onSubmit, fieldProps } = useFormValidation({
+  const { errors, onSubmit, fieldProps, formRef } = useFormValidation({
     name: (v) => (v.trim() ? undefined : "Add a name."),
     email: (v) => {
       if (!v.trim()) return "Enter an email.";
@@ -26,6 +26,7 @@ export default function ContactForm() {
 
   return (
     <form
+      ref={formRef}
       className="bg-white rounded-site shadow-site p-8 max-[440px]:p-4 flex flex-col gap-3.5 max-[440px]:gap-2 max-[440px]:w-full"
       action="https://formspree.io/f/xjykrlgr"
       method="POST"
