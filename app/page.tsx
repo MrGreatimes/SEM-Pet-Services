@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { preload } from "react-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OfferCard from "@/components/OfferCard";
 import ReviewForm from "@/components/ReviewForm";
 import ContactForm from "@/components/ContactForm";
+import LazyMap from "@/components/LazyMap";
 import { btnPrimary } from "@/lib/styles";
 import { neighborhoods } from "@/lib/neighborhoods";
 
@@ -71,11 +71,6 @@ const jsonLd = {
 };
 
 export default function HomePage() {
-  // The hero photo is a CSS background (.hero-bg in globals.css), which the
-  // browser normally finds only after the stylesheet loads. Preloading it
-  // starts the download right away; it's the page's LCP image.
-  preload("/images/background.webp", { as: "image", fetchPriority: "high" });
-
   return (
     <>
       <script
@@ -290,13 +285,10 @@ export default function HomePage() {
                   map's saved default view in My Maps. My Maps always shows a 46px title bar;
                   the iframe is shifted up and made 46px taller so the frame (overflow-hidden)
                   crops it off, leaving Google's attribution at the bottom visible. */}
-              <iframe
+              <LazyMap
                 title="Map of the Strol Pet Services area in North Seattle"
                 src="https://www.google.com/maps/d/embed?mid=1SVwcGDoesTB7NbzgF1NtwevxwBSE4s4&ehbc=2E312F&noprof=1"
                 className="absolute left-0 -top-[46px] w-full h-[calc(100%_+_46px)] border-0"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
               />
             </div>
 

@@ -208,8 +208,10 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
             aria-hidden="true"
             className={`block h-12 max-[560px]:h-10 aspect-[2168/888] transition-colors duration-300 ${logoColor}`}
             style={{
-              WebkitMaskImage: 'url("/images/Strol%20Pet%20Services%20Mono%20-%20Black.png")',
-              maskImage: 'url("/images/Strol%20Pet%20Services%20Mono%20-%20Black.png")',
+              // logo-mask.png: 352x144 copy of "Strol Pet Services Mono - Black.png" (the 2168x888
+              // original is 284KB, which slowed the first paint on phones). Regenerate if the logo changes.
+              WebkitMaskImage: 'url("/images/logo-mask.png")',
+              maskImage: 'url("/images/logo-mask.png")',
               WebkitMaskRepeat: "no-repeat",
               maskRepeat: "no-repeat",
               WebkitMaskPosition: "left center",
