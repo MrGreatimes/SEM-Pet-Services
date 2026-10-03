@@ -177,7 +177,7 @@ export default function RatesPage() {
                         <tr><td className={td}>60-minute walk</td><td className={tdLast}>+$30/day</td></tr>
                         <tr><td className={td}>20-minute enrichment session</td><td className={tdLast}>+$12/day</td></tr>
                         <tr><td className={td}>No yard access (street-only potty trips)</td><td className={tdLast}>+$10/night</td></tr>
-                        <tr><td className={td}>Each additional dog, base care</td><td className={tdLast}>+$7/night</td></tr>
+                        <tr><td className={td}>Each additional pet (dog or cat), base care</td><td className={tdLast}>+$7/night</td></tr>
                         <tr><td className={td}>Each additional dog, per walk</td><td className={tdLast}>+$7/walk</td></tr>
                         <tr><td className={td}>Complex behavioral/<wbr />reactive dog handling</td><td className={tdLast}>+$10&ndash;15/night</td></tr>
                         <tr><td className={td}>Holiday surcharge (Thanksgiving, Dec 24&ndash;Jan 1, July 4th)</td><td className={tdLast}>+30%</td></tr>
