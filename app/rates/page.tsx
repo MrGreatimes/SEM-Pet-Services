@@ -27,9 +27,9 @@ const anchor = "scroll-mt-[150px] max-[440px]:scroll-mt-[184px]";
 const card = "bg-white rounded-site shadow-site p-8 max-[560px]:p-6";
 const narrow = "mx-auto max-w-[700px]";
 const rateNote = "text-charcoal-soft text-[0.92rem] mb-4";
-const th = "text-left font-heading text-[0.85rem] uppercase tracking-wide text-charcoal-soft px-3 py-2.5 border-b-2 border-cream-alt";
-const td = "px-3 py-3 border-b border-cream-alt";
-const tdLast = "px-3 py-3 border-b border-cream-alt font-bold text-primary-dark whitespace-nowrap";
+const th = "text-left font-heading text-[0.85rem] uppercase tracking-wide text-charcoal-soft px-3 max-[440px]:px-2.5 py-2.5 border-b-2 border-cream-alt";
+const td = "px-3 max-[440px]:px-2.5 py-3 border-b border-cream-alt";
+const tdLast = "px-3 max-[440px]:px-2.5 py-3 border-b border-cream-alt font-bold text-primary-dark whitespace-nowrap";
 const bullet = "relative pl-5 before:content-['•'] before:absolute before:left-0 before:text-primary before:font-bold";
 const check = "relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-gold-ink before:font-bold";
 const blockTitle = "text-[1.2rem] mb-3 text-primary-dark";
@@ -74,6 +74,10 @@ export default function RatesPage() {
                   Basic medication administration and routine special needs
                 </li>
                 <li className={check}>Daily photo/text updates</li>
+                <li className={check}>
+                  Indoor enrichment sessions available: puzzle feeding, scent games, and short training reps, drawing on
+                  professional behavioral training
+                </li>
               </ul>
             </div>
 
@@ -137,27 +141,23 @@ export default function RatesPage() {
 
                 <div className={card}>
                   <h3 className={blockTitle}>Base Rate</h3>
-                  <p className={rateNote}>
-                    Covers standard care for one dog: feeding, potty breaks, overnight house presence, and daily
-                    photo/text updates. Every stay includes three walks a day, minimum; the nightly rate is set by your
-                    preferred walk length.
-                  </p>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
                       <thead>
                         <tr>
-                          <th className={th}>Included Walks</th>
+                          <th className={th}>Service</th>
                           <th className={th}>Rate</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr><td className={td}>Three 20-minute walks</td><td className={tdLast}>$90/night</td></tr>
-                        <tr><td className={td}>Three 30-minute walks</td><td className={tdLast}>$111/night</td></tr>
-                        <tr><td className={td}>Three 45-minute walks</td><td className={tdLast}>$132/night</td></tr>
-                        <tr><td className={`${td} !border-b-0`}>Three 60-minute walks</td><td className={`${tdLast} !border-b-0`}>$156/night</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>Overnight stay (base)</td><td className={`${tdLast} !border-b-0`}>$70/night</td></tr>
                       </tbody>
                     </table>
                   </div>
+                  <p className={`${rateNote} mt-4 !mb-0`}>
+                    Covers care for one dog: arrival and departure, two feedings, four to five potty trips (5&ndash;10 minutes, out and
+                    back), pad maintenance, overnight house presence, and daily photo and text updates.
+                  </p>
                 </div>
 
                 <div className={`${card} mt-8`}>
@@ -171,10 +171,39 @@ export default function RatesPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr><td className={td}>Each additional dog</td><td className={tdLast}>+$10/night</td></tr>
-                        <tr><td className={td}>Complex behavioral/reactive dog handling</td><td className={tdLast}>+$10&ndash;15/night</td></tr>
+                        <tr><td className={td}>20-minute walk</td><td className={tdLast}>+$15/day</td></tr>
+                        <tr><td className={td}>30-minute walk</td><td className={tdLast}>+$19/day</td></tr>
+                        <tr><td className={td}>45-minute walk</td><td className={tdLast}>+$24/day</td></tr>
+                        <tr><td className={td}>60-minute walk</td><td className={tdLast}>+$30/day</td></tr>
+                        <tr><td className={td}>20-minute enrichment session</td><td className={tdLast}>+$12/day</td></tr>
+                        <tr><td className={td}>No yard access (street-only potty trips)</td><td className={tdLast}>+$10/night</td></tr>
+                        <tr><td className={td}>Each additional dog, base care</td><td className={tdLast}>+$7/night</td></tr>
+                        <tr><td className={td}>Each additional dog, per walk</td><td className={tdLast}>+$7/walk</td></tr>
+                        <tr><td className={td}>Complex behavioral/<wbr />reactive dog handling</td><td className={tdLast}>+$10&ndash;15/night</td></tr>
                         <tr><td className={td}>Holiday surcharge (Thanksgiving, Dec 24&ndash;Jan 1, July 4th)</td><td className={tdLast}>+30%</td></tr>
                         <tr><td className={`${td} !border-b-0`}>Last-minute booking (inside 72 hours of start date)</td><td className={`${tdLast} !border-b-0`}>+$20 flat</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className={`${card} mt-8`}>
+                  <h3 className={blockTitle}>Common Builds</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr>
+                          <th className={th}>Profile</th>
+                          <th className={th}>Nightly</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td className={td}>Yard access, no walks</td><td className={tdLast}>$70</td></tr>
+                        <tr><td className={td}>One 20-minute walk, yard</td><td className={tdLast}>$85</td></tr>
+                        <tr><td className={td}>Apartment, pad-trained, one enrichment session</td><td className={tdLast}>$92</td></tr>
+                        <tr><td className={td}>Two 20-minute walks, apartment</td><td className={tdLast}>$110</td></tr>
+                        <tr><td className={td}>Three 20-minute walks</td><td className={tdLast}>$115</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>Three 60-minute walks</td><td className={`${tdLast} !border-b-0`}>$160</td></tr>
                       </tbody>
                     </table>
                   </div>
@@ -200,7 +229,7 @@ export default function RatesPage() {
                         <tr><td className={td}>30-minute visit</td><td className={tdLast}>$27</td></tr>
                         <tr><td className={td}>45-minute visit</td><td className={tdLast}>$35</td></tr>
                         <tr><td className={td}>60-minute visit</td><td className={tdLast}>$42</td></tr>
-                        <tr><td className={`${td} !border-b-0`}>Overnight house sitting</td><td className={`${tdLast} !border-b-0`}>$60</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>Overnight house sitting</td><td className={`${tdLast} !border-b-0`}>$75</td></tr>
                       </tbody>
                     </table>
                   </div>
@@ -240,7 +269,7 @@ export default function RatesPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr><td className={`${td} !border-b-0`}>Off-leash dog park trip</td><td className={`${tdLast} !border-b-0`}>$45 per trip</td></tr>
+                        <tr><td className={`${td} !border-b-0`}>Off-leash dog park trip</td><td className={`${tdLast} !border-b-0`}>$70 per trip</td></tr>
                       </tbody>
                     </table>
                   </div>

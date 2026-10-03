@@ -180,7 +180,7 @@ export default function HomePage() {
                 image="/images/Ollie 2.jpeg"
                 alt="Dog lying in the dirt at an off-leash park"
                 title="Off-Leash Dog Park Trip"
-                price="$45 per trip"
+                price="$70 per trip"
                 items={["+$20 per extra dog"]}
                 note="Two hours at a nearby off-leash park."
               />
@@ -194,13 +194,11 @@ export default function HomePage() {
               <OfferCard
                 image="/images/Biker 1.jpeg"
                 alt="Dog resting comfortably outdoors"
-                title="Overnight Stay + 3 Walks"
-                price="From $90 per night"
+                title="Overnight Stay"
+                price="From $70 per night"
                 items={[
-                  "Three 20-minute walks: $90/night",
-                  "Three 30-minute walks: $111/night",
-                  "Three 45-minute walks: $132/night",
-                  "Three 60-minute walks: $156/night",
+                  "Feedings, potty trips and overnight house presence included",
+                  "Add walks from +$15/day",
                 ]}
               />
             </div>
