@@ -151,18 +151,21 @@ export default function HomePage() {
                 image="/images/Kaasie 1.jpeg"
                 alt="German shepherd resting its head on a lap"
                 title="20-Minute Walk"
+                href="/rates#walking"
                 price="$25 per walk"
               />
               <OfferCard
                 image="/images/Fleia.jpeg"
                 alt="Dog on a walk"
                 title="30-Minute Walk"
+                href="/rates#walking"
                 price="$32 per walk"
               />
               <OfferCard
                 image="/images/Honeybee 2.jpeg"
                 alt="Golden retriever on a leash beside blue hydrangeas"
                 title="45-Minute Walk"
+                href="/rates#walking"
                 price="$38 per walk"
                 imgClassName="object-[center_40%]"
               />
@@ -170,6 +173,7 @@ export default function HomePage() {
                 image="/images/Bunnie 1.jpeg"
                 alt="Dog on a walk"
                 title="60-Minute Walk"
+                href="/rates#walking"
                 price="$48 per walk"
                 imgClassName="object-[center_80%]"
               />
@@ -178,8 +182,10 @@ export default function HomePage() {
             <div className="grid grid-cols-3 max-[860px]:grid-cols-1 gap-6 max-[860px]:gap-2.5 max-w-[900px] max-[860px]:max-w-[560px] mx-auto mt-6 max-[860px]:mt-2.5">
               <OfferCard
                 image="/images/Ollie 2.jpeg"
+                fullImage="/images/Ollie 2 full.jpeg"
                 alt="Dog lying in the dirt at an off-leash park"
                 title="Off-Leash Dog Park Trip"
+                href="/rates#dog-park"
                 price="$70 per trip"
                 items={["+$20 per extra dog"]}
                 note="Two hours at a nearby off-leash park."
@@ -188,6 +194,7 @@ export default function HomePage() {
                 image="/images/Manu 2.jpeg"
                 alt="Tabby cat stretched out on a pink blanket"
                 title="Cat Sitting"
+                href="/rates#cat-sitting"
                 price="$27–$42 per visit"
                 items={["30 to 60-minute visits, plus overnight house sitting."]}
               />
@@ -195,6 +202,7 @@ export default function HomePage() {
                 image="/images/Biker 1.jpeg"
                 alt="Dog resting comfortably outdoors"
                 title="Overnight Stay"
+                href="/rates#overnight"
                 price="From $70 per night"
                 items={[
                   "Feedings, potty trips and overnight house presence included",

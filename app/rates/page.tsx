@@ -104,6 +104,7 @@ export default function RatesPage() {
                       </tbody>
                     </table>
                   </div>
+                  <p className="text-charcoal-soft text-[0.85rem] mt-4">Longer walks are available on request.</p>
                 </div>
 
                 <div className={`${card} mt-8`}>
