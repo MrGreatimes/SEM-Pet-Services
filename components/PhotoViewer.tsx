@@ -9,6 +9,8 @@ type PhotoViewerProps = {
   fullImage?: string;
   alt: string;
   imgClassName?: string;
+  // Thumbnail `sizes`; defaults to the offer card thumbnail widths.
+  sizes?: string;
 };
 
 const MAX_SCALE = 4;
@@ -19,12 +21,12 @@ const MOVE_SLOP = 6; // px a pointer can drift and still count as a tap/click
 type View = { s: number; x: number; y: number };
 const RESET: View = { s: 1, x: 0, y: 0 };
 
-// Offer card thumbnail that opens the full, uncropped photo in a full-screen overlay.
+// Thumbnail (offer cards, My Mission photo) that opens the full, uncropped photo in a full-screen overlay.
 // Phones: pinch to zoom, drag to pan, double-tap to toggle zoom. Desktop: click to
 // toggle zoom, scroll wheel to zoom, drag to pan. Tapping outside the photo, the X
 // button or Esc closes it. Uses a native <dialog> for the top layer, focus trapping
 // and focus return.
-export default function PhotoViewer({ image, fullImage, alt, imgClassName }: PhotoViewerProps) {
+export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes = "(max-width: 860px) 100px, 300px" }: PhotoViewerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [open, setOpen] = useState(false);
@@ -205,7 +207,7 @@ export default function PhotoViewer({ image, fullImage, alt, imgClassName }: Pho
           src={image}
           alt={alt}
           fill
-          sizes="(max-width: 860px) 100px, 300px"
+          sizes={sizes}
           className={`object-cover transition-transform duration-300 group-hover:scale-[1.03] ${imgClassName ?? ""}`}
         />
       </button>

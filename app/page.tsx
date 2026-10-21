@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OfferCard from "@/components/OfferCard";
+import PhotoViewer from "@/components/PhotoViewer";
 import ReviewForm from "@/components/ReviewForm";
 import ContactForm from "@/components/ContactForm";
 import LazyMap from "@/components/LazyMap";
@@ -237,11 +237,10 @@ export default function HomePage() {
 
             <div className="grid grid-cols-[1.2fr_0.8fr] max-[860px]:grid-cols-1 gap-10 items-center max-w-[900px] mx-auto mt-10 max-[440px]:flow-root max-[440px]:mt-4">
               <div className="relative w-full aspect-[900/837] col-start-2 row-start-1 max-[860px]:col-start-1 max-[860px]:row-start-2 max-[440px]:float-right max-[440px]:w-[48%] max-[440px]:ml-3 max-[440px]:mb-1.5 max-[440px]:mt-1 rounded-site shadow-[0_4px_10px_rgba(58,46,40,0.1),0_20px_40px_rgba(58,46,40,0.16)] overflow-hidden">
-                <Image
-                  src="/images/Owner and Chloe 1 edit.jpeg"
+                <PhotoViewer
+                  image="/images/Owner and Chloe 1 edit.jpeg"
                   alt="The owner of Strol with a dog"
-                  fill
-                  className="object-cover"
+                  sizes="(max-width: 440px) 48vw, (max-width: 860px) 100vw, 360px"
                 />
               </div>
               <div className="flex flex-col gap-4 col-start-1 row-start-1 max-[440px]:block max-[440px]:text-[0.95rem] max-[440px]:leading-snug max-[440px]:[&>p+p]:mt-3">
