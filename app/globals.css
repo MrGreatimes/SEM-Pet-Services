@@ -2,6 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Color tokens (RGB channels, used by tailwind.config.ts). The night set applies
+   automatically when the visitor's device is in dark mode. Night contrast checks:
+   charcoal-soft on card 6.6:1, primary-dark on surface 8:1, gold-ink on gold-light
+   8.4:1, danger on card 4.9:1, white on primary / primary-hover 5.3:1 / 6.5:1. */
+:root {
+  color-scheme: light dark;
+  --c-primary: 62 110 142;
+  --c-primary-dark: 44 81 106;
+  --c-primary-hover: 44 81 106;
+  --c-cream: 250 246 236;
+  --c-cream-alt: 240 233 214;
+  --c-surface: 255 255 255;
+  --c-card: 255 255 255;
+  --c-charcoal: 43 46 51;
+  --c-charcoal-soft: 92 100 112;
+  --c-gold: 212 165 55;
+  --c-gold-light: 243 228 184;
+  --c-gold-dark: 154 116 24;
+  --c-gold-ink: 122 91 16;
+  --c-field-border: 148 139 122;
+  --c-blush: 246 227 216;
+  --c-danger: 185 28 28;
+  /* Frosted header pill, tab bar and phone menu. */
+  --pill-bg: rgba(251, 243, 233, 0.59);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-primary-dark: 143 188 219;
+    --c-primary-hover: 52 96 125;
+    --c-cream: 22 20 18;
+    --c-cream-alt: 36 32 28;
+    --c-surface: 29 27 24;
+    --c-card: 46 42 37;
+    --c-charcoal: 236 230 218;
+    --c-charcoal-soft: 184 176 163;
+    --c-gold-light: 52 43 22;
+    --c-gold-dark: 184 145 46;
+    --c-gold-ink: 230 196 110;
+    --c-field-border: 122 114 100;
+    --c-blush: 54 38 30;
+    --c-danger: 248 113 113;
+    --pill-bg: rgba(29, 27, 24, 0.72);
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -22,8 +68,8 @@ html {
 }
 
 body {
-  color: #2b2e33;
-  background: #faf6ec;
+  color: rgb(var(--c-charcoal));
+  background: rgb(var(--c-cream));
 }
 
 a {
@@ -36,32 +82,22 @@ h2,
 h3 {
   font-family: var(--font-fraunces), serif;
   font-weight: 700;
-  color: #2b2e33;
+  color: rgb(var(--c-charcoal));
   line-height: 1.25;
 }
 
-/* Where menu-link jumps land: each section's top label ends up 8px below the
-   fixed header pill (pill bottom 92px on larger screens, 84px on phones). Those
-   sections have 64px of top padding, so 100 - 64 = 36px. */
+/* Menu-link jumps to homepage sections tuck the header away at every screen size
+   (see Header.tsx, including arrivals from other pages), so sections land flush with
+   the top of the screen with no space reserved for the header; on phones the
+   full-screen ones then fit the screen exactly. */
 #services,
 #mission,
 #contact {
-  scroll-margin-top: 36px;
+  scroll-margin-top: 0;
 }
 
 #rates {
   scroll-margin-top: 100px;
-}
-
-/* On phones a menu jump tucks the auto-hiding header away (see Header.tsx), so
-   sections land flush with the top of the screen; the full-screen ones then fit the
-   screen exactly. */
-@media (max-width: 440px) {
-  #services,
-  #mission,
-  #contact {
-    scroll-margin-top: 0;
-  }
 }
 
 .hero-bg {

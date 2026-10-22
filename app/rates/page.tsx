@@ -24,7 +24,7 @@ const subnav = [
 ];
 
 const anchor = "scroll-mt-[150px] max-[440px]:scroll-mt-[184px]";
-const card = "bg-white rounded-site shadow-site p-8 max-[560px]:p-6";
+const card = "bg-card rounded-site shadow-site p-8 max-[560px]:p-6";
 const narrow = "mx-auto max-w-[700px]";
 const rateNote = "text-charcoal-soft text-[0.92rem] mb-4";
 const th = "text-left font-heading text-[0.85rem] uppercase tracking-wide text-charcoal-soft px-3 max-[440px]:px-2.5 py-2.5 border-b-2 border-cream-alt";
@@ -51,7 +51,7 @@ export default function RatesPage() {
       <Header lightPage subnav={subnav} />
 
       <main>
-        <section id="rates" className="pt-[180px] max-[860px]:pt-[160px] max-[440px]:pt-[196px] pb-24 bg-white">
+        <section id="rates" className="pt-[180px] max-[860px]:pt-[160px] max-[440px]:pt-[196px] pb-24 bg-surface">
           <div className="mx-auto max-w-site px-6">
             {/* Hero */}
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
@@ -350,7 +350,7 @@ export default function RatesPage() {
                 </p>
               </div>
 
-              <div className="rounded-site p-7 px-8 max-[560px]:p-6 mt-8" style={{ background: "#F6E3D8", borderLeft: "4px solid #3E6E8E" }}>
+              <div className="rounded-site p-7 px-8 max-[560px]:p-6 mt-8 bg-blush border-l-4 border-primary">
                 <h3 className="text-[1.1rem] mb-2 text-primary-dark">If I Cancel</h3>
                 <p className="text-charcoal-soft">
                   If I ever need to cancel or reschedule, I&apos;ll reach out as early as possible. You&apos;re never

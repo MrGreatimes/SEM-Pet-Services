@@ -20,7 +20,7 @@ export default function ReviewForm() {
   return (
     <form
       ref={formRef}
-      className="bg-white rounded-site shadow-site p-8 max-[440px]:p-3 max-w-[560px] mx-auto mt-10 max-[440px]:mt-2 flex flex-col gap-3.5 max-[440px]:gap-1.5 max-[440px]:w-full max-[440px]:flex-1 max-[440px]:min-h-0"
+      className="bg-card rounded-site shadow-site p-8 max-[440px]:p-3 max-w-[560px] mx-auto mt-10 max-[440px]:mt-2 flex flex-col gap-3.5 max-[440px]:gap-1.5 max-[440px]:w-full max-[440px]:flex-1 max-[440px]:min-h-0"
       action="https://formspree.io/f/xjykrlgr"
       method="POST"
       noValidate

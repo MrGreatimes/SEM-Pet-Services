@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       <Header lightPage />
 
       <main>
-        <section className="pt-[150px] max-[860px]:pt-[130px] pb-24 bg-white">
+        <section className="pt-[150px] max-[860px]:pt-[130px] pb-24 bg-surface">
           <div className="mx-auto max-w-[720px] px-6">
             <h1 className="text-[1.6rem] mb-2">Privacy Policy</h1>
             <p className="text-charcoal-soft text-[0.9rem] mb-6">Last updated September 28, 2026</p>

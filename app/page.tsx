@@ -2,7 +2,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OfferCard from "@/components/OfferCard";
 import PhotoViewer from "@/components/PhotoViewer";
-import ReviewForm from "@/components/ReviewForm";
+import Link from "next/link";
+import ReviewText from "@/components/ReviewText";
 import ContactForm from "@/components/ContactForm";
 import LazyMap from "@/components/LazyMap";
 import { btnPrimary } from "@/lib/styles";
@@ -10,6 +11,8 @@ import { neighborhoods } from "@/lib/neighborhoods";
 
 
 const siteUrl = "https://strolpetservices.com";
+// Opens the review box on the Strol Google Business Profile.
+const googleReviewUrl = "https://g.page/r/CffSIU9PzpUFEBM/review";
 
 
 const offeredServices = [
@@ -39,6 +42,42 @@ const whyCards = [
     emoji: "🤝",
     title: "No Platform Fees",
     text: "Book directly with me. No agency or app taking a cut, just clear rates confirmed in writing.",
+  },
+];
+
+// Client reviews, quoted with permission, laid out like Rover reviews: pet photo, first
+// name and last initial, service, date, then the text. No star ratings (owner's choice;
+// the review form doesn't collect them). "date" is when the review was sent ("Oct 7, 2026")
+// and is left out of the card until known. imgClassName crops and zooms each photo so
+// the dog's face fills the small circle.
+type Review = {
+  name: string;
+  service: string;
+  date?: string;
+  pet: string;
+  photo: string;
+  imgClassName: string;
+  text: string;
+};
+
+const reviews: Review[] = [
+  {
+    name: "Sona S.",
+    service: "Overnight Stay",
+    date: "Sep 8, 2026",
+    pet: "Ollie",
+    photo: "/images/Ollie 3.jpeg",
+    imgClassName: "object-[50%_81%] origin-[29%_50%] scale-[1.8]",
+    text: "It takes a lot of faith to trust your entire home and your beloved dog to someone for weeks. Sean wholly earns that trust. We are so thankful for his amazing care of our dog Ollie and our home. He left our home in better condition than we left it, even offering to fix our hopeless robot vacuum and mow our lawn. He also took amazing care of Ollie. He provided multiple video and picture updates every day, so we always knew what Ollie was up to. It made leaving our family member behind a lot easier. We knew Ollie was having as much fun (if not more) while we were gone as Sean took him to all his favorite spots. We could tell Ollie was totally comfortable with him, because he quickly exposed Sean to all his weird Golden Retriever quirks and Husky stubbornness. We plan to use Sean many more times in the future. He's our first contact for watching Ollie and our home and fully recommend him taking care of your most valued things.",
+  },
+  {
+    name: "Oliver T.",
+    service: "Overnight Stay",
+    date: "Oct 7, 2026",
+    pet: "Kaasie",
+    photo: "/images/Kaasie 2.jpeg",
+    imgClassName: "object-top origin-[87%_38%] scale-[1.4]",
+    text: "It was a really good experience! Sean came over to house-stay and watch over my dog Kaasie for a few days. Kaasie has a tendency for separation anxiety, so leaving is always hard. But when we returned, Kaasie was as cool as I'd seen her. Clearly she got the love and attention with me being out of the house. Was super happy with the daily reports, really shows Sean cared about our dog. Would highly recommend!",
   },
 ];
 
@@ -113,7 +152,7 @@ export default function HomePage() {
         {/* On phones (<=560px) the cards become compact rows (emoji left, text right).
             At <=440px the section fills the screen height and the four cards stretch
             equally to fill the space below the heading. */}
-        <section className="py-12 max-[560px]:py-10 bg-white max-[440px]:min-h-[100svh] max-[440px]:pt-12 max-[440px]:pb-2 max-[440px]:flex">
+        <section className="py-12 max-[560px]:py-10 bg-surface max-[440px]:min-h-[100svh] max-[440px]:pt-12 max-[440px]:pb-2 max-[440px]:flex">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Why Strol
@@ -123,7 +162,7 @@ export default function HomePage() {
               {whyCards.map(({ emoji, title, text }) => (
                 <div
                   key={title}
-                  className="bg-white rounded-site p-7 px-5 text-center shadow-site max-[560px]:flex max-[560px]:items-start max-[440px]:items-center max-[560px]:gap-4 max-[560px]:p-4 max-[440px]:py-2.5 max-[440px]:gap-3 max-[560px]:text-left"
+                  className="bg-card rounded-site p-7 px-5 text-center shadow-site max-[560px]:flex max-[560px]:items-start max-[440px]:items-center max-[560px]:gap-4 max-[560px]:p-4 max-[440px]:py-2.5 max-[440px]:gap-3 max-[560px]:text-left"
                 >
                   <div aria-hidden="true" className="text-3xl mb-3 max-[560px]:text-2xl max-[440px]:text-xl max-[560px]:mb-0 max-[560px]:shrink-0">{emoji}</div>
                   <div>
@@ -139,7 +178,7 @@ export default function HomePage() {
         </section>
 
         {/* SERVICES */}
-        <section id="services" className="py-16 max-[440px]:pt-10 max-[440px]:pb-12 bg-white">
+        <section id="services" className="py-16 max-[440px]:pt-10 max-[440px]:pb-12 bg-surface">
           <div className="mx-auto max-w-site px-6">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               What I Offer
@@ -266,7 +305,7 @@ export default function HomePage() {
             the floating header pill (ends at 84px), matching the Why Strol and Mission
             sections; content stays anchored at the top. The map is a keyless Google Maps
             embed (no mapping library), lazy-loaded. */}
-        <section id="area" className="py-14 max-[440px]:pt-12 max-[440px]:pb-6 max-[440px]:min-h-[100svh] max-[440px]:flex bg-white">
+        <section id="area" className="py-14 max-[440px]:pt-12 max-[440px]:pb-6 max-[440px]:min-h-[100svh] max-[440px]:flex bg-surface">
           <div className="mx-auto max-w-[720px] px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Where I Work
@@ -305,21 +344,54 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* TESTIMONIALS */}
-        {/* At <=440px, like the sections above: exactly one screen tall, top padding
-            clears the header pill, and the review textarea stretches to fill the
-            leftover height so the submit button ends at the bottom. */}
-        <section id="testimonials" className="py-14 max-[440px]:pt-12 max-[440px]:pb-4 max-[440px]:min-h-[100svh] max-[440px]:flex bg-cream-alt">
-          <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
+        {/* REVIEWS */}
+        {/* Cards sit side by side on desktop and stack at <=860px. */}
+        <section id="reviews" className="py-14 max-[440px]:pt-12 bg-cream-alt">
+          <div className="mx-auto max-w-site px-6">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Reviews
             </p>
-            <h2 className="text-center">Share Your Experience</h2>
-            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center max-[440px]:text-left">
-              Reviews are on their way. If you&apos;ve worked with me before, I&apos;d love to hear how it went.
-            </p>
+            <h2 className="text-center">What Clients Say</h2>
+            <div className="grid grid-cols-2 max-[860px]:grid-cols-1 items-start gap-6 max-[560px]:gap-4 mt-8 max-[560px]:mt-6">
+              {reviews.map(({ name, service, date, pet, photo, imgClassName, text }) => (
+                <figure key={name} className="bg-card rounded-site p-7 max-[560px]:p-5 shadow-site">
+                  {/* Header row: reviewer, then "service for pet" and the date on the
+                      left; the pet's photo in the top right corner (owner's choice). */}
+                  <figcaption className="flex items-start justify-between gap-3 mb-4">
+                    <div>
+                      <p className="font-heading font-semibold text-[1.05rem] text-charcoal">{name}</p>
+                      <p className="text-charcoal-soft text-[0.85rem]">
+                        {service} for {pet}
+                        {date && <> &middot; {date}</>}
+                      </p>
+                    </div>
+                    {/* Tapping the photo opens it full screen, like the offer card photos.
+                        sizes is double the circle so the zoomed-in crop stays sharp. */}
+                    <div className="relative w-14 h-14 shrink-0 rounded-full overflow-hidden bg-cream-alt">
+                      <PhotoViewer image={photo} alt={pet} imgClassName={imgClassName} sizes="112px" />
+                    </div>
+                  </figcaption>
+                  <blockquote className="text-charcoal-soft text-[0.95rem] max-[560px]:text-[0.9rem] leading-relaxed">
+                    <ReviewText text={text} />
+                  </blockquote>
+                </figure>
+              ))}
+            </div>
 
-            <ReviewForm />
+            {/* The only form on the homepage is Check Availability. Reviews go to Google
+                (helps the Business Profile), with the site's own form on /review for
+                clients who'd rather not use Google. */}
+            <div className="mt-10 max-[560px]:mt-8 text-center">
+              <a href={googleReviewUrl} target="_blank" rel="noopener noreferrer" className={btnPrimary}>
+                Leave a Review on Google
+              </a>
+              <p className="text-charcoal-soft text-[0.9rem] mt-4">
+                Prefer not to use Google?{" "}
+                <Link href="/review" className="text-primary-dark font-semibold underline underline-offset-4 decoration-1 hover:decoration-2">
+                  Send it to me directly
+                </Link>
+              </p>
+            </div>
           </div>
         </section>
 
@@ -327,7 +399,7 @@ export default function HomePage() {
         {/* At <=440px, like the sections above: exactly one screen tall, top padding
             clears the header pill, Name/Email sit side by side, and the two textareas
             share the leftover height so the send button ends at the bottom. */}
-        <section id="contact" className="py-16 pb-24 max-[440px]:pt-12 max-[440px]:pb-6 max-[440px]:min-h-[100svh] max-[440px]:flex bg-white">
+        <section id="contact" className="py-16 pb-24 max-[440px]:pt-12 max-[440px]:pb-6 max-[440px]:min-h-[100svh] max-[440px]:flex bg-surface">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               Get In Touch

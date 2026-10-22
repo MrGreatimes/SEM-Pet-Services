@@ -11,6 +11,8 @@ type PhotoViewerProps = {
   imgClassName?: string;
   // Thumbnail `sizes`; defaults to the offer card thumbnail widths.
   sizes?: string;
+  // Extra classes for the thumbnail button, e.g. an ::after layer that widens its tap area.
+  buttonClassName?: string;
 };
 
 const MAX_SCALE = 4;
@@ -18,15 +20,27 @@ const TAP_ZOOM = 2.5;
 const DOUBLE_TAP_MS = 300;
 const MOVE_SLOP = 6; // px a pointer can drift and still count as a tap/click
 
+// Wheel/trackpad pinch has no "release" in Chrome/Edge/Firefox. The cursor doesn't move
+// during a pinch, so a zoom-out past 100% springs back on the first cursor movement
+// (more than REBOUND_MOVE_PX) or click after it, with this long-pause fallback in case
+// the visitor just lets go and leaves the cursor alone.
+const WHEEL_REBOUND_MS = 3000;
+const REBOUND_MOVE_PX = 3;
+
 type View = { s: number; x: number; y: number };
 const RESET: View = { s: 1, x: 0, y: 0 };
 
-// Thumbnail (offer cards, My Mission photo) that opens the full, uncropped photo in a full-screen overlay.
+// Zooming out past 100% gives way with resistance (the photo shrinks at under half the
+// pinch's rate, never below 55%) and springs back to 100% on release.
+const rubberBand = (raw: number) => 1 - (1 - Math.max(raw, 0)) * 0.45;
+
+// Thumbnail (offer cards, review cards, My Mission photo) that opens the full, uncropped photo in a full-screen overlay.
 // Phones: pinch to zoom, drag to pan, double-tap to toggle zoom. Desktop: click to
-// toggle zoom, scroll wheel to zoom, drag to pan. Tapping outside the photo, the X
+// toggle zoom, scroll wheel or trackpad pinch to zoom, drag to pan. Pinching or
+// scrolling out past 100% rubber-bands and rebounds. Tapping outside the photo, the X
 // button or Esc closes it. Uses a native <dialog> for the top layer, focus trapping
 // and focus return.
-export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes = "(max-width: 860px) 100px, 300px" }: PhotoViewerProps) {
+export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes = "(max-width: 860px) 100px, 300px", buttonClassName }: PhotoViewerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [open, setOpen] = useState(false);
@@ -49,6 +63,9 @@ export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes
   } | null>(null);
   const lastTap = useRef(0);
   const downOnBackdrop = useRef(false);
+  // Wheel zoom-out below 100%: the unresisted scale, and the timer that springs it back.
+  const wheelRaw = useRef(1);
+  const wheelTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const openViewer = () => {
     setView(RESET);
@@ -148,7 +165,15 @@ export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes
       const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       const mx = (pts[0].x + pts[1].x) / 2;
       const my = (pts[0].y + pts[1].y) / 2;
-      const zoomed = zoomAt(v, (g.pinchScale * dist) / g.pinchDist, mx, my);
+      const raw = (g.pinchScale * dist) / g.pinchDist;
+      if (raw < 1) {
+        // Pinching out past 100%: shrink with resistance, centered; rebounds on release.
+        setView({ s: rubberBand(raw), x: 0, y: 0 });
+        g.lastX = mx;
+        g.lastY = my;
+        return;
+      }
+      const zoomed = zoomAt(v, raw, mx, my);
       setView(clamp({ ...zoomed, x: zoomed.x + mx - g.lastX, y: zoomed.y + my - g.lastY }));
       g.lastX = mx;
       g.lastY = my;
@@ -175,6 +200,8 @@ export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes
     }
     gesture.current = null;
     setGesturing(false);
+    // Spring back from a zoom-out past 100% (animates, since gesturing is now off).
+    if (viewRef.current.s < 1) setView(RESET);
     if (!g || g.moved || e.type === "pointercancel") return;
 
     if (e.pointerType === "mouse") {
@@ -190,10 +217,105 @@ export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes
     }
   };
 
-  const onWheel = (e: React.WheelEvent<HTMLImageElement>) => {
-    const v = viewRef.current;
-    setView(zoomAt(v, v.s * Math.exp(-e.deltaY * 0.002), e.clientX, e.clientY));
-  };
+  // Scroll wheel and trackpad pinch (which Chrome/Edge/Firefox report as ctrl+wheel).
+  // Attached as native non-passive listeners so preventDefault stops a trackpad pinch
+  // from zooming the whole page instead of the photo; pinch deltas are small, hence the
+  // bigger rate. Those browsers never say when fingers leave the trackpad, so a zoom-out
+  // past 100% springs back on the next cursor movement or click (see WHEEL_REBOUND_MS).
+  // Safari on a Mac reports trackpad pinches as gesture events with a real end, so
+  // there it waits for the fingers to lift.
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    let gestureActive = false;
+    let gestureStart = 1;
+    // Cursor position at the last wheel event while zoomed out past 100% (null otherwise).
+    let heldAt: { x: number; y: number } | null = null;
+
+    const rebound = () => {
+      clearTimeout(wheelTimer.current);
+      heldAt = null;
+      wheelRaw.current = 1;
+      setView(RESET);
+    };
+
+    // Apply an unresisted scale `raw`; below 100% it rubber-bands (and, unless a
+    // Safari gesture is still in progress, schedules the spring-back).
+    const applyRaw = (raw: number, px: number, py: number) => {
+      const v = viewRef.current;
+      clearTimeout(wheelTimer.current);
+      if (raw < 1) {
+        wheelRaw.current = raw;
+        setView({ s: rubberBand(raw), x: 0, y: 0 });
+        if (!gestureActive) {
+          heldAt = { x: px, y: py };
+          wheelTimer.current = setTimeout(rebound, WHEEL_REBOUND_MS);
+        }
+      } else {
+        heldAt = null;
+        wheelRaw.current = 1;
+        setView(zoomAt(v, raw, px, py));
+      }
+    };
+
+    // The fingers have left the trackpad once the cursor moves or a button is pressed.
+    const onPointerMove = (e: PointerEvent) => {
+      if (heldAt && e.pointerType === "mouse" && Math.hypot(e.clientX - heldAt.x, e.clientY - heldAt.y) > REBOUND_MOVE_PX) rebound();
+    };
+    // A click while zoomed out only springs the photo back (it doesn't also zoom in or
+    // close the viewer): stopping it here keeps it from reaching the photo's handlers.
+    const onPointerDown = (e: PointerEvent) => {
+      if (!heldAt) return;
+      e.stopPropagation();
+      rebound();
+    };
+    const currentRaw = () => (viewRef.current.s < 1 ? wheelRaw.current : viewRef.current.s);
+
+    const onWheel = (e: WheelEvent) => {
+      if (!imgRef.current) return;
+      e.preventDefault();
+      if (gestureActive && e.ctrlKey) return; // Safari: the gesture events handle the pinch
+      applyRaw(currentRaw() * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.002)), e.clientX, e.clientY);
+    };
+
+    // Safari-only (non-standard) trackpad gesture events; `scale` is relative to the start.
+    type GestureEvent = UIEvent & { scale: number; clientX: number; clientY: number };
+    const onGestureStart = (e: Event) => {
+      if (!imgRef.current) return;
+      e.preventDefault();
+      gestureActive = true;
+      gestureStart = currentRaw();
+      clearTimeout(wheelTimer.current);
+    };
+    const onGestureChange = (e: Event) => {
+      if (!gestureActive) return;
+      e.preventDefault();
+      const g = e as GestureEvent;
+      applyRaw(gestureStart * g.scale, g.clientX, g.clientY);
+    };
+    const onGestureEnd = (e: Event) => {
+      if (!gestureActive) return;
+      e.preventDefault();
+      gestureActive = false;
+      if (viewRef.current.s < 1) rebound();
+    };
+
+    dialog.addEventListener("wheel", onWheel, { passive: false });
+    dialog.addEventListener("pointermove", onPointerMove);
+    dialog.addEventListener("pointerdown", onPointerDown, true);
+    dialog.addEventListener("gesturestart", onGestureStart);
+    dialog.addEventListener("gesturechange", onGestureChange);
+    dialog.addEventListener("gestureend", onGestureEnd);
+    return () => {
+      dialog.removeEventListener("wheel", onWheel);
+      dialog.removeEventListener("pointermove", onPointerMove);
+      dialog.removeEventListener("pointerdown", onPointerDown, true);
+      dialog.removeEventListener("gesturestart", onGestureStart);
+      dialog.removeEventListener("gesturechange", onGestureChange);
+      dialog.removeEventListener("gestureend", onGestureEnd);
+      clearTimeout(wheelTimer.current);
+    };
+  }, [zoomAt]);
 
   return (
     <>
@@ -201,15 +323,17 @@ export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes
         type="button"
         onClick={openViewer}
         aria-label={`View full photo: ${alt}`}
-        className="group absolute inset-0 cursor-zoom-in focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-primary"
+        className={`group absolute inset-0 rounded-[inherit] cursor-zoom-in focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-primary ${buttonClassName ?? ""}`}
       >
-        <Image
-          src={image}
-          alt={alt}
-          fill
-          sizes={sizes}
-          className={`object-cover transition-transform duration-300 group-hover:scale-[1.03] ${imgClassName ?? ""}`}
-        />
+        {/* The photo is clipped here rather than by the parent, so a widened tap area
+            (buttonClassName) can reach outside the photo's box. */}
+        <span className="absolute inset-0 overflow-hidden rounded-[inherit]">
+          {/* The hover zoom lives on this wrapper, not the image, so it can't override a
+              crop zoom (scale-[...]) passed in imgClassName. */}
+          <span className="absolute inset-0 transition-transform duration-300 group-hover:scale-[1.03]">
+            <Image src={image} alt={alt} fill sizes={sizes} className={`object-cover ${imgClassName ?? ""}`} />
+          </span>
+        </span>
       </button>
 
       <dialog
@@ -223,7 +347,7 @@ export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes
           pointers.current.clear();
           gesture.current = null;
         }}
-        className="fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none overflow-hidden bg-transparent p-0 backdrop:bg-charcoal/90"
+        className="fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none overflow-hidden bg-transparent p-0 backdrop:bg-[#2B2E33]/90"
       >
         <div
           className="flex h-full w-full items-center justify-center"
@@ -252,7 +376,6 @@ export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes
               onPointerMove={onPointerMove}
               onPointerUp={onPointerUp}
               onPointerCancel={onPointerUp}
-              onWheel={onWheel}
               style={{
                 width: fit ? fit.w : "auto",
                 height: fit ? fit.h : "auto",
@@ -268,7 +391,7 @@ export default function PhotoViewer({ image, fullImage, alt, imgClassName, sizes
             type="button"
             onClick={closeViewer}
             aria-label="Close photo"
-            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-charcoal shadow-site hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-[#2B2E33] shadow-site hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
               <path d="M6 6l12 12M18 6L6 18" />

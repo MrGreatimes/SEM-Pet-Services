@@ -20,7 +20,7 @@ export default function FieldError({
     <p
       id={id}
       role="alert"
-      className={`text-[0.82rem] max-[440px]:text-[0.78rem] leading-snug font-semibold text-red-700 ${reserve ? "min-h-[1.15rem] max-[440px]:min-h-[1.1rem]" : ""} ${className}`}
+      className={`text-[0.82rem] max-[440px]:text-[0.78rem] leading-snug font-semibold text-danger ${reserve ? "min-h-[1.15rem] max-[440px]:min-h-[1.1rem]" : ""} ${className}`}
     >
       {message}
     </p>

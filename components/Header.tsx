@@ -131,6 +131,18 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
       endJumpSoon();
     };
     onScroll();
+    // Arriving at a section from another page (e.g. Rates -> /#services) counts as a
+    // jump too: the header starts tucked away so it doesn't cover the section heading.
+    // The longer first wait covers the gap before the browser starts scrolling.
+    const hash = window.location.hash.slice(1);
+    if (hideOnJump && hash && hash !== "top" && document.getElementById(hash)) {
+      jumping = true;
+      setHidden(true);
+      setJumpHidden(true);
+      settleTimer = setTimeout(() => {
+        jumping = false;
+      }, 1000);
+    }
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("click", onClick);
     return () => {
@@ -160,9 +172,9 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
   // The logo is rendered as a CSS mask over a solid fill so it can take an exact
   // brand color: primary blue (matching the buttons) on the light/scrolled header,
   // white when floating over the dark hero.
-  const logoColor = scrolled || lightPage ? "bg-primary" : "bg-white";
+  const logoColor = scrolled || lightPage ? "bg-primary dark:bg-primary-dark" : "bg-white";
   // Hamburger/X bars match the logo's color; the button lifts on hover.
-  const barColor = scrolled || lightPage ? "bg-primary group-hover:bg-primary-dark" : "bg-white";
+  const barColor = scrolled || lightPage ? "bg-primary group-hover:bg-primary-dark dark:bg-primary-dark dark:group-hover:bg-white" : "bg-white";
 
   return (
     <header
@@ -195,7 +207,7 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
           aria-hidden="true"
           className={`absolute inset-0 -z-10 rounded-full transition-[background-color,box-shadow] duration-300 ${
             scrolled
-              ? "bg-[rgba(251,243,233,0.59)] backdrop-blur-md shadow-[0_12px_32px_rgba(58,46,40,0.16)]"
+              ? "bg-[var(--pill-bg)] backdrop-blur-md shadow-[0_12px_32px_rgba(58,46,40,0.16)]"
               : "bg-transparent"
           }`}
         />
@@ -235,7 +247,7 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
             corners. */}
         <nav
           ref={navRef}
-          className={`flex gap-[22px] max-[860px]:absolute max-[860px]:inset-y-2 max-[860px]:left-[calc(var(--pad)_+_var(--logo-w))] max-[860px]:right-[calc(var(--pad)_+_24px)] max-[860px]:items-center max-[860px]:gap-0 max-[440px]:top-[calc(100%_+_8px)] max-[440px]:bottom-auto max-[440px]:left-auto max-[440px]:right-0 max-[440px]:w-[116px] max-[440px]:flex-col max-[440px]:items-start max-[440px]:gap-3 max-[440px]:px-3 max-[440px]:py-4 max-[440px]:rounded-[34px] max-[440px]:bg-[rgba(251,243,233,0.59)] max-[440px]:backdrop-blur-md max-[440px]:shadow-[0_12px_32px_rgba(58,46,40,0.16)] max-[860px]:overflow-x-auto max-[860px]:[scrollbar-width:none] max-[860px]:transition-[clip-path,opacity,visibility,transform] max-[860px]:duration-300 max-[860px]:ease-out ${
+          className={`flex gap-[22px] max-[860px]:absolute max-[860px]:inset-y-2 max-[860px]:left-[calc(var(--pad)_+_var(--logo-w))] max-[860px]:right-[calc(var(--pad)_+_24px)] max-[860px]:items-center max-[860px]:gap-0 max-[440px]:top-[calc(100%_+_8px)] max-[440px]:bottom-auto max-[440px]:left-auto max-[440px]:right-0 max-[440px]:w-[116px] max-[440px]:flex-col max-[440px]:items-start max-[440px]:gap-3 max-[440px]:px-3 max-[440px]:py-4 max-[440px]:rounded-[34px] max-[440px]:bg-[var(--pill-bg)] max-[440px]:backdrop-blur-md max-[440px]:shadow-[0_12px_32px_rgba(58,46,40,0.16)] max-[860px]:overflow-x-auto max-[860px]:[scrollbar-width:none] max-[860px]:transition-[clip-path,opacity,visibility,transform] max-[860px]:duration-300 max-[860px]:ease-out ${
             open
               ? "max-[860px]:[clip-path:inset(0_0_0_0)] max-[860px]:opacity-100 max-[860px]:visible max-[440px]:[clip-path:none] max-[440px]:translate-y-0"
               : "max-[860px]:[clip-path:inset(0_0_0_100%)] max-[860px]:opacity-0 max-[860px]:invisible max-[440px]:[clip-path:none] max-[440px]:-translate-y-2"
@@ -286,7 +298,7 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
           // narrows to leave an 8px gap before the dropdown: 116 + 8 = 124px. Closed it
           // is a fixed 280px, centered via margin, so the width and margin can animate
           // (300ms ease-out, same as the dropdown) instead of jumping.
-          className={`mx-auto mt-2 w-fit flex gap-1 p-1 rounded-full max-[440px]:rounded-[22px] max-[440px]:grid max-[440px]:grid-cols-6 max-[440px]:gap-0.5 max-[440px]:[&>a]:col-span-2 max-[440px]:[&>a:nth-child(4)]:col-start-2 bg-[rgba(251,243,233,0.59)] backdrop-blur-md shadow-[0_12px_32px_rgba(58,46,40,0.16)] max-[440px]:transition-[margin,width] max-[440px]:duration-300 max-[440px]:ease-out ${
+          className={`mx-auto mt-2 w-fit flex gap-1 p-1 rounded-full max-[440px]:rounded-[22px] max-[440px]:grid max-[440px]:grid-cols-6 max-[440px]:gap-0.5 max-[440px]:[&>a]:col-span-2 max-[440px]:[&>a:nth-child(4)]:col-start-2 bg-[var(--pill-bg)] backdrop-blur-md shadow-[0_12px_32px_rgba(58,46,40,0.16)] max-[440px]:transition-[margin,width] max-[440px]:duration-300 max-[440px]:ease-out ${
             open
               ? "max-[440px]:ml-0 max-[440px]:w-[calc(100%-124px)]"
               : "max-[440px]:ml-[calc((100%-280px)/2)] max-[440px]:w-[280px]"

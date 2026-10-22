@@ -27,7 +27,7 @@ export default function ContactForm() {
   return (
     <form
       ref={formRef}
-      className="bg-white rounded-site shadow-site p-8 max-[440px]:p-4 flex flex-col gap-3.5 max-[440px]:gap-2 max-[440px]:w-full"
+      className="bg-card rounded-site shadow-site p-8 max-[440px]:p-4 flex flex-col gap-3.5 max-[440px]:gap-2 max-[440px]:w-full"
       action="https://formspree.io/f/xjykrlgr"
       method="POST"
       noValidate
