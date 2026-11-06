@@ -13,7 +13,9 @@ export default function Footer() {
           {neighborhoods.join(", ")}
         </p>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p>&copy; {year} Strol Pet Services. All rights reserved.</p>
+          <p>
+            &copy; {year} Strol Pet Services &middot; Licensed, Bonded &amp; Insured. All rights reserved.
+          </p>
           <Link href="/privacy" className="font-semibold text-[#FAF6EC] hover:underline">
             Privacy Policy
           </Link>

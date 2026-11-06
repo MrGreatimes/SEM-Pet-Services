@@ -20,7 +20,7 @@ const siteUrl = "https://strolpetservices.com";
 const siteName = "Strol Pet Services";
 const siteTitle = "Strol Pet Services | Dog Walking & Pet Sitting in Seattle";
 const siteDescription =
-  "Trusted, independent pet care services in Seattle. 10 years of experience. Daily updates, meet & greet, and medication care included.";
+  "Licensed, bonded and insured independent pet care in Seattle. 10 years of experience. Daily updates, meet & greet, and medication care included.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

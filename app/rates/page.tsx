@@ -307,6 +307,10 @@ export default function RatesPage() {
                   </li>
                 ))}
               </ul>
+              <p className="text-charcoal-soft text-[0.85rem] mt-4">
+                Strol carries general liability insurance and a dishonesty bond. Ask if you&apos;d like a copy of the
+                certificate of insurance.
+              </p>
             </div>
 
             {/* Policies: every cancellation, payment and emergency term in one place */}

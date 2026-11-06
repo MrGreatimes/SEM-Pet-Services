@@ -26,7 +26,7 @@ const whyCards = [
   {
     emoji: "⭐",
     title: "Trusted & Reputable",
-    text: "Years of dependable pet care, with past clients who keep coming back and asking for me by name.",
+    text: "Licensed, bonded and insured, with a Washington LLC and general liability coverage. Your home and your pet are protected.",
   },
   {
     emoji: "🌿",
