@@ -26,7 +26,7 @@ const whyCards = [
   {
     emoji: "⭐",
     title: "Trusted & Reputable",
-    text: "Licensed, bonded and insured, with a Washington LLC and general liability coverage. Your home and your pet are protected.",
+    text: "Licensed, bonded and insured, Red Cross pet first aid certified (including pet CPR), and background checked. Your home and your pet are protected.",
   },
   {
     emoji: "🌿",

@@ -309,7 +309,8 @@ export default function RatesPage() {
               </ul>
               <p className="text-charcoal-soft text-[0.85rem] mt-4">
                 Strol carries general liability insurance and a dishonesty bond. Ask if you&apos;d like a copy of the
-                certificate of insurance.
+                certificate of insurance. I&apos;m Red Cross certified in pet first aid, including pet CPR, and background
+                checked through the Washington State Patrol.
               </p>
             </div>
 

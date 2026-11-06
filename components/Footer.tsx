@@ -14,7 +14,8 @@ export default function Footer() {
         </p>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p>
-            &copy; {year} Strol Pet Services &middot; Licensed, Bonded &amp; Insured. All rights reserved.
+            &copy; {year} Strol Pet Services &middot; Licensed, Bonded &amp; Insured &middot; Pet First Aid Certified
+            &middot; Background Checked. All rights reserved.
           </p>
           <Link href="/privacy" className="font-semibold text-[#FAF6EC] hover:underline">
             Privacy Policy
