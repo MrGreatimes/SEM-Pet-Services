@@ -89,7 +89,7 @@ const jsonLd = {
     "Independent, in-home overnight pet sitting and dog walking in Seattle. Ten years of experience, with daily photo and text updates.",
   url: siteUrl,
   image: encodeURI(`${siteUrl}/images/Owner and Chloe 1 edit.jpeg`),
-  logo: encodeURI(`${siteUrl}/images/Strol Pet Services Orange 2.png`),
+  logo: encodeURI(`${siteUrl}/images/Strol logo v2 primary.png`),
   priceRange: "$$",
   knowsLanguage: ["en", "es"],
   address: {
@@ -407,7 +407,7 @@ export default function HomePage() {
             <h2 className="text-center">Check Availability</h2>
             <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center">
               Tell me about your dog and the dates you need, and I&apos;ll follow up to set up a meet &amp;
-              greet. <strong className="font-semibold text-charcoal">Now booking for November and beyond.</strong>
+              greet.
             </p>
 
             <div className="mt-10 max-[440px]:mt-4 max-w-[640px] mx-auto max-[440px]:w-full max-[440px]:flex-1 max-[440px]:min-h-0 max-[440px]:flex">

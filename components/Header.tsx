@@ -169,10 +169,11 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
     scrolled || lightPage
       ? "text-charcoal hover:text-primary-dark"
       : "text-white hover:text-gold";
-  // The logo is rendered as a CSS mask over a solid fill so it can take an exact
-  // brand color: primary blue (matching the buttons) on the light/scrolled header,
-  // white when floating over the dark hero.
-  const logoColor = scrolled || lightPage ? "bg-primary dark:bg-primary-dark" : "bg-white";
+  // Logo: reverse (white) over the dark hero; on the scrolled pill or light pages,
+  // primary by day and reverse at night, when the pill is dark (see the logo markup below).
+  const onPill = scrolled || lightPage;
+  const logoPrimaryOpacity = onPill ? "opacity-100 dark:opacity-0" : "opacity-0";
+  const logoReverseOpacity = onPill ? "opacity-0 dark:opacity-100" : "opacity-100";
   // Hamburger/X bars match the logo's color; the button lifts on hover.
   const barColor = scrolled || lightPage ? "bg-primary group-hover:bg-primary-dark dark:bg-primary-dark dark:group-hover:bg-white" : "bg-white";
 
@@ -216,22 +217,34 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
           className="flex items-center"
           aria-label="Strol Pet Services, home"
         >
+          {/* Two stacked copies of the logo that crossfade (owner's choice, 2026-11-05):
+              "reverse" (white) over the dark hero, "primary" (blue) on the scrolled pill or
+              light pages by day; at night that pill is dark, where primary's navy text is
+              hard to read, so reverse stays. logo-header-*.png are 353x144
+              copies of "Strol logo v2 primary/reverse.png", trimmed to the artwork
+              (1745x711) so they don't slow the first paint on phones. Regenerate if the
+              logo changes. */}
           <span
             aria-hidden="true"
-            className={`block h-12 max-[560px]:h-10 aspect-[2168/888] transition-colors duration-300 ${logoColor}`}
-            style={{
-              // logo-mask.png: 352x144 copy of "Strol Pet Services Mono - Black.png" (the 2168x888
-              // original is 284KB, which slowed the first paint on phones). Regenerate if the logo changes.
-              WebkitMaskImage: 'url("/images/logo-mask.png")',
-              maskImage: 'url("/images/logo-mask.png")',
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-              WebkitMaskPosition: "left center",
-              maskPosition: "left center",
-              WebkitMaskSize: "contain",
-              maskSize: "contain",
-            }}
-          />
+            className="relative block h-12 max-[560px]:h-10 aspect-[1745/711]"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/logo-header-primary.png"
+              alt=""
+              width={353}
+              height={144}
+              className={`absolute inset-0 h-full w-full transition-opacity duration-300 ${logoPrimaryOpacity}`}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/logo-header-reverse.png"
+              alt=""
+              width={353}
+              height={144}
+              className={`absolute inset-0 h-full w-full transition-opacity duration-300 ${logoReverseOpacity}`}
+            />
+          </span>
         </Link>
 
         {/* Desktop: inline links. Mobile: a single-row bar that slides out leftward
