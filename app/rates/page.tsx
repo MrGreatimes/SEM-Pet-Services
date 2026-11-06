@@ -74,10 +74,6 @@ export default function RatesPage() {
                   Basic medication administration and routine special needs
                 </li>
                 <li className={check}>Daily photo/text updates</li>
-                <li className={check}>
-                  Indoor enrichment sessions available: puzzle feeding, scent games, and short training reps, drawing on
-                  professional behavioral training
-                </li>
               </ul>
             </div>
 
@@ -156,8 +152,8 @@ export default function RatesPage() {
                     </table>
                   </div>
                   <p className={`${rateNote} mt-4 !mb-0`}>
-                    Covers care for one dog: arrival and departure, two feedings, four to five potty trips (5&ndash;10 minutes, out and
-                    back), pad maintenance, overnight house presence, and daily photo and text updates.
+                    Covers care for one dog: arrival and departure, two feedings, four to five potty trips, pad maintenance, overnight house
+                    presence, plenty of play and attention, and daily photo and text updates.
                   </p>
                 </div>
 
@@ -176,7 +172,6 @@ export default function RatesPage() {
                         <tr><td className={td}>30-minute walk</td><td className={tdLast}>+$19/day</td></tr>
                         <tr><td className={td}>45-minute walk</td><td className={tdLast}>+$24/day</td></tr>
                         <tr><td className={td}>60-minute walk</td><td className={tdLast}>+$30/day</td></tr>
-                        <tr><td className={td}>20-minute enrichment session</td><td className={tdLast}>+$12/day</td></tr>
                         <tr><td className={td}>No yard access (street-only potty trips)</td><td className={tdLast}>+$10/night</td></tr>
                         <tr><td className={td}>Each additional pet (dog or cat), base care</td><td className={tdLast}>+$7/night</td></tr>
                         <tr><td className={td}>Each additional dog, per walk</td><td className={tdLast}>+$7/walk</td></tr>
@@ -201,7 +196,6 @@ export default function RatesPage() {
                       <tbody>
                         <tr><td className={td}>Yard access, no walks</td><td className={tdLast}>$70</td></tr>
                         <tr><td className={td}>One 20-minute walk, yard</td><td className={tdLast}>$85</td></tr>
-                        <tr><td className={td}>Apartment, pad-trained, one enrichment session</td><td className={tdLast}>$92</td></tr>
                         <tr><td className={td}>Two 20-minute walks, apartment</td><td className={tdLast}>$110</td></tr>
                         <tr><td className={td}>Three 20-minute walks</td><td className={tdLast}>$115</td></tr>
                         <tr><td className={`${td} !border-b-0`}>Three 60-minute walks</td><td className={`${tdLast} !border-b-0`}>$160</td></tr>
