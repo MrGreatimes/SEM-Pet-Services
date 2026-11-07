@@ -79,6 +79,10 @@ export default function RatesPage() {
                 <strong className="text-gold-ink">New clients:</strong> $10 off your first booking (walk, cat visit,
                 overnight stay or park trip). One per household.
               </p>
+              <p className="text-charcoal-soft mt-2">
+                <strong className="text-gold-ink">Refer a friend:</strong> when someone you refer finishes their first
+                booking, you get $10 off your next one. No limit on referrals.
+              </p>
             </div>
 
             {/* Rates: dog walking first, then overnight; two columns on desktop, stacked at <=860px */}

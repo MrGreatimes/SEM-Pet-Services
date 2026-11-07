@@ -257,6 +257,10 @@ export default function HomePage() {
                 Good for a walk, cat visit, overnight stay or park trip, and it starts with a complimentary meet &amp; greet.
                 One per household.
               </p>
+              <p className="text-charcoal-soft text-[0.95rem] max-[440px]:text-[0.875rem] max-[440px]:leading-snug mt-2">
+                <strong className="text-gold-ink">Already a client?</strong> Refer a friend and you get $10 off your next
+                booking once their first one is done.
+              </p>
             </div>
 
             <p className="text-center mt-8 max-[860px]:mt-6">

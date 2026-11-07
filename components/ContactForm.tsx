@@ -35,6 +35,12 @@ export default function ContactForm() {
     >
       <input type="hidden" name="_subject" value="New inquiry from Strol website" />
       <input type="text" name="_gotcha" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
+      {/* Reminder for Sean, printed in every Formspree email (owner's request 2026-11-06). Visible in page source, so keep it client-safe. */}
+      <input
+        type="hidden"
+        name="booking_checklist"
+        value="New client: add New Client $10 Off to the first invoice. If referred_by is filled in: note it, and once this first booking is done add Referral Reward $10 Off to the referrer's next invoice."
+      />
 
       {/* On phones Name and Email sit side by side, top-aligned. */}
       <div className="flex flex-col gap-3.5 max-[440px]:grid max-[440px]:grid-cols-2 max-[440px]:gap-2 max-[440px]:items-start">
@@ -66,20 +72,39 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <div className={field}>
-        <label htmlFor="dates" className={labelClass}>
-          Dates Needed <span className="font-normal text-charcoal-soft">(optional)</span>
-        </label>
-        <p id="dates-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
-          e.g. Aug 12–16
-        </p>
-        <input
-          type="text"
-          id="dates"
-          name="dates"
-          aria-describedby="dates-hint"
-          className={`${inputClass} max-[440px]:py-2`}
-        />
+      {/* On phones Dates and Referred By sit side by side too, so the form stays one screen tall. */}
+      <div className="flex flex-col gap-3.5 max-[440px]:grid max-[440px]:grid-cols-2 max-[440px]:gap-2 max-[440px]:items-end">
+        <div className={field}>
+          <label htmlFor="dates" className={labelClass}>
+            Dates Needed <span className="font-normal text-charcoal-soft">(optional)</span>
+          </label>
+          <p id="dates-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
+            e.g. Aug 12–16
+          </p>
+          <input
+            type="text"
+            id="dates"
+            name="dates"
+            aria-describedby="dates-hint"
+            className={`${inputClass} max-[440px]:py-2`}
+          />
+        </div>
+        <div className={field}>
+          <label htmlFor="referred_by" className={labelClass}>
+            Referred By <span className="font-normal text-charcoal-soft">(optional)</span>
+          </label>
+          <p id="referred-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
+            <span className="max-[440px]:hidden">The client who sent you, so they get $10 off</span>
+            <span className="hidden max-[440px]:inline">Who sent you?</span>
+          </p>
+          <input
+            type="text"
+            id="referred_by"
+            name="referred_by"
+            aria-describedby="referred-hint"
+            className={`${inputClass} max-[440px]:py-2`}
+          />
+        </div>
       </div>
 
       <div className={`${field} ${grow}`}>
