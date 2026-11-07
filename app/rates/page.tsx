@@ -68,13 +68,17 @@ export default function RatesPage() {
               <h2 className="text-[1.1rem] mb-3 text-gold-ink">What&apos;s Always Included</h2>
               <ul className="text-charcoal-soft space-y-2.5">
                 <li className={check}>
-                  Meet &amp; greet: Offered before a first booking.
+                  Complimentary meet &amp; greet before a first booking
                 </li>
                 <li className={check}>
                   Basic medication administration and routine special needs
                 </li>
                 <li className={check}>Daily photo/text updates</li>
               </ul>
+              <p className="text-charcoal-soft mt-4 pt-4 border-t border-gold-dark/30">
+                <strong className="text-gold-ink">New clients:</strong> $10 off your first booking (walk, cat visit,
+                overnight stay or park trip). One per household.
+              </p>
             </div>
 
             {/* Rates: dog walking first, then overnight; two columns on desktop, stacked at <=860px */}

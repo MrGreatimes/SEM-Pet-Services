@@ -250,6 +250,15 @@ export default function HomePage() {
               />
             </div>
 
+            {/* First-time client offer (gold callout, same pattern as "Outside that range?") */}
+            <div className="max-w-[900px] max-[860px]:max-w-[560px] mx-auto rounded-site p-6 px-7 max-[440px]:p-4 mt-8 max-[860px]:mt-6 bg-gold-light border-l-4 border-gold-dark">
+              <h3 className="text-[1.1rem] max-[440px]:text-base mb-2 max-[440px]:mb-1 text-gold-ink">New to Strol? $10 off your first booking.</h3>
+              <p className="text-charcoal-soft text-[0.95rem] max-[440px]:text-[0.875rem] max-[440px]:leading-snug">
+                Good for a walk, cat visit, overnight stay or park trip, and it starts with a complimentary meet &amp; greet.
+                One per household.
+              </p>
+            </div>
+
             <p className="text-center mt-8 max-[860px]:mt-6">
               <a href="/rates" className="font-heading font-semibold text-primary-dark underline underline-offset-4 hover:text-primary">
                 See all rates &amp; policies &rarr;
