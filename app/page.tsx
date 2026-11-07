@@ -86,7 +86,7 @@ const jsonLd = {
   "@type": "LocalBusiness",
   name: "Strol Pet Services",
   description:
-    "Independent, in-home overnight pet sitting and dog walking in Seattle. Ten years of experience, with daily photo and text updates.",
+    "Independent, in-home overnight pet sitting and dog walking in Seattle, with daily photo and text updates.",
   url: siteUrl,
   image: encodeURI(`${siteUrl}/images/Owner and Chloe 1 edit.jpeg`),
   logo: encodeURI(`${siteUrl}/images/Strol logo v2 primary.png`),
@@ -283,7 +283,7 @@ export default function HomePage() {
             </p>
             <h2 className="text-center">Every Dog Deserves to Feel Loved</h2>
             <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center max-[440px]:text-left">
-              Ten years of caring for dogs of every age and temperament has taught me that trust is earned one visit
+              Caring for dogs of every age and temperament has taught me that trust is earned one visit
               at a time, not promised in a listing.
             </p>
 
@@ -297,8 +297,8 @@ export default function HomePage() {
               </div>
               <div className="flex flex-col gap-4 col-start-1 row-start-1 max-[440px]:block max-[440px]:text-[0.95rem] max-[440px]:leading-snug max-[440px]:[&>p+p]:mt-3">
                 <p className="text-charcoal-soft">
-                  Hi, I&apos;m Sean. Born and raised in Seattle, I&apos;ve spent the last ten years caring for the pets of friends,
-                  family, and neighbors, long before this was a business. I have hands-on experience across dogs,
+                  Hi, I&apos;m Sean. Born and raised in Seattle, I cared for the pets of friends, family, and neighbors
+                  long before I started doing it professionally. I have hands-on experience across dogs,
                   cats, birds, rabbits, and more, from high-energy puppies to senior dogs who need a slower pace. I
                   speak both English and Spanish, so you can book and get updates in whichever you prefer.
                 </p>
