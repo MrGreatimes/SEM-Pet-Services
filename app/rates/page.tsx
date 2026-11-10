@@ -81,7 +81,7 @@ export default function RatesPage() {
               </p>
               <p className="text-charcoal-soft mt-2">
                 <strong className="text-gold-ink">Refer a friend:</strong> when someone you refer finishes their first
-                booking, you get $10 off your next one. No limit on referrals.
+                booking, you get $25 off your next one. No limit on referrals.
               </p>
             </div>
 

@@ -258,7 +258,7 @@ export default function HomePage() {
                 One per household.
               </p>
               <p className="text-charcoal-soft text-[0.95rem] max-[440px]:text-[0.875rem] max-[440px]:leading-snug mt-2">
-                <strong className="text-gold-ink">Already a client?</strong> Refer a friend and you get $10 off your next
+                <strong className="text-gold-ink">Already a client?</strong> Refer a friend and you get $25 off your next
                 booking once their first one is done.
               </p>
             </div>

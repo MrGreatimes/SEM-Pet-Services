@@ -39,7 +39,7 @@ export default function ContactForm() {
       <input
         type="hidden"
         name="booking_checklist"
-        value="New client: add New Client $10 Off to the first invoice. If referred_by is filled in: note it, and once this first booking is done add Referral Reward $10 Off to the referrer's next invoice."
+        value="New client: add New Client $10 Off to the first invoice. If referred_by is filled in: note it, and once this first booking is done add Referral Reward $25 Off to the referrer's next invoice."
       />
 
       {/* On phones Name and Email sit side by side, top-aligned. */}
@@ -94,7 +94,7 @@ export default function ContactForm() {
             Referred By <span className="font-normal text-charcoal-soft">(optional)</span>
           </label>
           <p id="referred-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
-            <span className="max-[440px]:hidden">The client who sent you, so they get $10 off</span>
+            <span className="max-[440px]:hidden">The client who sent you, so they get $25 off</span>
             <span className="hidden max-[440px]:inline">Who sent you?</span>
           </p>
           <input
