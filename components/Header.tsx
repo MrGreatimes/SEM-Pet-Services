@@ -135,7 +135,8 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
     // jump too: the header starts tucked away so it doesn't cover the section heading.
     // The longer first wait covers the gap before the browser starts scrolling.
     const hash = window.location.hash.slice(1);
-    if (hideOnJump && hash && hash !== "top" && document.getElementById(hash)) {
+    const hashTarget = hash && hash !== "top" ? document.getElementById(hash) : null;
+    if (hideOnJump && hashTarget) {
       jumping = true;
       setHidden(true);
       setJumpHidden(true);
@@ -143,9 +144,36 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
         jumping = false;
       }, 1000);
     }
+    // Opening the site straight to a section (e.g. the QR code -> /#contact): the
+    // browser jumps before the photos and fonts above have loaded, and as they grow
+    // they push the section down so it lands too low. For the first few seconds, snap
+    // back to the section whenever the page above it changes size, until the visitor
+    // scrolls or touches the page themselves.
+    let stopRealign = () => {};
+    if (hashTarget) {
+      const realign = () => {
+        if (Math.abs(hashTarget.getBoundingClientRect().top) < 1) return;
+        hashTarget.scrollIntoView({ block: "start", behavior: "instant" as ScrollBehavior });
+      };
+      const ro = new ResizeObserver(realign);
+      ro.observe(document.body);
+      const userEvents = ["wheel", "touchstart", "keydown", "mousedown"];
+      const stopTimer = setTimeout(() => stopRealign(), 4000);
+      stopRealign = () => {
+        ro.disconnect();
+        clearTimeout(stopTimer);
+        window.removeEventListener("load", realign);
+        userEvents.forEach((ev) => window.removeEventListener(ev, stopRealign));
+      };
+      userEvents.forEach((ev) => window.addEventListener(ev, stopRealign, { passive: true }));
+      window.addEventListener("load", realign);
+      document.fonts?.ready.then(realign);
+      requestAnimationFrame(realign);
+    }
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("click", onClick);
     return () => {
+      stopRealign();
       clearTimeout(settleTimer);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("click", onClick);
