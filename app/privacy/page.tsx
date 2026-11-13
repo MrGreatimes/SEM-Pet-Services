@@ -52,6 +52,14 @@ export default function PrivacyPage() {
               is subject to Google&apos;s Privacy Policy and Terms of Service.
             </p>
 
+            <h2 className={h2}>Online booking</h2>
+            <p className={p}>
+              The Book a Meet &amp; Greet button opens a booking page run by Square, the service I use for scheduling
+              and invoices. When you book there, Square collects the details you enter, such as your name, phone
+              number, email, address and any note, and sends me your request along with confirmation and reminder
+              messages. Square&apos;s handling of the data is governed by its own privacy policy.
+            </p>
+
             <h2 className={h2}>Embedded map</h2>
             <p className={p}>
               The homepage shows an embedded Google Map of the service area. When it loads, Google may receive

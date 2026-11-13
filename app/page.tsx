@@ -2,11 +2,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OfferCard from "@/components/OfferCard";
 import PhotoViewer from "@/components/PhotoViewer";
-import Link from "next/link";
+import PhotoStack from "@/components/PhotoStack";
 import ReviewText from "@/components/ReviewText";
 import ContactForm from "@/components/ContactForm";
+import StrolMacron from "@/components/StrolMacron";
 import LazyMap from "@/components/LazyMap";
 import { btnPrimary } from "@/lib/styles";
+import { bookingUrl } from "@/lib/booking";
 import { neighborhoods } from "@/lib/neighborhoods";
 
 
@@ -73,11 +75,12 @@ const reviews: Review[] = [
   {
     name: "Oliver T.",
     service: "Overnight Stay",
-    date: "Oct 7, 2026",
-    pet: "Kaasie",
+    date: "Nov 12, 2026",
+    pet: "Kaasie & Manu",
     photo: "/images/Kaasie 2.jpeg",
     imgClassName: "object-top origin-[87%_38%] scale-[1.4]",
-    text: "It was a really good experience! Sean came over to house-stay and watch over my dog Kaasie for a few days. Kaasie has a tendency for separation anxiety, so leaving is always hard. But when we returned, Kaasie was as cool as I'd seen her. Clearly she got the love and attention with me being out of the house. Was super happy with the daily reports, really shows Sean cared about our dog. Would highly recommend!",
+    // Updated review (Nov 12, 2026), quoted as written. Blank lines are paragraph breaks.
+    text: "We absolutely love having Sean look after Kaasie (Belgian malinoise/german shep adult female) and Manu (maine coon adult male)! He is just wonderful with them. He has such a natural connection with cats and really takes the time to get to know their personalities and little quirks. It means so much to know they’re not just being looked after, but genuinely loved and cared for while we’re away.\n\nHe’s also incredible when it comes to looking after our home. He’s thoughtful, respectful, and notices all the little things. Honestly, we often come home to find everything in even better shape than when we left! He goes above and beyond, and it’s clear how much pride he takes in making sure everything is taken care of.\n\nIt’s hard to put a price on the peace of mind that comes from knowing your pets and home are in such good hands. We never have to worry when Sean is looking after things. He’s someone we trust completely, and we feel incredibly lucky to have found him. I would recommend him in a heartbeat to anyone looking for someone truly special to care for their pets and home.",
   },
 ];
 
@@ -155,7 +158,7 @@ export default function HomePage() {
         <section className="py-12 max-[560px]:py-10 bg-surface max-[440px]:min-h-[100svh] max-[440px]:pt-12 max-[440px]:pb-2 max-[440px]:flex">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full max-[440px]:flex max-[440px]:flex-col">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
-              Why Strol
+              Why <StrolMacron caps />
             </p>
             <h2 className="text-center">The Little Things That Matter</h2>
             <div className="grid grid-cols-4 max-[860px]:grid-cols-2 max-[560px]:grid-cols-1 gap-6 max-[560px]:gap-3 mt-8 max-[560px]:mt-6 max-[440px]:flex-1 max-[440px]:min-h-0 max-[440px]:auto-rows-fr max-[440px]:gap-1.5 max-[440px]:mt-3">
@@ -252,7 +255,7 @@ export default function HomePage() {
 
             {/* First-time client offer (gold callout, same pattern as "Outside that range?") */}
             <div className="max-w-[900px] max-[860px]:max-w-[560px] mx-auto rounded-site p-6 px-7 max-[440px]:p-4 mt-8 max-[860px]:mt-6 bg-gold-light border-l-4 border-gold-dark">
-              <h3 className="text-[1.1rem] max-[440px]:text-base mb-2 max-[440px]:mb-1 text-gold-ink">New to Strol? $10 off your first booking.</h3>
+              <h3 className="text-[1.1rem] max-[440px]:text-base mb-2 max-[440px]:mb-1 text-gold-ink">New to <StrolMacron />? $10 off your first booking.</h3>
               <p className="text-charcoal-soft text-[0.95rem] max-[440px]:text-[0.875rem] max-[440px]:leading-snug">
                 Good for a walk, cat visit, overnight stay or park trip, and it starts with a complimentary meet &amp; greet.
                 One per household.
@@ -276,7 +279,8 @@ export default function HomePage() {
             the type/spacing tighten, and the yellow section fills the screen with its
             content fitted between the header pill (ends at 84px) and the screen bottom,
             anchored at the top (92px, same as Why Strol) so it stays put across widths. */}
-        <section id="mission" className="py-16 bg-gold-light max-[440px]:min-h-[100svh] max-[440px]:pt-12 max-[440px]:pb-4 max-[440px]:flex">
+        {/* overflow-x-clip: a photo dragged off the right edge of the screen must not widen the page (it made a horizontal scrollbar pop up). clip, not hidden, so nothing else changes. */}
+        <section id="mission" className="overflow-x-clip py-16 bg-gold-light max-[440px]:min-h-[100svh] max-[440px]:pt-12 max-[440px]:pb-4 max-[440px]:flex">
           <div className="mx-auto max-w-site px-6 max-[440px]:w-full">
             <p className="font-heading font-semibold text-primary-dark uppercase tracking-[0.08em] text-[0.85rem] mb-2 text-center">
               My Mission
@@ -288,11 +292,23 @@ export default function HomePage() {
             </p>
 
             <div className="grid grid-cols-[1.2fr_0.8fr] max-[860px]:grid-cols-1 gap-10 items-center max-w-[900px] mx-auto mt-10 max-[440px]:flow-root max-[440px]:mt-4">
-              <div className="relative w-full aspect-[900/837] col-start-2 row-start-1 max-[860px]:col-start-1 max-[860px]:row-start-2 max-[440px]:float-right max-[440px]:w-[48%] max-[440px]:ml-3 max-[440px]:mb-1.5 max-[440px]:mt-1 rounded-site shadow-[0_4px_10px_rgba(58,46,40,0.1),0_20px_40px_rgba(58,46,40,0.16)] overflow-hidden">
-                <PhotoViewer
-                  image="/images/Owner and Chloe 1 edit.jpeg"
-                  alt="The owner of Strol with a dog"
+              <div className="relative w-full aspect-[900/837] col-start-2 row-start-1 max-[860px]:col-start-1 max-[860px]:row-start-2 max-[440px]:float-right max-[440px]:w-[48%] max-[440px]:ml-3 max-[440px]:mb-1.5 max-[440px]:mt-1">
+                {/* Photo stack (added 2026-11-12): a pile of prints, swipe for the next.
+                    Tall photos are cropped to the card around the faces; tapping opens the
+                    full photo. Order mixes indoor/outdoor and dogs/cats. Rounding and shadow
+                    live on each card. */}
+                <PhotoStack
+                  label="Photos of Sean with pets"
                   sizes="(max-width: 440px) 48vw, (max-width: 860px) 100vw, 360px"
+                  photos={[
+                    { image: "/images/Owner and Chloe 1 edit.jpeg", alt: "The owner of Strol with a dog" },
+                    { image: "/images/Owner and Oscar.jpg", alt: "The owner of Strol holding a small black dog on the waterfront", imgClassName: "object-[50%_70%]" },
+                    { image: "/images/Owner and cat 1.jpg", alt: "The owner of Strol with a cat on his shoulder", imgClassName: "object-[50%_58%]" },
+                    { image: "/images/Owner and Max.jpg", alt: "The owner of Strol holding a white dog in a bow tie collar", imgClassName: "object-[50%_45%]" },
+                    { image: "/images/Owner and Chloe 4.jpeg", alt: "The owner of Strol getting a kiss from a dog", imgClassName: "object-[50%_38%]" },
+                    { image: "/images/Owner and Buddy.jpg", alt: "The owner of Strol with a dog resting on the couch behind him", imgClassName: "object-[50%_45%]" },
+                    { image: "/images/Owner and Nemo.jpg", alt: "The owner of Strol laughing as a cat paws at his face", imgClassName: "object-[50%_45%]" },
+                  ]}
                 />
               </div>
               <div className="flex flex-col gap-4 col-start-1 row-start-1 max-[440px]:block max-[440px]:text-[0.95rem] max-[440px]:leading-snug max-[440px]:[&>p+p]:mt-3">
@@ -392,18 +408,13 @@ export default function HomePage() {
             </div>
 
             {/* The only form on the homepage is Check Availability. Reviews go to Google
-                (helps the Business Profile), with the site's own form on /review for
-                clients who'd rather not use Google. */}
+                (helps the Business Profile reach). The site's own form on /review is no
+                longer linked here (owner's choice 2026-11-12); Sean texts that link only to
+                clients who won't use Google. */}
             <div className="mt-10 max-[560px]:mt-8 text-center">
               <a href={googleReviewUrl} target="_blank" rel="noopener noreferrer" className={btnPrimary}>
                 Leave a Review on Google
               </a>
-              <p className="text-charcoal-soft text-[0.9rem] mt-4">
-                Prefer not to use Google?{" "}
-                <Link href="/review" className="text-primary-dark font-semibold underline underline-offset-4 decoration-1 hover:decoration-2">
-                  Send it to me directly
-                </Link>
-              </p>
             </div>
           </div>
         </section>
@@ -419,11 +430,34 @@ export default function HomePage() {
             </p>
             <h2 className="text-center">Check Availability</h2>
             <p className="text-charcoal-soft max-w-[560px] mx-auto mt-3 max-[440px]:mt-2 max-[440px]:text-[0.95rem] max-[440px]:leading-snug text-center">
-              Tell me about your dog and the dates you need, and I&apos;ll follow up to set up a meet &amp;
-              greet.
+              Pick a time to meet and I&apos;ll confirm it.
             </p>
 
-            <div className="mt-10 max-[440px]:mt-4 max-w-[640px] mx-auto max-[440px]:w-full max-[440px]:flex-1 max-[440px]:min-h-0 max-[440px]:flex">
+            {/* Online booking (Square Appointments, opens in a new tab). Requests stay pending
+                until Sean accepts them; the form below is the fallback for everything else. */}
+            <div className="mt-6 max-[440px]:mt-3 text-center">
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener"
+                className={`${btnPrimary} max-[440px]:w-full max-[440px]:py-3`}
+              >
+                Book a Meet &amp; Greet
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+              <p className="text-charcoal-soft text-[0.85rem] mt-2">Free &middot; 30 minutes &middot; Location of your choice</p>
+            </div>
+
+            <div className="flex items-center gap-4 max-w-[640px] mx-auto w-full mt-8 max-[440px]:mt-4" aria-hidden="true">
+              <span className="h-px flex-1 bg-charcoal-soft/25" />
+              <span className="font-heading font-semibold text-charcoal-soft text-[0.85rem] uppercase tracking-[0.08em]">or</span>
+              <span className="h-px flex-1 bg-charcoal-soft/25" />
+            </div>
+            <p className="text-charcoal-soft max-w-[560px] mx-auto mt-4 max-[440px]:mt-2max-[440px]:text-[0.9rem] max-[440px]:leading-snug text-center">
+              Questions or requests? Send me a note.
+            </p>
+
+            <div className="mt-6 max-[440px]:mt-3 max-w-[640px] mx-auto max-[440px]:w-full max-[440px]:flex-1 max-[440px]:min-h-0 max-[440px]:flex">
               <ContactForm />
             </div>
           </div>

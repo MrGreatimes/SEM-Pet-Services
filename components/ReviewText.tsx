@@ -23,7 +23,8 @@ export default function ReviewText({ text }: { text: string }) {
 
   return (
     <>
-      <p ref={ref} id={id} className={expanded ? "" : "line-clamp-5"}>
+      {/* whitespace-pre-line turns blank lines in the review text into paragraph breaks. */}
+      <p ref={ref} id={id} className={`whitespace-pre-line ${expanded ? "" : "line-clamp-5"}`}>
         &ldquo;{text}&rdquo;
       </p>
       {(overflows || expanded) && (

@@ -78,14 +78,10 @@ export default function ContactForm() {
           <label htmlFor="dates" className={labelClass}>
             Dates Needed <span className="font-normal text-charcoal-soft">(optional)</span>
           </label>
-          <p id="dates-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
-            e.g. Aug 12–16
-          </p>
           <input
             type="text"
             id="dates"
             name="dates"
-            aria-describedby="dates-hint"
             className={`${inputClass} max-[440px]:py-2`}
           />
         </div>
@@ -93,15 +89,10 @@ export default function ContactForm() {
           <label htmlFor="referred_by" className={labelClass}>
             Referred By <span className="font-normal text-charcoal-soft">(optional)</span>
           </label>
-          <p id="referred-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
-            <span className="max-[440px]:hidden">The client who sent you, so they get $25 off</span>
-            <span className="hidden max-[440px]:inline">Who sent you?</span>
-          </p>
           <input
             type="text"
             id="referred_by"
             name="referred_by"
-            aria-describedby="referred-hint"
             className={`${inputClass} max-[440px]:py-2`}
           />
         </div>
@@ -112,7 +103,7 @@ export default function ContactForm() {
           Tell Me More <span className="font-normal text-charcoal-soft">(optional)</span>
         </label>
         <p id="message-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
-          Your dog&apos;s breed, age, temperament, any special needs, and anything else I should know
+          Breed, age, temperament and special needs.
         </p>
         <textarea id="message" name="message" rows={5} aria-describedby="message-hint" className={textarea} />
       </div>

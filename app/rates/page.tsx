@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { btnPrimary } from "@/lib/styles";
+import { bookingUrl } from "@/lib/booking";
+import StrolMacron from "@/components/StrolMacron";
 
 export const metadata: Metadata = {
   title: "Rates & Policies | Strol Pet Services",
@@ -316,7 +318,7 @@ export default function RatesPage() {
                 ))}
               </ul>
               <p className="text-charcoal-soft text-[0.85rem] mt-4">
-                Strol carries general liability insurance and a dishonesty bond. Ask if you&apos;d like a copy of the
+                <StrolMacron /> carries general liability insurance and a dishonesty bond. Ask if you&apos;d like a copy of the
                 certificate of insurance. I&apos;m Red Cross certified in pet first aid, including pet CPR, and background
                 checked through the Washington State Patrol.
               </p>
@@ -401,11 +403,18 @@ export default function RatesPage() {
               </div>
             </div>
 
-            <p className="text-center mt-12">
-              <a href="/#contact" className={btnPrimary}>
-                Check Availability
+            <div className="text-center mt-12">
+              <a href={bookingUrl} target="_blank" rel="noopener" className={btnPrimary}>
+                Book a Meet &amp; Greet
+                <span className="sr-only"> (opens in a new tab)</span>
               </a>
-            </p>
+              <p className="text-charcoal-soft text-[0.9rem] mt-4">
+                Already a client or have a question?{" "}
+                <a href="/#contact" className="text-primary-dark font-semibold underline underline-offset-4 decoration-1 hover:decoration-2">
+                  Send me a note
+                </a>
+              </p>
+            </div>
           </div>
         </section>
       </main>
