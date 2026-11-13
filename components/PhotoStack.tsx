@@ -71,6 +71,7 @@ const cancelSwings = (el: HTMLElement) =>
 
 export default function PhotoStack({ photos, label, sizes }: { photos: StackPhoto[]; label: string; sizes?: string }) {
   const n = photos.length;
+  const viewerPhotos = photos.map(({ image, alt }) => ({ image, alt }));
   const boxRef = useRef<HTMLDivElement>(null);
   const [top, setTop] = useState(0);
   const [drag, setDrag] = useState<number | null>(null);
@@ -178,8 +179,12 @@ export default function PhotoStack({ photos, label, sizes }: { photos: StackPhot
   // Move/up/cancel are listened for on the window for the length of a drag, so the release
   // is always seen even if the finger or mouse ends up off the photo (pointer capture alone
   // was not reliable).
+  // Events from the open full-screen viewer (outside this box in the page, though inside
+  // it in React's tree) must never move the stack.
+  const fromStack = (e: React.SyntheticEvent) => !!boxRef.current?.contains(e.target as Node);
+
   const onPointerDown = (e: React.PointerEvent) => {
-    if (e.button !== 0 || busy.current) return;
+    if (e.button !== 0 || busy.current || !fromStack(e)) return;
     const el = e.currentTarget as HTMLElement;
     cancelSwings(el); // grabbing it mid-swing stops the swing
     pointer.current = { id: e.pointerId, x: e.clientX, y: e.clientY, dragging: false, limitL: Infinity, limitR: Infinity, last: 0, el };
@@ -275,7 +280,7 @@ export default function PhotoStack({ photos, label, sizes }: { photos: StackPhot
 
   // A drag ends with a click; swallow it (on the whole stack) so it doesn't open the viewer.
   const onClickCapture = (e: React.MouseEvent) => {
-    if (suppressClick.current) {
+    if (suppressClick.current && fromStack(e)) {
       suppressClick.current = false;
       e.stopPropagation();
       e.preventDefault();
@@ -283,7 +288,7 @@ export default function PhotoStack({ photos, label, sizes }: { photos: StackPhot
   };
   // Horizontal trackpad swipe: one photo per gesture.
   const onWheel = (e: React.WheelEvent) => {
-    if (Math.abs(e.deltaX) < 25 || Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
+    if (!fromStack(e) || Math.abs(e.deltaX) < 25 ||Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
     const now = Date.now();
     if (now - wheelLock.current < 600) return;
     wheelLock.current = now;
@@ -336,7 +341,16 @@ export default function PhotoStack({ photos, label, sizes }: { photos: StackPhot
             }`}
           >
             {/* Pointing-hand cursor on the stack (owner request), not the viewer's magnifier. */}
-            <PhotoViewer image={p.image} alt={p.alt} imgClassName={p.imgClassName} sizes={sizes} buttonClassName="!cursor-pointer" />
+            {/* In the viewer, swipe through all the photos; closing it leaves the photo
+                last viewed on top of the pile. */}
+            <PhotoViewer
+              image={p.image}
+              alt={p.alt}
+              imgClassName={p.imgClassName}
+              sizes={sizes}
+              buttonClassName="!cursor-pointer"
+              gallery={{ photos: viewerPhotos, index: i, onClose: setTop }}
+            />
           </div>
         );
       })}
