@@ -9,5 +9,8 @@ export const socialLinks = [
   { name: "Facebook", url: "https://www.facebook.com/strolpetservices", icon: "facebook", sameAs: true },
   { name: "TikTok", url: "https://www.tiktok.com/@strolpetservices", icon: "tiktok", sameAs: true },
   { name: "Nextdoor", url: "https://nextdoor.com/page/strol-pet-services-seattle-wa", icon: "nextdoor", sameAs: true },
+  // Yelp added 2026-11-13. Uses the business ID form of the public page (yelp.com/biz/<id>),
+  // which Yelp redirects to the named page; swap in the named URL if the owner shares it.
+  { name: "Yelp", url: "https://www.yelp.com/biz/_wmUShRbZJGt-Y50rMWN5Q", icon: "yelp", sameAs: true },
   { name: "Google", url: "https://share.google/3ufcP8hVedraf8fMu", icon: "google", sameAs: false },
 ] as const;
