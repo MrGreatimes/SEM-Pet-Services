@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Work_Sans } from "next/font/google";
+import { LANG_STORAGE_KEY, siteUrl } from "@/lib/i18n";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -16,45 +17,28 @@ const workSans = Work_Sans({
   display: "swap",
 });
 
-const siteUrl = "https://strolpetservices.com";
-const siteName = "Strol Pet Services";
-const siteTitle = "Strol Pet Services | Dog Walking & Pet Sitting in Seattle";
-const siteDescription =
-  "Licensed, bonded and insured pet care in Seattle: dog walking, overnight and cat sitting, with daily updates and a complimentary meet & greet.";
-
+// Site-wide defaults only. Each page sets its own title, description, canonical address,
+// language alternates and link preview through lib/pageMetadata.ts (before 2026-11-13 the
+// canonical "/" set here leaked into /rates and /privacy, telling Google they were copies
+// of the homepage).
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: siteTitle,
-  description: siteDescription,
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    url: siteUrl,
-    siteName,
-    title: siteTitle,
-    description: siteDescription,
-    images: [
-      {
-        url: "/images/Owner and Chloe 1 edit.jpeg",
-        width: 900,
-        height: 837,
-        alt: "Strol Pet Services, in-home overnight pet sitting and dog walking in Seattle",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteTitle,
-    description: siteDescription,
-    images: ["/images/Owner and Chloe 1 edit.jpeg"],
-  },
 };
+
+// A visitor who picked Spanish with the header's language switch and later opens an
+// English page directly (typed address, bookmark, shared link) is sent to the same page
+// in Spanish before anything is drawn. Only for the four pages that have a Spanish copy.
+// Search engines never store a choice, so they always get each page in its own language.
+const rememberLanguage = `try{var p=location.pathname;if(localStorage.getItem(${JSON.stringify(
+  LANG_STORAGE_KEY
+)})==="es"&&["/","/rates","/privacy","/review"].indexOf(p)>-1){location.replace((p==="/"?"/es":"/es"+p)+location.search+location.hash)}}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${workSans.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${workSans.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: rememberLanguage }} />
+      </head>
       <body className="font-body text-charcoal bg-cream leading-relaxed">{children}</body>
     </html>
   );

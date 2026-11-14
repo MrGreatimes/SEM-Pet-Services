@@ -1,17 +1,51 @@
 "use client";
 
 import FieldError from "@/components/FieldError";
+import { useLang } from "@/components/LangRoot";
 import { btnPrimary, inputClass, labelClass } from "@/lib/styles";
 import { looksLikeEmail, useFormValidation } from "@/lib/useFormValidation";
 
+const text = {
+  en: {
+    nameMissing: "Add a name.",
+    emailMissing: "Enter an email.",
+    emailFormat: "Format: name@example.com",
+    name: "Your Name",
+    email: "Email",
+    dates: "Dates Needed",
+    referredBy: "Referred By",
+    more: "Tell Me More",
+    optional: "(optional)",
+    moreHint: "Breed, age, temperament and special needs.",
+    send: "Send Request",
+  },
+  es: {
+    nameMissing: "Escriba su nombre.",
+    emailMissing: "Escriba su correo electrónico.",
+    emailFormat: "Formato: nombre@ejemplo.com",
+    name: "Su nombre",
+    email: "Correo electrónico",
+    dates: "Fechas",
+    referredBy: "Recomendación de",
+    more: "Cuénteme más",
+    optional: "(opcional)",
+    moreHint: "Raza, edad, temperamento y necesidades especiales.",
+    send: "Enviar solicitud",
+  },
+};
+
 // "Check Availability" form. Required: Your Name, Email. Optional: Dates Needed,
 // Tell Me More (one combined box for dog details and anything else). Posts straight to Formspree as a plain HTML form.
+// On the Spanish site the labels and errors are in Spanish, and the email Sean gets
+// says "language: Spanish" (and "(Spanish)" in the subject) so he knows to reply in Spanish.
 export default function ContactForm() {
+  const lang = useLang();
+  const t = text[lang];
   const { errors, onSubmit, fieldProps, formRef } = useFormValidation({
-    name: (v) => (v.trim() ? undefined : "Add a name."),
+    name: (v) => (v.trim() ? undefined : t.nameMissing),
     email: (v) => {
-      if (!v.trim()) return "Enter an email.";
-      if (!looksLikeEmail(v)) return "Format: name@example.com";
+      if (!v.trim()) return t.emailMissing;
+      if (!looksLikeEmail(v)) return t.emailFormat;
       return undefined;
     },
   });
@@ -33,7 +67,12 @@ export default function ContactForm() {
       noValidate
       onSubmit={onSubmit}
     >
-      <input type="hidden" name="_subject" value="New inquiry from Strol website" />
+      <input
+        type="hidden"
+        name="_subject"
+        value={lang === "es" ? "New inquiry from Strol website (Spanish)" : "New inquiry from Strol website"}
+      />
+      <input type="hidden" name="language" value={lang === "es" ? "Spanish" : "English"} />
       <input type="text" name="_gotcha" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
       {/* Reminder for Sean, printed in every Formspree email (owner's request 2026-11-06). Visible in page source, so keep it client-safe. */}
       <input
@@ -46,7 +85,7 @@ export default function ContactForm() {
       <div className="flex flex-col gap-3.5 max-[440px]:grid max-[440px]:grid-cols-2 max-[440px]:gap-2 max-[440px]:items-start">
         <div className={field}>
           <label htmlFor="name" className={labelClass}>
-            Your Name
+            {t.name}
           </label>
           <input
             type="text"
@@ -59,7 +98,7 @@ export default function ContactForm() {
         </div>
         <div className={field}>
           <label htmlFor="email" className={labelClass}>
-            Email
+            {t.email}
           </label>
           <input
             type="email"
@@ -76,7 +115,7 @@ export default function ContactForm() {
       <div className="flex flex-col gap-3.5 max-[440px]:grid max-[440px]:grid-cols-2 max-[440px]:gap-2 max-[440px]:items-end">
         <div className={field}>
           <label htmlFor="dates" className={labelClass}>
-            Dates Needed <span className="font-normal text-charcoal-soft">(optional)</span>
+            {t.dates} <span className="font-normal text-charcoal-soft">{t.optional}</span>
           </label>
           <input
             type="text"
@@ -87,7 +126,7 @@ export default function ContactForm() {
         </div>
         <div className={field}>
           <label htmlFor="referred_by" className={labelClass}>
-            Referred By <span className="font-normal text-charcoal-soft">(optional)</span>
+            {t.referredBy} <span className="font-normal text-charcoal-soft">{t.optional}</span>
           </label>
           <input
             type="text"
@@ -100,10 +139,10 @@ export default function ContactForm() {
 
       <div className={`${field} ${grow}`}>
         <label htmlFor="message" className={labelClass}>
-          Tell Me More <span className="font-normal text-charcoal-soft">(optional)</span>
+          {t.more} <span className="font-normal text-charcoal-soft">{t.optional}</span>
         </label>
         <p id="message-hint" className="text-[0.78rem] text-charcoal-soft -mt-1">
-          Breed, age, temperament and special needs.
+          {t.moreHint}
         </p>
         <textarea id="message" name="message" rows={5} aria-describedby="message-hint" className={textarea} />
       </div>
@@ -112,7 +151,7 @@ export default function ContactForm() {
         type="submit"
         className={`${btnPrimary} self-start mt-2 max-[440px]:self-stretch max-[440px]:mt-1 max-[440px]:py-3`}
       >
-        Send Request
+        {t.send}
       </button>
     </form>
   );

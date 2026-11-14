@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { useLang } from "@/components/LangRoot";
 
 // Review body, clamped to 5 lines with a "Read more" toggle. The toggle only shows when
 // the text actually runs past 5 lines (re-checked on resize), so short reviews stay as is.
@@ -9,6 +10,7 @@ export default function ReviewText({ text }: { text: string }) {
   const id = useId();
   const [expanded, setExpanded] = useState(false);
   const [overflows, setOverflows] = useState(false);
+  const es = useLang() === "es";
 
   useEffect(() => {
     const el = ref.current;
@@ -35,7 +37,7 @@ export default function ReviewText({ text }: { text: string }) {
           aria-controls={id}
           className="mt-2 font-semibold text-primary-dark text-[0.9rem] underline underline-offset-4 decoration-1 hover:decoration-2 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
-          {expanded ? "Show less" : "Read more"}
+          {expanded ? (es ? "Mostrar menos" : "Show less") : es ? "Leer más" : "Read more"}
         </button>
       )}
     </>

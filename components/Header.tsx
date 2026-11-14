@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { rememberScrollPosition, useLang } from "@/components/LangRoot";
+import { LANG_STORAGE_KEY, basePath, localePath, type Lang } from "@/lib/i18n";
 
 // Optional on-page section links (e.g. the Rates page's Overnight | Walking | Policies),
 // shown as a small frosted pill attached under the main header pill. They are plain
@@ -9,7 +12,80 @@ import Link from "next/link";
 // highlighting whichever section(s) are currently on screen.
 export type SubnavItem = { id: string; label: string };
 
+const navText: Record<Lang, { label: string; short: string; dropdown: string }[]> = {
+  // label: desktop, short: 441-860px row, dropdown: <=440px box
+  en: [
+    { label: "Services", short: "Services", dropdown: "Services" },
+    { label: "My Mission", short: "Mission", dropdown: "My Mission" },
+    { label: "Rates & Policies", short: "Rates", dropdown: "Rates" },
+    { label: "Contact Me", short: "Contact", dropdown: "Contact Me" },
+  ],
+  es: [
+    { label: "Servicios", short: "Servicios", dropdown: "Servicios" },
+    { label: "Mi misión", short: "Misión", dropdown: "Mi misión" },
+    { label: "Tarifas y políticas", short: "Tarifas", dropdown: "Tarifas" },
+    { label: "Contacto", short: "Contacto", dropdown: "Contacto" },
+  ],
+};
+
+const uiText = {
+  en: { home: "Strol Pet Services, home", openMenu: "Open menu", closeMenu: "Close menu", onThisPage: "On this page" },
+  es: { home: "Strol Pet Services, inicio", openMenu: "Abrir menú", closeMenu: "Cerrar menú", onThisPage: "En esta página" },
+};
+
+// Pages that have a copy in the other language; anything else (a 404) switches to the
+// other language's homepage.
+const translatedPaths = ["/", "/rates", "/privacy", "/review"];
+
+// Language switch (added 2026-11-13): shows the language you can switch TO ("Español" on
+// English pages, "English" on Spanish ones; "ES"/"EN" on phones), written in that
+// language, and remembers the choice (see the root layout). Always visible, beside the
+// menu button on phones, so a Spanish speaker finds it without opening the menu.
+// It swaps the language in place (owner request): no reload and no jump. The other
+// language's page is prefetched, the spot on screen is remembered, and LangRoot puts the
+// visitor back on the same spot before the new text is painted. A ctrl/cmd-click (new
+// tab), or a browser without JavaScript, just opens the plain link.
+function LanguageSwitch({ lang, colorClass }: { lang: Lang; colorClass: string }) {
+  const router = useRouter();
+  const pathname = usePathname() ?? "/";
+  const to: Lang = lang === "es" ? "en" : "es";
+  const current = basePath(pathname);
+  const href = localePath(to, translatedPaths.includes(current) ? current : "/");
+  useEffect(() => {
+    router.prefetch(href);
+  }, [router, href]);
+  return (
+    <a
+      href={href}
+      hrefLang={to}
+      lang={to}
+      aria-label={to === "es" ? "Ver esta página en español" : "View this page in English"}
+      onClick={(e) => {
+        try {
+          localStorage.setItem(LANG_STORAGE_KEY, to);
+        } catch {
+          // storage blocked: the switch still works, it just isn't remembered
+        }
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        rememberScrollPosition();
+        router.push(href, { scroll: false });
+      }}
+      className={`flex items-center justify-center gap-1.5 font-semibold text-[1rem] whitespace-nowrap rounded-full border-[1.5px] border-current px-3 py-0.5 transition-colors max-[860px]:w-[40px] max-[860px]:px-0 max-[860px]:py-1.5 max-[860px]:border-0 max-[860px]:text-[0.9rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${colorClass}`}
+    >
+      <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 max-[860px]:hidden" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" />
+      </svg>
+      <span className="max-[860px]:hidden">{to === "es" ? "Español" : "English"}</span>
+      <span className="hidden max-[860px]:inline">{to === "es" ? "ES" : "EN"}</span>
+    </a>
+  );
+}
+
 export default function Header({ lightPage = false, subnav }: { lightPage?: boolean; subnav?: SubnavItem[] }) {
+  const lang = useLang();
+  const t = uiText[lang];
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeIds, setActiveIds] = useState<string[]>([]);
@@ -32,6 +108,10 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
       { rootMargin: "-190px 0px -55% 0px" }
     );
     targets.forEach((t) => observer.observe(t));
+    // Start with the last section above the band highlighted, so a page that opens
+    // mid-way (e.g. after the language switch) shows a highlight before any scrolling.
+    const above = targets.filter((t) => t.getBoundingClientRect().top < 190);
+    if (above.length) setActiveIds([above[above.length - 1].id]);
     return () => observer.disconnect();
   }, [subnav]);
   // Combined width of the mobile menu words, measured so the header's side padding
@@ -180,16 +260,11 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
     };
   }, [hideOnJump]);
 
-  // No "Home" link: the logo is the home link.
-  const servicesHref = lightPage ? "/#services" : "#services";
-  const missionHref = lightPage ? "/#mission" : "#mission";
-  const contactHref = lightPage ? "/#contact" : "#contact";
-  const navLinks = [
-    { href: servicesHref, label: "Services", short: "Services", dropdown: "Services" },
-    { href: missionHref, label: "My Mission", short: "Mission", dropdown: "My Mission" },
-    { href: "/rates", label: "Rates & Policies", short: "Rates", dropdown: "Rates" },
-    { href: contactHref, label: "Contact Me", short: "Contact", dropdown: "Contact Me" },
-  ];
+  // No "Home" link: the logo is the home link. Links stay in the page's language.
+  const home = localePath(lang, "/");
+  const section = (id: string) => (lightPage ? `${home}#${id}` : `#${id}`);
+  const hrefs = [section("services"), section("mission"), localePath(lang, "/rates"), section("contact")];
+  const navLinks = navText[lang].map((text, i) => ({ ...text, href: hrefs[i] }));
 
   // White links over the hero hover to brand gold; dark links in the scrolled pill
   // (or on light pages) hover to blue.
@@ -226,7 +301,7 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
           -mr-2 cancels its 8px padding so the bars, like the logo, sit exactly --pad
           from the edge. */}
       <div
-        className="relative z-10 isolate mx-auto max-w-site px-6 flex items-center justify-between py-3.5 max-[860px]:[--logo-w:117px] max-[560px]:[--logo-w:98px] max-[860px]:[--pad:max(16px,calc((100%_-_var(--logo-w)_-_24px_-_var(--links-w))/7))] max-[440px]:[--pad:24px] max-[860px]:px-[var(--pad)]"
+        className="relative z-10 isolate mx-auto max-w-site px-6 flex items-center justify-between py-3.5 max-[860px]:[--logo-w:117px] max-[560px]:[--logo-w:98px] max-[860px]:[--pad:max(16px,calc((100%_-_var(--logo-w)_-_84px_-_var(--links-w))/7))] max-[440px]:[--pad:24px] max-[860px]:px-[var(--pad)]"
         style={{ "--links-w": `${linksWidth}px` } as CSSProperties}
       >
         {/* The pill's frosted background lives on its own layer rather than on this
@@ -241,9 +316,9 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
           }`}
         />
         <Link
-          href={lightPage ? "/" : "#top"}
+          href={lightPage ? home : "#top"}
           className="flex items-center"
-          aria-label="Strol Pet Services, home"
+          aria-label={t.home}
         >
           {/* Two stacked copies of the logo that crossfade (owner's choice, 2026-11-05):
               "reverse" (white) over the dark hero, "primary" (blue) on the scrolled pill or
@@ -275,6 +350,12 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
           </span>
         </Link>
 
+        {/* Right side: menu links, the language switch, and (phones) the menu button.
+            On phones the links are positioned against the header row (absolute), so only
+            the switch (40px) and the button take space here, 12px apart; the links' right
+            edge and --pad above allow for both (84px = 24px bars + 8px button padding +
+            12px gap + 40px switch). */}
+        <div className="flex items-center gap-[22px] max-[860px]:gap-3">
         {/* Desktop: inline links. Mobile: a single-row bar that slides out leftward
             from the hamburger in the logo's row, with shortened labels. It spans exactly
             from the logo's right edge to the X's left edge. An auto left margin on every
@@ -288,7 +369,7 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
             corners. */}
         <nav
           ref={navRef}
-          className={`flex gap-[22px] max-[860px]:absolute max-[860px]:inset-y-2 max-[860px]:left-[calc(var(--pad)_+_var(--logo-w))] max-[860px]:right-[calc(var(--pad)_+_24px)] max-[860px]:items-center max-[860px]:gap-0 max-[440px]:top-[calc(100%_+_8px)] max-[440px]:bottom-auto max-[440px]:left-auto max-[440px]:right-0 max-[440px]:w-[116px] max-[440px]:flex-col max-[440px]:items-start max-[440px]:gap-3 max-[440px]:px-3 max-[440px]:py-4 max-[440px]:rounded-[34px] max-[440px]:bg-[var(--pill-bg)] max-[440px]:backdrop-blur-md max-[440px]:shadow-[0_12px_32px_rgba(58,46,40,0.16)] max-[860px]:overflow-x-auto max-[860px]:[scrollbar-width:none] max-[860px]:transition-[clip-path,opacity,visibility,transform] max-[860px]:duration-300 max-[860px]:ease-out ${
+          className={`flex gap-[22px] max-[860px]:absolute max-[860px]:inset-y-2 max-[860px]:left-[calc(var(--pad)_+_var(--logo-w))] max-[860px]:right-[calc(var(--pad)_+_84px)] max-[860px]:items-center max-[860px]:gap-0 max-[440px]:top-[calc(100%_+_8px)] max-[440px]:bottom-auto max-[440px]:left-auto max-[440px]:right-0 max-[440px]:w-[116px] max-[440px]:flex-col max-[440px]:items-start max-[440px]:gap-3 max-[440px]:px-3 max-[440px]:py-4 max-[440px]:rounded-[34px] max-[440px]:bg-[var(--pill-bg)] max-[440px]:backdrop-blur-md max-[440px]:shadow-[0_12px_32px_rgba(58,46,40,0.16)] max-[860px]:overflow-x-auto max-[860px]:[scrollbar-width:none] max-[860px]:transition-[clip-path,opacity,visibility,transform] max-[860px]:duration-300 max-[860px]:ease-out ${
             open
               ? "max-[860px]:[clip-path:inset(0_0_0_0)] max-[860px]:opacity-100 max-[860px]:visible max-[440px]:[clip-path:none] max-[440px]:translate-y-0"
               : "max-[860px]:[clip-path:inset(0_0_0_100%)] max-[860px]:opacity-0 max-[860px]:invisible max-[440px]:[clip-path:none] max-[440px]:-translate-y-2"
@@ -309,10 +390,12 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
           ))}
         </nav>
 
+        <LanguageSwitch lang={lang} colorClass={navLinkColor} />
+
         <button
           ref={buttonRef}
           className="group hidden max-[860px]:flex max-[860px]:-mr-2 flex-col gap-[5px] bg-transparent border-none cursor-pointer p-2 rounded-full transition-[transform,filter] duration-200 hover:scale-125 hover:drop-shadow-[0_4px_6px_rgba(0,0,0,0.35)] active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={open ? t.closeMenu : t.openMenu}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -329,11 +412,12 @@ export default function Header({ lightPage = false, subnav }: { lightPage?: bool
             }`}
           />
         </button>
+        </div>
       </div>
 
       {subnav?.length ? (
         <nav
-          aria-label="On this page"
+          aria-label={t.onThisPage}
           // On phones, while the menu dropdown is open (116px wide, right-aligned, 8px
           // below the header pill), the tab pill moves to the header's left edge and
           // narrows to leave an 8px gap before the dropdown: 116 + 8 = 124px. Closed it

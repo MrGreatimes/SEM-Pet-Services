@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import PhotoViewer from "@/components/PhotoViewer";
+import { useLang } from "@/components/LangRoot";
 
 export type StackPhoto = {
   image: string;
@@ -71,6 +72,7 @@ const cancelSwings = (el: HTMLElement) =>
 
 export default function PhotoStack({ photos, label, sizes }: { photos: StackPhoto[]; label: string; sizes?: string }) {
   const n = photos.length;
+  const es = useLang() === "es";
   const viewerPhotos = photos.map(({ image, alt }) => ({ image, alt }));
   const boxRef = useRef<HTMLDivElement>(null);
   const [top, setTop] = useState(0);
@@ -303,7 +305,7 @@ export default function PhotoStack({ photos, label, sizes }: { photos: StackPhot
     <div
       ref={boxRef}
       role="region"
-      aria-roledescription="carousel"
+      aria-roledescription={es ? "carrusel" : "carousel"}
       aria-label={label}
       className="absolute inset-0"
       onWheel={onWheel}
@@ -368,13 +370,13 @@ export default function PhotoStack({ photos, label, sizes }: { photos: StackPhot
       </div>
 
       <button type="button" onClick={prev} className={`${hidden} focus:left-0`}>
-        Previous photo
+        {es ? "Foto anterior" : "Previous photo"}
       </button>
       <button type="button" onClick={next} className={`${hidden} focus:right-0`}>
-        Next photo
+        {es ? "Foto siguiente" : "Next photo"}
       </button>
       <p className="sr-only" aria-live="polite">
-        Photo {top + 1} of {n}
+        {es ? `Foto ${top + 1} de ${n}` : `Photo ${top + 1} of ${n}`}
       </p>
     </div>
   );

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useLang } from "@/components/LangRoot";
 
 export type ViewerPhoto = { image: string; fullImage?: string; alt: string };
 
@@ -69,6 +70,7 @@ export default function PhotoViewer({
   const imgRef = useRef<HTMLImageElement>(null);
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
+  const es = useLang() === "es";
   const [loaded, setLoaded] = useState(false);
   const [view, setView] = useState<View>(RESET);
   const [gesturing, setGesturing] = useState(false);
@@ -548,19 +550,19 @@ export default function PhotoViewer({
               {idx + 1} / {n}
             </p>
             {/* Arrow buttons only where there's a mouse; on phones, swipe. */}
-            <button type="button" onClick={() => go(-1)} aria-label="Previous photo" className={`${roundBtn} left-4 top-1/2 hidden -translate-y-1/2 [@media(hover:hover)]:flex`}>
+            <button type="button" onClick={() => go(-1)} aria-label={es ? "Foto anterior" : "Previous photo"} className={`${roundBtn} left-4 top-1/2 hidden -translate-y-1/2 [@media(hover:hover)]:flex`}>
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M15 5l-7 7 7 7" />
               </svg>
             </button>
-            <button type="button" onClick={() => go(1)} aria-label="Next photo" className={`${roundBtn} right-4 top-1/2 hidden -translate-y-1/2 [@media(hover:hover)]:flex`}>
+            <button type="button" onClick={() => go(1)} aria-label={es ? "Foto siguiente" : "Next photo"} className={`${roundBtn} right-4 top-1/2 hidden -translate-y-1/2 [@media(hover:hover)]:flex`}>
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </>
         )}
-        <button type="button" onClick={closeViewer} aria-label="Close photo" className={`${roundBtn} right-4 top-4`}>
+        <button type="button" onClick={closeViewer} aria-label={es ? "Cerrar foto" : "Close photo"} className={`${roundBtn} right-4 top-4`}>
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
@@ -574,7 +576,7 @@ export default function PhotoViewer({
       <button
         type="button"
         onClick={openViewer}
-        aria-label={`View full photo: ${alt}`}
+        aria-label={`${es ? "Ver foto completa" : "View full photo"}: ${alt}`}
         className={`group absolute inset-0 rounded-[inherit] cursor-zoom-in focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-primary ${buttonClassName ?? ""}`}
       >
         {/* The photo is clipped here rather than by the parent, so a widened tap area
